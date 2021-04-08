@@ -1,6 +1,7 @@
 package com.example.oss_app;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +43,7 @@ public class Adapter extends PagerAdapter {
 
         ImageView imageView;
         TextView title, desc;
+        String str;
 
         imageView = view.findViewById(R.id.image);
         title = view.findViewById(R.id.title);
@@ -50,6 +52,16 @@ public class Adapter extends PagerAdapter {
         imageView.setImageResource(models.get(position).getImage());
         title.setText(models.get(position).getTitle());
         desc.setText(models.get(position).getDesc());
+        str = models.get(position).getTitle();
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), NewsList.class);
+                intent.putExtra("value", str);
+                v.getContext().startActivity(intent);
+            }
+        });
 
         container.addView(view, 0);
 
