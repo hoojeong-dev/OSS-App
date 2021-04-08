@@ -23,14 +23,14 @@ public class CategoryPage extends Activity {
         setContentView(R.layout.activity_category_page);
 
         models = new ArrayList<>();
-        models.add(new Model(R.drawable.brochure, "Society", ""));
-        models.add(new Model(R.drawable.sticker, "Sports", ""));
+        models.add(new Model(R.drawable.society_image, "Society", ""));
+        models.add(new Model(R.drawable.sports_image, "Sports", ""));
         models.add(new Model(R.drawable.poster, "Entertain", ""));
         models.add(new Model(R.drawable.namecard, "Politics", ""));
         models.add(new Model(R.drawable.brochure, "Editorial", ""));
-        models.add(new Model(R.drawable.sticker, "IT", ""));
-        models.add(new Model(R.drawable.poster, "Economic", ""));
-        models.add(new Model(R.drawable.namecard, "Foreign", ""));
+        models.add(new Model(R.drawable.it_image, "IT", ""));
+        models.add(new Model(R.drawable.economic_image, "Economic", ""));
+        models.add(new Model(R.drawable.foreign_image, "Foreign", ""));
         models.add(new Model(R.drawable.brochure, "Culture", ""));
         models.add(new Model(R.drawable.sticker, "Press", ""));
 
@@ -44,7 +44,13 @@ public class CategoryPage extends Activity {
                 getResources().getColor(R.color.color1),
                 getResources().getColor(R.color.color2),
                 getResources().getColor(R.color.color3),
-                getResources().getColor(R.color.color4)
+                getResources().getColor(R.color.color4),
+                getResources().getColor(R.color.color5),
+                getResources().getColor(R.color.color6),
+                getResources().getColor(R.color.color7),
+                getResources().getColor(R.color.color8),
+                getResources().getColor(R.color.color9),
+                getResources().getColor(R.color.color10)
         };
 
         colors = colors_temp;
