@@ -2,7 +2,6 @@ package com.example.oss_app;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +13,13 @@ import androidx.viewpager.widget.PagerAdapter;
 
 import java.util.List;
 
-public class Adapter extends PagerAdapter {
+public class CategoryAdapter extends PagerAdapter {
 
-    private List<Model> models;
+    private List<CategoryModel> models;
     private LayoutInflater layoutInflater;
     private Context context;
 
-    public Adapter(List<Model> models, Context context) {
+    public CategoryAdapter(List<CategoryModel> models, Context context) {
         this.models = models;
         this.context = context;
     }
@@ -39,7 +38,7 @@ public class Adapter extends PagerAdapter {
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         layoutInflater = LayoutInflater.from(context);
-        View view = layoutInflater.inflate(R.layout.item, container, false);
+        View view = layoutInflater.inflate(R.layout.activity_category_item, container, false);
 
         ImageView imageView;
         TextView title, desc;

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "863670861906",
+    "project_id": "oss-newslist",
+    "storage_bucket": "oss-newslist.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:863670861906:android:6b1473d4e1c3c3b0c75f8b",
+        "android_client_info": {
+          "package_name": "com.example.oss_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "863670861906-epe13it4m2dt2dgmu6s7c1vtlrr8uqo5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.oss_app",
+            "certificate_hash": "a47831fec9c0d79f22e4a9b158d287cadf44b0c6"
+          }
+        },
+        {
+          "client_id": "863670861906-3od0ni3icbei28jojab3tuj2bk82jauk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQlNlCEPTUHpfauWP0GVArS2SH2KHZfA4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "863670861906-3od0ni3icbei28jojab3tuj2bk82jauk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

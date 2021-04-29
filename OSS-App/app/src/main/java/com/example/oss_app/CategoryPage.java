@@ -12,8 +12,8 @@ import java.util.List;
 public class CategoryPage extends Activity {
 
     ViewPager viewPager;
-    Adapter adapter;
-    List<Model> models;
+    CategoryAdapter adapter;
+    List<CategoryModel> models;
     Integer[] colors = null;
     ArgbEvaluator argbEvaluator = new ArgbEvaluator();
 
@@ -23,18 +23,18 @@ public class CategoryPage extends Activity {
         setContentView(R.layout.activity_category_page);
 
         models = new ArrayList<>();
-        models.add(new Model(R.drawable.society_image, "Society", ""));
-        models.add(new Model(R.drawable.sports_image, "Sports", ""));
-        models.add(new Model(R.drawable.poster, "Entertain", ""));
-        models.add(new Model(R.drawable.namecard, "Politics", ""));
-        models.add(new Model(R.drawable.brochure, "Editorial", ""));
-        models.add(new Model(R.drawable.it_image, "IT", ""));
-        models.add(new Model(R.drawable.economic_image, "Economic", ""));
-        models.add(new Model(R.drawable.foreign_image, "Foreign", ""));
-        models.add(new Model(R.drawable.brochure, "Culture", ""));
-        models.add(new Model(R.drawable.sticker, "Press", ""));
+        models.add(new CategoryModel(R.drawable.society_image, "Society", ""));
+        models.add(new CategoryModel(R.drawable.sports_image, "Sports", ""));
+        models.add(new CategoryModel(R.drawable.poster, "Entertain", ""));
+        models.add(new CategoryModel(R.drawable.namecard, "Politics", ""));
+        models.add(new CategoryModel(R.drawable.brochure, "Editorial", ""));
+        models.add(new CategoryModel(R.drawable.it_image, "IT", ""));
+        models.add(new CategoryModel(R.drawable.economic_image, "Economic", ""));
+        models.add(new CategoryModel(R.drawable.foreign_image, "Foreign", ""));
+        models.add(new CategoryModel(R.drawable.brochure, "Culture", ""));
+        models.add(new CategoryModel(R.drawable.sticker, "Press", ""));
 
-        adapter = new Adapter(models, this);
+        adapter = new CategoryAdapter(models, this);
 
         viewPager = findViewById(R.id.viewPager);
         viewPager.setAdapter(adapter);

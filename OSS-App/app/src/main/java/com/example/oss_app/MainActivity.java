@@ -8,19 +8,28 @@ import android.widget.Button;
 
 public class MainActivity extends Activity {
 
-    Button start_btn;
+    Button sign_up_btn, sign_in_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        start_btn = findViewById(R.id.start_btn);
+        sign_up_btn = findViewById(R.id.sign_up_btn);
+        sign_in_btn = findViewById(R.id.sign_in_btn);
 
-        start_btn.setOnClickListener(new View.OnClickListener() {
+        sign_up_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, CategoryPage.class);
+                Intent intent = new Intent(MainActivity.this, Sign_up.class);
+                startActivity(intent);
+            }
+        });
+
+        sign_in_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, Sign_in.class);
                 startActivity(intent);
             }
         });
