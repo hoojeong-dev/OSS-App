@@ -1,46 +1,43 @@
 package com.example.oss_app;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
+import androidx.core.app.ActivityCompat;
 
 public class MainActivity extends Activity {
 
-    Button sign_up_btn, sign_in_btn, Start;
+    public static Context mainActivityContext;
+    static String postUrl = "http://192.168.0.92:8000/userLogin";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Start = findViewById(R.id.Start);
-        sign_up_btn = findViewById(R.id.sign_up_btn);
-        sign_in_btn = findViewById(R.id.sign_in_btn);
+        ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.INTERNET}, 0);
 
-        Start.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, soundPlay.class);
-                startActivity(intent);
-            }
-        });
+        mainActivityContext = this;
+    }
 
-        sign_up_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Sign_up.class);
-                startActivity(intent);
-            }
-        });
+    public void login(View v) {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivityForResult(intent, 2);
+    }
 
-        sign_in_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Sign_in.class);
-                startActivity(intent);
-            }
-        });
+    public void register(View v) {
+        Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

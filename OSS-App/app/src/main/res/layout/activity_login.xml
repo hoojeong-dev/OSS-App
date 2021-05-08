@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    tools:context=".LoginActivity">
+
+    <EditText
+        android:id="@+id/loginUserid"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        android:hint="Enter your ID"
+        android:singleLine="true"/>
+
+    <EditText
+        android:id="@+id/loginPassword"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:layout_below="@+id/loginUserid"
+        android:hint="Enter Password"
+        android:inputType="textPassword"
+        android:singleLine="true"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:layout_below="@+id/loginPassword"
+        android:background="#00FFFFFF"
+        android:onClick="submit"
+        android:text="Login"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/responseTextLogin"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:layout_below="@+id/btn"
+        android:text=""
+        android:textAlignment="center"
+        android:textColor="#FF0000"
+        android:textStyle="bold" />
+
+</RelativeLayout>
