@@ -3,6 +3,7 @@
     package="com.example.oss_app">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:allowBackup="true"
@@ -11,8 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppThem.NoActionBar">
-        <activity android:name=".RegisterActivity"></activity>
-        <activity android:name=".RegistrationActivity" />
+        <activity android:name=".SampleHttpConnection"></activity>
+        <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

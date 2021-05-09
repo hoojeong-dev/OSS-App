@@ -12,9 +12,13 @@ import java.io.IOException;
 // xml 수정 + view로 모든 페이지에 ㄱㄱ
 public class soundPlay extends AppCompatActivity {
 
-    public static String url = "http://192.168.0.92:8000/audio/1";
+    public static String url;
     MediaPlayer player;
     int position = 0;
+
+    void setsoundPlay(String url){
+        this.url = url;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
