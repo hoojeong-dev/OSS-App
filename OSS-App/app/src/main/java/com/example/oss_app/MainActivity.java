@@ -14,7 +14,7 @@ import androidx.core.app.ActivityCompat;
 public class MainActivity extends Activity {
 
     public static Context mainActivityContext;
-    static String postUrl = "http://192.168.0.92:8000/ai";
+    static String postUrl = "http://20.41.87.42:8000/etc";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
