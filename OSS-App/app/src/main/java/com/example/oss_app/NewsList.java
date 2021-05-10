@@ -15,7 +15,7 @@ public class NewsList extends Activity {
 
     ListView listView;
     NewsListAdapter adapter;
-    //List<NewsListModel> models = new ArrayList<>();
+    List<NewsListModel> models = new ArrayList<>();
     TextView category;
     String str;
 
@@ -31,9 +31,13 @@ public class NewsList extends Activity {
         str = intent.getExtras().getString("value");
         category.setText(str);
 
-        //models.add(new NewsListModel("key","title", "content"));
-        //adapter = new NewsListAdapter(NewsListDAO.models, this);
-        adapter = new NewsListAdapter();
+        for(int i=0; i<NewsListDAO.allmodels.size(); i++){
+            if(NewsListDAO.allmodels.get(i).getCategory().equals(str)){
+                models.add(NewsListDAO.allmodels.get(i));
+            }
+        }
+
+        adapter = new NewsListAdapter(models, str);
         listView.setAdapter(adapter);
     }
 }

@@ -15,33 +15,37 @@ import java.util.List;
 
 public class NewsListDAO {
 
-    static List<NewsListModel> models = new ArrayList<>();
+    static List<NewsListModel> allmodels = new ArrayList<>();
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     NewsListModel newsListModel;
     //String[] categories = {"Society", "Sports", "Politics", "Economic", "Foreign", "Culture", "Entertain", "Digital", "Editorial", "Press"};
     String[] categories = {"Society", "Sports"};
+    int count = -1;
 
-    public void LoadData(){
+    public void LoadData() {
         firebaseDatabase = FirebaseDatabase.getInstance();
 
-        for(int i=0; i<2; i++){
-            databaseReference = firebaseDatabase.getReference("news").child(categories[i]);
-            databaseReference.addListenerForSingleValueEvent(postListener);
-        }
+        databaseReference = firebaseDatabase.getReference("news");
+        databaseReference.addListenerForSingleValueEvent(postListener);
     }
 
     ValueEventListener postListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-            models.clear();
+            allmodels.clear();
 
-            for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                String key = snapshot.getKey();
-                newsListModel = snapshot.getValue(NewsListModel.class);
-                newsListModel.key = key;
+            for(int i=0; i<2; i++){
+                for (DataSnapshot snapshot : dataSnapshot.child(categories[i]).getChildren()) {
+                    String key = snapshot.getKey();
+                    newsListModel = snapshot.getValue(NewsListModel.class);
+                    newsListModel.key = key;
+                    newsListModel.category = categories[i];
 
-                models.add(newsListModel);
+                    System.out.println(newsListModel.category + "  " + newsListModel.key + "  " + newsListModel.title + "  " + newsListModel.content);
+
+                    allmodels.add(newsListModel);
+                }
             }
         }
 

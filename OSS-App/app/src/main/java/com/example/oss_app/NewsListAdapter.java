@@ -19,12 +19,14 @@ import java.util.List;
 
 public class NewsListAdapter extends BaseAdapter {
 
-    List<NewsListModel> models = NewsListDAO.models;
+    List<NewsListModel> models;
     Context context;
     TextView titleTextView;
+    String category;
 
-    public NewsListAdapter() {
-
+    public NewsListAdapter(List<NewsListModel> models, String category) {
+        this.models = models;
+        this.category = category;
     }
 
     @Override
@@ -69,7 +71,7 @@ public class NewsListAdapter extends BaseAdapter {
         clickLayout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), NewsContent.class);
-                intent.putExtra("value", "성공");
+                intent.putExtra("value", models.get(position).getCategory() + " : " + models.get(position).getTitle());
                 v.getContext().startActivity(intent);
             }
         });
