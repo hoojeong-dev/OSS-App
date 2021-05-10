@@ -2,36 +2,38 @@ package com.example.oss_app;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class NewsList extends AppCompatActivity {
+public class NewsList extends Activity {
 
     ListView listView;
     NewsListAdapter adapter;
-    ArrayList<NewsListModel> models;
+    //List<NewsListModel> models = new ArrayList<>();
     TextView category;
+    String str;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_list);
 
+        listView = findViewById(R.id.listview);
         category = findViewById(R.id.category);
 
         Intent intent = getIntent();
-        category.setText(intent.getExtras().getString("value"));
+        str = intent.getExtras().getString("value");
+        category.setText(str);
 
-        models = new ArrayList<>();
-        //데이터베이스와 연동하여 기사 데이터 리스트에 저장
-        adapter = new NewsListAdapter(models, this);
-
-        listView = findViewById(R.id.viewPager);
+        //models.add(new NewsListModel("key","title", "content"));
+        //adapter = new NewsListAdapter(NewsListDAO.models, this);
+        adapter = new NewsListAdapter();
         listView.setAdapter(adapter);
-
     }
 }

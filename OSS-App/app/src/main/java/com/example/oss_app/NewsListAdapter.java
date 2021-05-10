@@ -15,31 +15,31 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NewsListAdapter extends BaseAdapter {
 
-    private ArrayList<NewsListModel> models;
-    private Context context;
-    private TextView titleTextView;
+    List<NewsListModel> models = NewsListDAO.models;
+    Context context;
+    TextView titleTextView;
 
-    public NewsListAdapter(ArrayList<NewsListModel> models, Context context){
-        this.models = models;
-        this.context = context;
+    public NewsListAdapter() {
+
     }
 
     @Override
     public int getCount() {
-        return 0;
+        return models.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return models.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -49,7 +49,7 @@ public class NewsListAdapter extends BaseAdapter {
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.activity_news_list, parent, false);
+            convertView = inflater.inflate(R.layout.activity_news_list_item, parent, false);
         }
 
         TranslateAnimation translateAnimation = new TranslateAnimation(300, 0, 0, 0);
@@ -63,12 +63,16 @@ public class NewsListAdapter extends BaseAdapter {
 
         titleTextView = (TextView) convertView.findViewById(R.id.newstitle);
         titleTextView.getShadowRadius();
+        titleTextView.setText(models.get(position).getTitle());
 
-        NewsListModel newsListModel = models.get(position);
-
-        titleTextView.setText(newsListModel.getTitle());
-
-        //클릭 메소드 작성
+        LinearLayout clickLayout = (LinearLayout) convertView.findViewById(R.id.clickLayout);
+        clickLayout.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), NewsContent.class);
+                intent.putExtra("value", "성공");
+                v.getContext().startActivity(intent);
+            }
+        });
 
         return convertView;
     }

@@ -41,6 +41,11 @@ public class MainActivity extends Activity {
         startActivity(intent);
     }
 
+    public void skip(View v) {
+        Intent intent = new Intent(this, CategoryPage.class);
+        startActivity(intent);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
