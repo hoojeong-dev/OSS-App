@@ -15,7 +15,7 @@ public class NewsList extends Activity {
 
     ListView listView;
     NewsListAdapter adapter;
-    List<NewsListModel> models = new ArrayList<>();
+    static List<NewsListModel> models = new ArrayList<>();
     TextView category;
     String str;
 
@@ -35,6 +35,10 @@ public class NewsList extends Activity {
             if(NewsListDAO.allmodels.get(i).getCategory().equals(str)){
                 models.add(NewsListDAO.allmodels.get(i));
             }
+        }
+
+        for(int i=0; i<models.size(); i++){
+            System.out.println(models.get(i).getTitle() + "   " + models.get(i).getTitle());
         }
 
         adapter = new NewsListAdapter(models, str);

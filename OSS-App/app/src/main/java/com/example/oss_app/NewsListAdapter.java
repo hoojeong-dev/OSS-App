@@ -20,7 +20,6 @@ import java.util.List;
 public class NewsListAdapter extends BaseAdapter {
 
     List<NewsListModel> models;
-    Context context;
     TextView titleTextView;
     String category;
 
@@ -71,7 +70,7 @@ public class NewsListAdapter extends BaseAdapter {
         clickLayout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), NewsContent.class);
-                intent.putExtra("value", models.get(position).getCategory() + " : " + models.get(position).getTitle());
+                intent.putExtra("position", position);
                 v.getContext().startActivity(intent);
             }
         });

@@ -42,8 +42,6 @@ public class NewsListDAO {
                     newsListModel.key = key;
                     newsListModel.category = categories[i];
 
-                    System.out.println(newsListModel.category + "  " + newsListModel.key + "  " + newsListModel.title + "  " + newsListModel.content);
-
                     allmodels.add(newsListModel);
                 }
             }
