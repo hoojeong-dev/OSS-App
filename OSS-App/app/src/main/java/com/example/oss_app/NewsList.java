@@ -1,7 +1,5 @@
 package com.example.oss_app;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,6 +28,8 @@ public class NewsList extends Activity {
         Intent intent = getIntent();
         str = intent.getExtras().getString("value");
         category.setText(str);
+
+        models.clear();
 
         for(int i=0; i<NewsListDAO.allmodels.size(); i++){
             if(NewsListDAO.allmodels.get(i).getCategory().equals(str)){

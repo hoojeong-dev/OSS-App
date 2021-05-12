@@ -5,16 +5,20 @@ public class NewsListModel {
     public String key;
     public String title;
     public String content;
+    public String keywords;
+    public String summary;
 
     public NewsListModel(){
 
     }
 
-    public NewsListModel(String category, String key, String title, String content) {
+    public NewsListModel(String category, String key, String title, String content, String keywords, String summary) {
         this.category = category;
         this.key = key;
         this.title = title;
         this.content = content;
+        this.keywords = keywords;
+        this.summary = summary;
     }
 
     public String getCategory() {
@@ -31,5 +35,13 @@ public class NewsListModel {
 
     public String getContent() {
         return content;
+    }
+
+    public String getKeywords(){
+        return keywords;
+    }
+
+    public String getSummary(){
+        return summary;
     }
 }

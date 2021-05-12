@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ContentPage">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.4">
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7.2">
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="40dp"
+                android:paddingRight="40dp"
+                android:paddingBottom="40dp"
+                android:lineSpacingExtra="13dp"
+                android:textSize="23dp"
+                android:text="에세이는 대학 합격, 장학금 수령, 취업 등에 필수적 요소 중 하나입니다. 에세이는 종종 학생들에게 매우 두려운 작업으로 여겨집니다. 장학금 수령, 수업 준비, 취업 등 어떤 목적이든 많은 학생들과 직장인들이 종종 이러한 작업을 매우 부담스러워 합니다. 에세이가 전반적으로 큰 프로젝트로 보여질 수 있으나, 이 작업은 실행 가능한 부분들로 나누어 진행하도록 몇 가지 단계들로 쪼개질 수 있습니다. 다음의 단계들은 당신의 에세이가 어떠한 목적이든 성공적인 초안을 작성하기 위한 가장 빠른 지름길을 제시할 것입니다.
+
+1. 주제를 선정한다
+당신은 이미 주어진 에세이 주제를 가지고 있거나, 스스로 정한 주제에 대해 자유롭게 작성할 수도 있습니다. 만약 특정한 주제가 주어졌다면, 당신이 작성하고 싶은 글의 종류에 대해 생각해 봐야 합니다. 이 주제에 대한 일반적 개괄인가 아니면 특정 형태의 분석인가? 또한, 당신의 에세이 작성에 대한 초점을 줄이는 것이 필요할 수도 있습니다. 만약 주어진 주제 없이 자유롭게 작성하는 경우라면, 해야 할 일이 조금 더 늘어납니다. 그러나, 이러한 기회는 당신이 흥미롭게 여기거나 자신과 관련 있는 주제를 고를 수 있도록 하는 장점이 있습니다.
+
+첫째, 당신의 목적을 정의하도록 합니다. 정보를 제공하고자 하는가, 아니면 독자를 설득하고자 하는가? 일단 이러한 목적이 결정되면, 당신이 흥미를 발견한 주제들에 대한 약간의 조사가 필요할 것입니다. 당신의 삶에 대해 생각해 보십시오. 당신에 흥미를 주는 것이 무엇입니까? 이러한 주제들을 적어보십시오. 마지막으로, 당신이 선택한 옵션들을 평가합니다. 당신의 목표가 독자를 교육시키는 것이라면, 자신이 이미 공부한 주제를 선택하도록 합니다. 당신의 목적이 독자를 설득하는 것이라면, 자신이 열정을 가지고 있는 주제를 선택하십시오. 해당 에세이의 임무가 무엇이든 반드시 당신이 흥미 있어 하는 토픽을 선정하도록 합니다.
+2. 아이디어의 개요 또는 개념도를 준비한다
+성공적인 에세이를 쓰기 위해서 당신은 반드시 자신의 생각을 정리해야 합니다. 마음속에 이미 있는 것을 꺼내어 종이에 옮김으로써, 당신은 아이디어들 간의 연결고리를 보다 정확하게 바라볼 수 있습니다.
+
+이 구조는 당신의 글의 기초가 됩니다. 당신의 아이디어를 적고 정리하기 위해 개요 또는 개념도를 이용하도록 합니다.
+
+개념도를 생성하기 위해, 종이를 꺼내어 페이지 한 가운데 당신의 주제를 적습니다. 이 주제로부터 나오는 3-5줄 정도의 선을 긋고, 각 선의 끝에 당신의 주요 아이디어를 적습니다. 이제 다시 각 아이디어로부터 나오는 선들을 긋고 각 아이디어에 대해 떠오른 어떠한 생각이든 적어봅니다.
+
+당신이 개념도 대신 개요를 생성하는 것을 선호한다면, 페이지 맨 위에 당신의 주제를 적습니다. 그 아래 당신의 주요 아이디어들을 나란히 적고 각 아이디어 아래 부분을 빈 공간으로 남겨둡니다. 이 공간에 각 주요 아이디어와 관련된 보다 세부적인 아이디어들을 나열하도록 합니다. 이러한 작업은 당신이 아이디어들 간의 연결 고리를 바라보고 보다 정돈되고 조직적인 에세이를 작성하도록 도울 것입니다.">
+            </TextView>
+        </ScrollView>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5">
+    </LinearLayout>
+</LinearLayout>
