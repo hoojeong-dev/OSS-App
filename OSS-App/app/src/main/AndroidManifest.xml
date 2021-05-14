@@ -14,8 +14,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppThem.NoActionBar">
         <activity android:name=".NewsContent"></activity>
-        <activity android:name=".SummaryPage" />
-        <activity android:name=".ContentPage" />
         <activity android:name=".SampleHttpConnection" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />
