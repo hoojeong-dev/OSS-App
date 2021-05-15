@@ -1,7 +1,12 @@
 package com.example.oss_app;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,6 +47,13 @@ public class NewsContent extends AppCompatActivity {
         indicator.setViewPager(vpPager);
     }
 
+    public void setting(View v){
+        LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LinearLayout settingLayout = (LinearLayout) layoutInflater.inflate(R.layout.activity_setting_page, null);
+        settingLayout.setBackgroundColor(Color.parseColor("#99000000"));
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        addContentView(settingLayout, layoutParams);
+    }
     public static class MyPagerAdapter extends FragmentPagerAdapter {
         private static int NUM_ITEMS = 2;
 
