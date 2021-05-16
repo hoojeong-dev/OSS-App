@@ -17,12 +17,21 @@
             android:layout_height="match_parent"/>
         <TextView
             android:id="@+id/title"
-            android:layout_width="300dp"
+            android:layout_width="220dp"
             android:layout_height="match_parent"
             android:background="#00ff0000"
             android:gravity="left|center|bottom"
             android:text="title"
             android:textSize="30dp" />
+        <Button
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:gravity="right|bottom"
+            android:text=">"
+            android:textSize="35dp"
+            android:onClick="play"
+            android:textColor="#FF000000"
+            android:background="#00FFFFFF"/>
         <Button
             android:layout_width="70dp"
             android:layout_height="match_parent"

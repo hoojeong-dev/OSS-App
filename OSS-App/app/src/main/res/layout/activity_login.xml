@@ -33,15 +33,4 @@
         android:onClick="submit"
         android:text="Login"
         android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/responseTextLogin"
-        android:layout_width="250dp"
-        android:layout_height="60dp"
-        android:layout_below="@+id/btn"
-        android:text=""
-        android:textAlignment="center"
-        android:textColor="#FF0000"
-        android:textStyle="bold" />
-
 </RelativeLayout>

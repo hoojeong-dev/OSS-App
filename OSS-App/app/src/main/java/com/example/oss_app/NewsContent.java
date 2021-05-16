@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -24,13 +25,16 @@ public class NewsContent extends AppCompatActivity {
 
     List<NewsListModel> models = NewsList.models;
     FragmentPagerAdapter adapterViewPager;
-    static int modelPosition;
-    String title;
+    static int modelPosition, pageMode;
+    String category, key, title;
     TextView titleView;
 
-    LayoutInflater layoutInflater;
-    LinearLayout settingLayout;
-    LinearLayout.LayoutParams layoutParams;
+    LayoutInflater setLayoutInflater, playLayoutInflater;
+    LinearLayout settingLayout, playLayout;
+    LinearLayout.LayoutParams setLayoutParams, playLayoutParams;
+
+    SoundPlay soundPlay = new SoundPlay();
+    HttpConnection httpConnection = new HttpConnection();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +43,9 @@ public class NewsContent extends AppCompatActivity {
 
         Intent intent = getIntent();
         modelPosition = intent.getExtras().getInt("position");
+
+        category = models.get(modelPosition).getCategory();
+        key = models.get(modelPosition).getKey();
 
         title = models.get(modelPosition).getTitle();
         titleView = (TextView) findViewById(R.id.title);
@@ -54,14 +61,14 @@ public class NewsContent extends AppCompatActivity {
 
     public void setting(View v){
 
-        layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        settingLayout = (LinearLayout) layoutInflater.inflate(R.layout.activity_setting_page, null);
+        setLayoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        settingLayout = (LinearLayout) setLayoutInflater.inflate(R.layout.activity_setting_page, null);
         settingLayout.setBackgroundColor(Color.parseColor("#99000000"));
-        layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        addContentView(settingLayout, layoutParams);
+        setLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        addContentView(settingLayout, setLayoutParams);
     }
 
-    public void inVisible(View w){
+    public void inVisibleSetting(View v){
         ((ViewManager)settingLayout.getParent()).removeView(settingLayout);
     }
 
@@ -73,6 +80,51 @@ public class NewsContent extends AppCompatActivity {
     //폰트 사이즈 설정 함수 -> 다른 기능으로 대체 가능
     public void fontSize(View v){
 
+    }
+
+    public void play(View v){
+
+        String msg = "", path = category + "/" + key;
+
+        if(pageMode == 0)
+            msg = "읽어";
+        else if(pageMode == 1)
+            msg = "요약";
+
+        String soundUrl = httpConnection.send(msg, path);
+
+        playLayoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        playLayout = (LinearLayout) playLayoutInflater.inflate(R.layout.activity_sound_play, null);
+        playLayout.setBackgroundColor(Color.parseColor("#99000000"));
+        playLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+
+        addContentView(playLayout, playLayoutParams);
+
+        if(soundUrl.equals("failure") || soundUrl.equals("something failure")){
+            Toast.makeText(getApplicationContext(), "Failed to Connect to Server. Please try again later.", Toast.LENGTH_LONG).show();
+            ((ViewManager)playLayout.getParent()).removeView(playLayout);
+            soundPlay.closePlayer();
+        }
+        else
+            soundPlay.setPlayUrl(soundUrl);
+    }
+
+    public void playbtn(View v){
+        soundPlay.playAudio();
+    }
+    public void pausebtn(View v){
+        soundPlay.pauseAudio();
+    }
+    public void restartbtn(View v){
+        soundPlay.resumeAudio();
+    }
+    public void stopbtn(View v){
+        soundPlay.stopAudio();
+    }
+
+    public void inVisiblePlay(View v){
+        ((ViewManager)playLayout.getParent()).removeView(playLayout);
+        soundPlay.closePlayer();
     }
 
     public static class MyPagerAdapter extends FragmentPagerAdapter {
@@ -93,8 +145,10 @@ public class NewsContent extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
+                    pageMode = 0;
                     return ContentPage.newInstance(0, modelPosition);
                 case 1:
+                    pageMode = 1;
                     return SummaryPage.newInstance(1, modelPosition);
                 default:
                     return null;

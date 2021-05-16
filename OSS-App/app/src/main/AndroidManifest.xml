@@ -14,7 +14,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppThem.NoActionBar">
         <activity android:name=".NewsContent"></activity>
-        <activity android:name=".SampleHttpConnection" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity">
@@ -24,7 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".soundPlay" />
+        <activity android:name=".SoundPlay" />
         <activity android:name=".NewsList" />
         <activity android:name=".CategoryPage" />
     </application>

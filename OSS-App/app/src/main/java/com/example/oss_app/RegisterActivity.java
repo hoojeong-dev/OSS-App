@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -22,6 +21,8 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class RegisterActivity extends Activity {
+
+    String postUrl = "http://20.41.87.42/userLogin";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +56,7 @@ public class RegisterActivity extends Activity {
 
             RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), registrationForm.toString());
 
-            postRequest(MainActivity.postUrl, body);
+            postRequest(postUrl, body);
         }
     }
 
@@ -78,27 +79,25 @@ public class RegisterActivity extends Activity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        TextView responseText = findViewById(R.id.responseTextRegister);
-                        responseText.setText("Failed to Connect to Server. Please Try Again.");
+                        Toast.makeText(getApplicationContext(), "Failed to Connect to Server. Please Try Again.", Toast.LENGTH_LONG).show();
                     }
                 });
             }
 
             @Override
             public void onResponse(Call call, final Response response) {
-                final TextView responseTextRegister = findViewById(R.id.responseTextRegister);
                 try {
                     final String responseString = response.body().string().trim();
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             if (responseString.equals("success")) {
-                                responseTextRegister.setText("Registration completed successfully.");
+                                Toast.makeText(getApplicationContext(), "Registration completed successfully.", Toast.LENGTH_LONG).show();
                                 finish();
                             } else if (responseString.equals("username")) {
-                                responseTextRegister.setText("Username already exists. Please chose another username.");
+                                Toast.makeText(getApplicationContext(), "Username already exists. Please chose another username.", Toast.LENGTH_LONG).show();
                             } else {
-                                responseTextRegister.setText("Something went wrong. Please try again later.");
+                                Toast.makeText(getApplicationContext(), "Something went wrong. Please try again later.", Toast.LENGTH_LONG).show();
                             }
                         }
                     });

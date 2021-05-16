@@ -30,16 +30,6 @@
         android:textSize="20dp" />
 
     <Button
-        android:id="@+id/sample"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:background="#00ff0000"
-        android:gravity="center"
-        android:onClick="sample"
-        android:text="sample"
-        android:textSize="20dp" />
-
-    <Button
         android:id="@+id/skip"
         android:layout_width="100dp"
         android:layout_height="50dp"

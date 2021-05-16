@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -23,6 +22,8 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class LoginActivity extends Activity {
+
+    String postUrl = "http://20.41.87.42/userLogin";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +54,7 @@ public class LoginActivity extends Activity {
 
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), loginForm.toString());
 
-        postRequest(MainActivity.postUrl, body);
+        postRequest(postUrl, body);
     }
 
     public void postRequest(String postUrl, RequestBody postBody) {
@@ -77,8 +78,7 @@ public class LoginActivity extends Activity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        TextView responseTextLogin = findViewById(R.id.responseTextLogin);
-                        responseTextLogin.setText("Failed to Connect to Server. Please Try Again.");
+                        Toast.makeText(getApplicationContext(), "Failed to Connect to Server. Please Try Again.", Toast.LENGTH_LONG).show();
                     }
                 });
             }
@@ -89,7 +89,6 @@ public class LoginActivity extends Activity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        TextView responseTextLogin = findViewById(R.id.responseTextLogin);
                         try {
                             String loginResponseString = response.body().string().trim();
                             Log.d("LOGIN", "Response from the server : " + loginResponseString);
@@ -99,11 +98,11 @@ public class LoginActivity extends Activity {
                                 Intent intent = new Intent(LoginActivity.this, CategoryPage.class);
                                 startActivity(intent);
                             } else if (loginResponseString.equals("failure")) {
-                                responseTextLogin.setText("Login Failed. Invalid ID or Password.");
+                                Toast.makeText(getApplicationContext(), "Login Failed. Invalid ID or Password.", Toast.LENGTH_LONG).show();
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
-                            responseTextLogin.setText("Something went wrong. Please try again later.");
+                            Toast.makeText(getApplicationContext(), "Something went wrong. Please try again later.", Toast.LENGTH_LONG).show();
                         }
                     }
                 });

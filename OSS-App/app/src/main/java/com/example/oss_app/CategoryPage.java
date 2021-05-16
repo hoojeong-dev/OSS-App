@@ -36,6 +36,7 @@ public class CategoryPage extends Activity {
         models.add(new CategoryModel(R.drawable.foreign_image, "Foreign", ""));
         models.add(new CategoryModel(R.drawable.brochure, "Culture", ""));
         models.add(new CategoryModel(R.drawable.sticker, "Press", ""));
+        models.add(new CategoryModel(R.drawable.sticker, "My", ""));
 
         adapter = new CategoryAdapter(models, this);
 
@@ -53,6 +54,7 @@ public class CategoryPage extends Activity {
                 getResources().getColor(R.color.color7),
                 getResources().getColor(R.color.color8),
                 getResources().getColor(R.color.color9),
+                getResources().getColor(R.color.color10),
                 getResources().getColor(R.color.color10)
         };
 

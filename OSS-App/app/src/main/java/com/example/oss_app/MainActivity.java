@@ -6,15 +6,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.core.app.ActivityCompat;
 
 public class MainActivity extends Activity {
 
     public static Context mainActivityContext;
-    static String postUrl = "http://20.41.87.42:8000/etc";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,11 +30,6 @@ public class MainActivity extends Activity {
 
     public void register(View v) {
         Intent intent = new Intent(this, RegisterActivity.class);
-        startActivity(intent);
-    }
-
-    public void sample(View v) {
-        Intent intent = new Intent(this, SampleHttpConnection.class);
         startActivity(intent);
     }
 
