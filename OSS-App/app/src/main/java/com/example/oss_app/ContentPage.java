@@ -40,7 +40,7 @@ public class ContentPage extends Fragment {
 
         content = models.get(position).getContent();
         contentView = (TextView) view.findViewById(R.id.content);
-        contentView.setText("Success!!");
+        contentView.setText(content);
 
         return view;
     }

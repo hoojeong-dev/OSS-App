@@ -37,10 +37,6 @@ public class NewsList extends Activity {
             }
         }
 
-        for(int i=0; i<models.size(); i++){
-            System.out.println(models.get(i).getTitle() + "   " + models.get(i).getTitle());
-        }
-
         adapter = new NewsListAdapter(models, str);
         listView.setAdapter(adapter);
     }

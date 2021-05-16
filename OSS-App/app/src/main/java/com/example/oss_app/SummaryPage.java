@@ -45,8 +45,8 @@ public class SummaryPage extends Fragment {
         keywordsView = (TextView) view.findViewById(R.id.keywords);
         summaryView = (TextView) view.findViewById(R.id.summary);
 
-        keywordsView.setText("success!!");
-        //summaryView.setText(summary);
+        keywordsView.setText(keywords);
+        summaryView.setText(summary);
 
         return view;
     }

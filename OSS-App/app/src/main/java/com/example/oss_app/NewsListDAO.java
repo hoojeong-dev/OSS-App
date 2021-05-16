@@ -19,15 +19,13 @@ public class NewsListDAO {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     NewsListModel newsListModel;
-    //String[] categories = {"Society", "Sports", "Politics", "Economic", "Foreign", "Culture", "Entertain", "Digital", "Editorial", "Press"};
-    String[] categories = {"Society", "Sports"};
-    int count = -1;
+    String[] categories = {"Society", "Sports", "Politics", "Economic", "Foreign", "Culture", "Entertain"};
 
     public void LoadData() {
         firebaseDatabase = FirebaseDatabase.getInstance();
 
         databaseReference = firebaseDatabase.getReference("news");
-        databaseReference.addListenerForSingleValueEvent(postListener);
+        databaseReference.limitToLast(20).addListenerForSingleValueEvent(postListener);
     }
 
     ValueEventListener postListener = new ValueEventListener() {
@@ -35,7 +33,7 @@ public class NewsListDAO {
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             allmodels.clear();
 
-            for(int i=0; i<2; i++){
+            for(int i=0; i<7; i++){
                 for (DataSnapshot snapshot : dataSnapshot.child(categories[i]).getChildren()) {
                     String key = snapshot.getKey();
                     newsListModel = snapshot.getValue(NewsListModel.class);

@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -26,6 +27,10 @@ public class NewsContent extends AppCompatActivity {
     static int modelPosition;
     String title;
     TextView titleView;
+
+    LayoutInflater layoutInflater;
+    LinearLayout settingLayout;
+    LinearLayout.LayoutParams layoutParams;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,12 +53,28 @@ public class NewsContent extends AppCompatActivity {
     }
 
     public void setting(View v){
-        LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        LinearLayout settingLayout = (LinearLayout) layoutInflater.inflate(R.layout.activity_setting_page, null);
+
+        layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        settingLayout = (LinearLayout) layoutInflater.inflate(R.layout.activity_setting_page, null);
         settingLayout.setBackgroundColor(Color.parseColor("#99000000"));
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         addContentView(settingLayout, layoutParams);
     }
+
+    public void inVisible(View w){
+        ((ViewManager)settingLayout.getParent()).removeView(settingLayout);
+    }
+
+    //시선 or 터치 함수
+    public void controlMode(View v){
+
+    }
+
+    //폰트 사이즈 설정 함수 -> 다른 기능으로 대체 가능
+    public void fontSize(View v){
+
+    }
+
     public static class MyPagerAdapter extends FragmentPagerAdapter {
         private static int NUM_ITEMS = 2;
 
