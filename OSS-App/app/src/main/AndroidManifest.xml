@@ -12,6 +12,7 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
         android:theme="@style/AppThem.NoActionBar">
         <activity android:name=".NewsContent"></activity>
         <activity android:name=".RegisterActivity" />
@@ -23,9 +24,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SoundPlay" />
         <activity android:name=".NewsList" />
         <activity android:name=".CategoryPage" />
     </application>
 
 </manifest>
+
+<!-- <activity android:name=".SoundPlay" /> -->

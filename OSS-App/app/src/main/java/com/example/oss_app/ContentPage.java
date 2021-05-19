@@ -14,8 +14,8 @@ public class ContentPage extends Fragment {
 
     List<NewsListModel> models = NewsList.models;
     int page, position;
-    String key, title, content;
-    TextView titleView, contentView;
+    String content;
+    TextView contentView;
 
     public static ContentPage newInstance(int page, int position) {
         ContentPage fragment = new ContentPage();

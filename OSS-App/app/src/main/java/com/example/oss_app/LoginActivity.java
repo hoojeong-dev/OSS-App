@@ -23,7 +23,8 @@ import okhttp3.Response;
 
 public class LoginActivity extends Activity {
 
-    String postUrl = "http://20.41.87.42/userLogin";
+    String postUrl = "http://52.231.75.96:8000/userLogin";
+    static String userid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +36,7 @@ public class LoginActivity extends Activity {
         EditText useridView = findViewById(R.id.loginUserid);
         EditText passwordView = findViewById(R.id.loginPassword);
 
-        String userid = useridView.getText().toString().trim();
+        userid = useridView.getText().toString().trim();
         String password = passwordView.getText().toString().trim();
 
         if (userid.length() == 0 || password.length() == 0) {

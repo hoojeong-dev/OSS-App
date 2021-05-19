@@ -22,8 +22,10 @@ public class CategoryPage extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_page);
 
-        NewsListDAO dao = new NewsListDAO();
-        dao.LoadData();
+        NewsListDAO newsListDAO = new NewsListDAO();
+        MyContentsDAO myContentsDAO = new MyContentsDAO();
+        newsListDAO.LoadData();
+        myContentsDAO.LoadData();
 
         models = new ArrayList<>();
         models.add(new CategoryModel(R.drawable.society_image, "Society", ""));

@@ -1,13 +1,11 @@
 package com.example.oss_app;
 
-import android.app.Activity;
-import android.os.AsyncTask;
-import android.util.Log;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -17,32 +15,44 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class HttpConnection {
+public class MyContentsDAO {
 
-    static String soundUrl;
-    String postUrl = "http://52.231.75.96:8000/ai";
+    static String getResult;
+    String getUrl = "http://52.231.75.96:8000/getdata/" + LoginActivity.userid;
+    static List<NewsListModel> contentsModels = new ArrayList<>();
 
-    public String sendTTS(String msg, String path) {
+    public void LoadData(){
+        String result = getContent();
+        result = result.replaceAll("\\{\\{", "");
+        result = result.replaceAll("\\}\\}", "\n");
+
+        String[] text = result.split("\n");
+
+        for(int i=0; i< text.length; i++){
+            String[] content = text[i].split("//");
+            NewsListModel newsListModel = new NewsListModel("My", "0", content[0], content[1], content[3], content[2], content[4]);
+            contentsModels.add(newsListModel);
+        }
+    }
+
+    public String getContent() {
 
         JSONObject reqForm = new JSONObject();
         try {
             reqForm.put("subject", "request");
-            reqForm.put("msg", msg);
-            reqForm.put("path", path);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), reqForm.toString());
 
-        postRequest(postUrl, body);
+        postRequest(getUrl, body);
 
-        while(soundUrl==null) {
+        while(getResult==null) {
             System.out.println(".....ing");
         }
-        return soundUrl;
+        return getResult;
     }
-
 
     public void postRequest(String postUrl, RequestBody postBody) {
         OkHttpClient client = new OkHttpClient();
@@ -58,8 +68,7 @@ public class HttpConnection {
             @Override
             public void onFailure(Call call, IOException e) {
                 call.cancel();
-                e.printStackTrace();
-                soundUrl = "failure";
+                getResult = "failure";
             }
 
             @Override
@@ -67,10 +76,10 @@ public class HttpConnection {
                 try {
                     final String responseString = response.body().string().trim();
                     if (responseString.equals("failure")) {
-                        soundUrl = "failure";
+                        getResult = "failure";
                     }
                     else {   // 성공했을 때
-                        soundUrl = responseString;
+                        getResult = responseString;
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

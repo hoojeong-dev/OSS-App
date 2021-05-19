@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewManager;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,8 +26,8 @@ public class NewsContent extends AppCompatActivity {
 
     List<NewsListModel> models = NewsList.models;
     FragmentPagerAdapter adapterViewPager;
-    static int modelPosition, pageMode;
-    String category, key, title;
+    static int modelPosition, currentPosition;
+    String category, key, title, content;
     TextView titleView;
 
     LayoutInflater setLayoutInflater, playLayoutInflater;
@@ -46,6 +47,7 @@ public class NewsContent extends AppCompatActivity {
 
         category = models.get(modelPosition).getCategory();
         key = models.get(modelPosition).getKey();
+        content = models.get(modelPosition).getContent();
 
         title = models.get(modelPosition).getTitle();
         titleView = (TextView) findViewById(R.id.title);
@@ -54,6 +56,22 @@ public class NewsContent extends AppCompatActivity {
         ViewPager vpPager = (ViewPager) findViewById(R.id.vpPager);
         adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
         vpPager.setAdapter(adapterViewPager);
+        vpPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                currentPosition = position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         CircleIndicator indicator = (CircleIndicator) findViewById(R.id.indicator);
         indicator.setViewPager(vpPager);
@@ -84,29 +102,37 @@ public class NewsContent extends AppCompatActivity {
 
     public void play(View v){
 
-        String msg = "", path = category + "/" + key;
-
-        if(pageMode == 0)
-            msg = "읽어";
-        else if(pageMode == 1)
-            msg = "요약";
-
-        String soundUrl = httpConnection.send(msg, path);
-
         playLayoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         playLayout = (LinearLayout) playLayoutInflater.inflate(R.layout.activity_sound_play, null);
         playLayout.setBackgroundColor(Color.parseColor("#99000000"));
         playLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 
-        addContentView(playLayout, playLayoutParams);
+        if(category.equals("My")){
 
-        if(soundUrl.equals("failure") || soundUrl.equals("something failure")){
-            Toast.makeText(getApplicationContext(), "Failed to Connect to Server. Please try again later.", Toast.LENGTH_LONG).show();
-            ((ViewManager)playLayout.getParent()).removeView(playLayout);
-            soundPlay.closePlayer();
+            String contentUrl = "http://52.231.75.96:8000/tts/" + content;
+            soundPlay.setPlayUrl(contentUrl);
         }
-        else
-            soundPlay.setPlayUrl(soundUrl);
+
+        else{
+            String msg = "", path = "category/"+ category + "/" + key;
+
+            if(currentPosition == 0)
+                msg = "읽어";
+            if(currentPosition == 1)
+                msg = "요약";
+            System.out.println("=================" + msg);
+
+            String soundUrl = httpConnection.sendTTS(msg, path);
+
+            if(soundUrl.equals("failure")){
+                Toast.makeText(getApplicationContext(), "Failed to Connect to Server. Please try again later.", Toast.LENGTH_LONG).show();
+                soundPlay.closePlayer();
+            }
+            else {
+                soundPlay.setPlayUrl(soundUrl);
+                addContentView(playLayout, playLayoutParams);
+            }
+        }
     }
 
     public void playbtn(View v){
@@ -143,12 +169,11 @@ public class NewsContent extends AppCompatActivity {
         // Returns the fragment to display for that page
         @Override
         public Fragment getItem(int position) {
+
             switch (position) {
                 case 0:
-                    pageMode = 0;
                     return ContentPage.newInstance(0, modelPosition);
                 case 1:
-                    pageMode = 1;
                     return SummaryPage.newInstance(1, modelPosition);
                 default:
                     return null;
@@ -160,6 +185,5 @@ public class NewsContent extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             return "Page " + position;
         }
-
     }
 }

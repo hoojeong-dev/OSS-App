@@ -22,7 +22,7 @@ import okhttp3.Response;
 
 public class RegisterActivity extends Activity {
 
-    String postUrl = "http://20.41.87.42/userLogin";
+    String postUrl = "http://52.231.75.96:8000/userLogin";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

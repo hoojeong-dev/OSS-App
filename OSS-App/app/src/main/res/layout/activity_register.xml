@@ -10,7 +10,6 @@
         android:id="@+id/userid"
         android:layout_width="250dp"
         android:layout_height="60dp"
-        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         android:hint="Enter your ID"
         android:singleLine="true"
         android:textStyle="bold" />
@@ -20,7 +19,6 @@
         android:layout_width="250dp"
         android:layout_height="60dp"
         android:layout_below="@+id/userid"
-        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         android:hint="Enter your Name"
         android:singleLine="true"
         android:textStyle="bold" />
@@ -30,7 +28,6 @@
         android:layout_width="250dp"
         android:layout_height="60dp"
         android:layout_below="@+id/username"
-        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
         android:hint="Enter your Password"
         android:singleLine="true"
         android:textStyle="bold" />

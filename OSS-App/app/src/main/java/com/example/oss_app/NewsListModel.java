@@ -23,6 +23,34 @@ public class NewsListModel {
         this.sentiment = sentiment;
     }
 
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
+
+    public void setSentiment(String sentiment) {
+        this.sentiment = sentiment;
+    }
+
     public String getCategory() {
         return category;
     }
