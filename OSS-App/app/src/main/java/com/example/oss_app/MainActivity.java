@@ -33,6 +33,11 @@ public class MainActivity extends Activity {
         startActivity(intent);
     }
 
+    public void speech(View v) {
+        Intent intent = new Intent(this, SpeechToText.class);
+        startActivity(intent);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

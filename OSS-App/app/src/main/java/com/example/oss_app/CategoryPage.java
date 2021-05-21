@@ -32,12 +32,10 @@ public class CategoryPage extends Activity {
         models.add(new CategoryModel(R.drawable.sports_image, "Sports", ""));
         models.add(new CategoryModel(R.drawable.poster, "Entertain", ""));
         models.add(new CategoryModel(R.drawable.namecard, "Politics", ""));
-        models.add(new CategoryModel(R.drawable.brochure, "Editorial", ""));
         models.add(new CategoryModel(R.drawable.it_image, "IT", ""));
         models.add(new CategoryModel(R.drawable.economic_image, "Economic", ""));
         models.add(new CategoryModel(R.drawable.foreign_image, "Foreign", ""));
         models.add(new CategoryModel(R.drawable.brochure, "Culture", ""));
-        models.add(new CategoryModel(R.drawable.sticker, "Press", ""));
         models.add(new CategoryModel(R.drawable.sticker, "My", ""));
 
         adapter = new CategoryAdapter(models, this);

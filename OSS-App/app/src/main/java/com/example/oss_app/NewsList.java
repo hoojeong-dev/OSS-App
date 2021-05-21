@@ -33,7 +33,7 @@ public class NewsList extends Activity {
     String str, sendResult;
     Button camera;
 
-    String userUrl = "http://52.231.75.96:8000/insert/" + LoginActivity.userid;
+    String userUrl = "http://20.194.21.177:8000/insert/" + LoginActivity.userid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -18,7 +18,7 @@ import okhttp3.Response;
 public class MyContentsDAO {
 
     static String getResult;
-    String getUrl = "http://52.231.75.96:8000/getdata/" + LoginActivity.userid;
+    String getUrl = "http://20.194.21.177:8000/getdata/" + LoginActivity.userid;
     static List<NewsListModel> contentsModels = new ArrayList<>();
 
     public void LoadData(){
@@ -28,10 +28,14 @@ public class MyContentsDAO {
 
         String[] text = result.split("\n");
 
-        for(int i=0; i< text.length; i++){
-            String[] content = text[i].split("//");
-            NewsListModel newsListModel = new NewsListModel("My", "0", content[0], content[1], content[3], content[2], content[4]);
-            contentsModels.add(newsListModel);
+        try{
+            for(int i=0; i< text.length; i++){
+                String[] content = text[i].split("//");
+                NewsListModel newsListModel = new NewsListModel("My", "0", content[0], content[1], content[2], content[3], content[4]);
+                contentsModels.add(newsListModel);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
         }
     }
 

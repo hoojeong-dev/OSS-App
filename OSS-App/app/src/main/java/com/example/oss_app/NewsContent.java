@@ -56,11 +56,10 @@ public class NewsContent extends AppCompatActivity {
         ViewPager vpPager = (ViewPager) findViewById(R.id.vpPager);
         adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
         vpPager.setAdapter(adapterViewPager);
+
         vpPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
 
             @Override
             public void onPageSelected(int position) {
@@ -68,9 +67,7 @@ public class NewsContent extends AppCompatActivity {
             }
 
             @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
+            public void onPageScrollStateChanged(int state) { }
         });
 
         CircleIndicator indicator = (CircleIndicator) findViewById(R.id.indicator);
@@ -108,9 +105,9 @@ public class NewsContent extends AppCompatActivity {
         playLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 
         if(category.equals("My")){
-
-            String contentUrl = "http://52.231.75.96:8000/tts/" + content;
+            String contentUrl = "http://20.194.21.177:8000/tts/" + content;
             soundPlay.setPlayUrl(contentUrl);
+            addContentView(playLayout, playLayoutParams);
         }
 
         else{
@@ -180,7 +177,6 @@ public class NewsContent extends AppCompatActivity {
             }
         }
 
-        // Returns the page title for the top indicator
         @Override
         public CharSequence getPageTitle(int position) {
             return "Page " + position;

@@ -23,7 +23,7 @@ import okhttp3.Response;
 
 public class LoginActivity extends Activity {
 
-    String postUrl = "http://52.231.75.96:8000/userLogin";
+    String postUrl = "http://20.194.21.177:8000/userLogin";
     static String userid;
 
     @Override
