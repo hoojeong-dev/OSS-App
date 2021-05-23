@@ -19,7 +19,7 @@ import okhttp3.Response;
 
 public class HttpConnection {
 
-    static String soundUrl;
+    String soundUrl;
     String postUrl = "http://20.194.21.177:8000/ai";
 
     public String sendTTS(String msg, String path) {
@@ -32,7 +32,7 @@ public class HttpConnection {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+        soundUrl = null;
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), reqForm.toString());
 
         postRequest(postUrl, body);
@@ -40,6 +40,7 @@ public class HttpConnection {
         while(soundUrl==null) {
             System.out.println(".....ing");
         }
+
         return soundUrl;
     }
 
