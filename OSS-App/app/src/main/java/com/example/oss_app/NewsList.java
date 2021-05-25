@@ -1,10 +1,15 @@
 package com.example.oss_app;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +37,10 @@ public class NewsList extends Activity {
     TextView category;
     String str, sendResult;
     Button camera;
+
+    LayoutInflater setLayoutInflater;
+    LinearLayout settingLayout;
+    LinearLayout.LayoutParams setLayoutParams;
 
     String userUrl = "http://20.194.21.177:8000/insert/" + LoginActivity.userid;
 
@@ -64,6 +73,28 @@ public class NewsList extends Activity {
 
         adapter = new NewsListAdapter(models, str);
         listView.setAdapter(adapter);
+    }
+
+    public void setting(View v){
+        setLayoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        settingLayout = (LinearLayout) setLayoutInflater.inflate(R.layout.activity_setting_page, null);
+        settingLayout.setBackgroundColor(Color.parseColor("#99000000"));
+        setLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        addContentView(settingLayout, setLayoutParams);
+    }
+
+    public void inVisibleSetting(View v){
+        ((ViewManager)settingLayout.getParent()).removeView(settingLayout);
+    }
+
+    //시선 or 터치 함수
+    public void controlMode(View v){
+
+    }
+
+    //폰트 사이즈 설정 함수 -> 다른 기능으로 대체 가능
+    public void fontSize(View v){
+
     }
 
     public void camera1(View v){

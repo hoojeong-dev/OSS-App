@@ -29,6 +29,7 @@
         android:layout_height="60dp"
         android:layout_below="@+id/username"
         android:hint="Enter your Password"
+        android:inputType="textPassword"
         android:singleLine="true"
         android:textStyle="bold" />
 

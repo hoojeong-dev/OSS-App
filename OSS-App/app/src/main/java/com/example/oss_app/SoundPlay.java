@@ -19,6 +19,7 @@ public class SoundPlay{
         try {
             closePlayer();
 
+            System.out.println(url+"===============");
             player = new MediaPlayer();
             player.setDataSource(url);
             player.prepare();

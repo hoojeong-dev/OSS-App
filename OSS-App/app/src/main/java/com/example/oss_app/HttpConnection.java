@@ -41,6 +41,7 @@ public class HttpConnection {
             System.out.println(".....ing");
         }
 
+        System.out.println(soundUrl+"===============");
         return soundUrl;
     }
 

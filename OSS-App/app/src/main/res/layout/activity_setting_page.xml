@@ -31,11 +31,11 @@
             android:paddingLeft="20dp"
             android:paddingBottom="10dp">
             <Button
-                android:onClick="controlMode"
+                android:onClick="touch"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3.3"
-                android:text="TOUCH\nTRACKING"
+                android:text="TOUCH"
                 android:textSize="20dp"
                 android:background="#FFFFFF"
                 android:gravity="center"/>
@@ -56,11 +56,11 @@
             android:paddingTop="10dp"
             android:paddingBottom="10dp">
             <Button
-                android:onClick="fontSize"
+                android:onClick="tracking"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3.3"
-                android:text="SIZE"
+                android:text="TRACKING"
                 android:textSize="20dp"
                 android:background="#FFFFFF"
                 android:gravity="center"/>

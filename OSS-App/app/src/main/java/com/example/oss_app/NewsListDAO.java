@@ -19,7 +19,7 @@ public class NewsListDAO {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     NewsListModel newsListModel;
-    String[] categories = {"Society", "Sports", "Politics", "Economic", "Foreign", "Culture", "Entertain"};
+    String[] categories = {"Society", "Sports", "Politics", "Economic", "Foreign", "Culture", "Entertain", "Digital"};
 
     public void LoadData() {
         firebaseDatabase = FirebaseDatabase.getInstance();

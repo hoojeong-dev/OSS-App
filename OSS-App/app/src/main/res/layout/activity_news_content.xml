@@ -8,7 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="1.5"
         android:orientation="horizontal"
         android:gravity="center">
 
@@ -22,11 +22,11 @@
             android:background="#00ff0000"
             android:gravity="left|center|bottom"
             android:text="title"
-            android:textSize="30dp" />
+            android:textSize="25dp" />
         <Button
             android:layout_width="50dp"
             android:layout_height="match_parent"
-            android:gravity="center|bottom"
+            android:gravity="left|bottom"
             android:text="ㅁ"
             android:textSize="35dp"
             android:visibility="invisible"
@@ -37,7 +37,7 @@
         <Button
             android:layout_width="50dp"
             android:layout_height="match_parent"
-            android:gravity="center|bottom"
+            android:gravity="left|bottom"
             android:text=">"
             android:textSize="35dp"
             android:id="@+id/play"
@@ -47,7 +47,7 @@
         <Button
             android:layout_width="50dp"
             android:layout_height="match_parent"
-            android:gravity="center|bottom"
+            android:gravity="left|bottom"
             android:text="⋮"
             android:textSize="35dp"
             android:onClick="setting"

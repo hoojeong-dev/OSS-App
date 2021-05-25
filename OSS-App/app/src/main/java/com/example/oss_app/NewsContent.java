@@ -27,8 +27,11 @@ public class NewsContent extends AppCompatActivity {
     List<NewsListModel> models = NewsList.models;
     FragmentPagerAdapter adapterViewPager;
     static int modelPosition, currentPosition;
-    String category, key, title, content;
+    String category, key, title, content = null;
     TextView titleView;
+    static String[] newsContents;
+    static int currentCount;
+    static int count;
 
     LayoutInflater setLayoutInflater, playLayoutInflater;
     LinearLayout settingLayout, playLayout;
@@ -53,13 +56,16 @@ public class NewsContent extends AppCompatActivity {
         titleView = (TextView) findViewById(R.id.title);
         titleView.setText(title);
 
+        setNewContents();
+
         ViewPager vpPager = (ViewPager) findViewById(R.id.vpPager);
         adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
         vpPager.setAdapter(adapterViewPager);
 
         vpPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
 
             @Override
             public void onPageSelected(int position) {
@@ -67,14 +73,15 @@ public class NewsContent extends AppCompatActivity {
             }
 
             @Override
-            public void onPageScrollStateChanged(int state) { }
+            public void onPageScrollStateChanged(int state) {
+            }
         });
 
         CircleIndicator indicator = (CircleIndicator) findViewById(R.id.indicator);
         indicator.setViewPager(vpPager);
     }
 
-    public void setting(View v){
+    public void setting(View v) {
 
         setLayoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         settingLayout = (LinearLayout) setLayoutInflater.inflate(R.layout.activity_setting_page, null);
@@ -83,75 +90,108 @@ public class NewsContent extends AppCompatActivity {
         addContentView(settingLayout, setLayoutParams);
     }
 
-    public void inVisibleSetting(View v){
-        ((ViewManager)settingLayout.getParent()).removeView(settingLayout);
+    public void inVisibleSetting(View v) {
+        ((ViewManager) settingLayout.getParent()).removeView(settingLayout);
     }
 
-    //시선 or 터치 함수
-    public void controlMode(View v){
-
+    //터치 함수
+    public void touch(View v) {
+        //MainActivity.startTracking();
     }
 
-    //폰트 사이즈 설정 함수 -> 다른 기능으로 대체 가능
-    public void fontSize(View v){
-
+    //아이트래킹 함수
+    public void tracking(View v) {
+        //MainActivity.stopTracking();
     }
 
-    public void play(View v){
+    public void play(View v) {
 
         playLayoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         playLayout = (LinearLayout) playLayoutInflater.inflate(R.layout.activity_sound_play, null);
         playLayout.setBackgroundColor(Color.parseColor("#99000000"));
         playLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 
-        if(category.equals("My")){
+        if (category.equals("My")) {
             String contentUrl = "http://20.194.21.177:8000/tts/" + content;
             soundPlay.setPlayUrl(contentUrl);
             addContentView(playLayout, playLayoutParams);
-        }
+        } else {
+            String msg = "", path = "category/" + category + "/" + key;
 
-        else{
-            String msg = "", path = "category/"+ category + "/" + key;
-
-            if(currentPosition == 0)
+            if (currentPosition == 0)
                 msg = "읽어";
-            if(currentPosition == 1)
+            if (currentPosition == 1)
                 msg = "요약";
             System.out.println("=================" + msg);
 
             String soundUrl = httpConnection.sendTTS(msg, path);
 
-            if(soundUrl.equals("failure")){
+            if (soundUrl.equals("failure")) {
                 Toast.makeText(getApplicationContext(), "Failed to Connect to Server. Please try again later.", Toast.LENGTH_LONG).show();
                 soundPlay.closePlayer();
-            }
-            else {
+            } else {
                 soundPlay.setPlayUrl(soundUrl);
                 addContentView(playLayout, playLayoutParams);
             }
         }
     }
 
-    public void playbtn(View v){
+    public void playbtn(View v) {
         soundPlay.playAudio();
     }
-    public void pausebtn(View v){
+
+    public void pausebtn(View v) {
         soundPlay.pauseAudio();
     }
-    public void restartbtn(View v){
+
+    public void restartbtn(View v) {
         soundPlay.resumeAudio();
     }
-    public void stopbtn(View v){
+
+    public void stopbtn(View v) {
         soundPlay.stopAudio();
     }
 
-    public void inVisiblePlay(View v){
-        ((ViewManager)playLayout.getParent()).removeView(playLayout);
+    public void inVisiblePlay(View v) {
+        ((ViewManager) playLayout.getParent()).removeView(playLayout);
         soundPlay.closePlayer();
     }
 
+    public void setNewContents() {
+
+        String[] sample = new String[1000];
+        int maxLength = 300;
+        int textLen = content.length();
+        int loopCnt = textLen / maxLength + 1;
+        String result = "";
+        count = 0;
+        currentCount = 0;
+
+        for (int i = 0; i < loopCnt; i++) {
+            int lastIndex = (i + 1) * maxLength;
+
+            if (textLen > lastIndex) {
+                result = content.substring(i * maxLength, lastIndex);
+                System.out.println(result);
+                sample[count] = result;
+                count++;
+            } else {
+                result = content.substring(i * maxLength);
+                sample[count] = result;
+                count++;
+            }
+        }
+
+        System.out.println("count : " + count);
+        newsContents = new String[count];
+
+        for(int i=0; i<count; i++){
+            newsContents[i] = sample[i];
+        }
+    }
+
     public static class MyPagerAdapter extends FragmentPagerAdapter {
-        private static int NUM_ITEMS = 2;
+
 
         public MyPagerAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
@@ -160,26 +200,28 @@ public class NewsContent extends AppCompatActivity {
         // Returns total number of pages
         @Override
         public int getCount() {
-            return NUM_ITEMS;
+            return count + 1;
         }
 
         // Returns the fragment to display for that page
         @Override
         public Fragment getItem(int position) {
 
-            switch (position) {
-                case 0:
-                    return ContentPage.newInstance(0, modelPosition);
-                case 1:
-                    return SummaryPage.newInstance(1, modelPosition);
-                default:
-                    return null;
+            if (currentCount < count) {
+                currentCount++;
+                return ContentPage.newInstance(0, modelPosition, currentCount-1);
             }
+            else if (currentCount == count) {
+                return SummaryPage.newInstance(1, modelPosition);
+            }
+
+            return null;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             return "Page " + position;
         }
+
     }
 }
