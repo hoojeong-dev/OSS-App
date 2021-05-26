@@ -14,7 +14,7 @@ public class ContentPage extends Fragment {
 
     List<NewsListModel> models = NewsList.models;
     int page, position, count;
-    String content;
+    String title, content;
     TextView contentView;
 
     public static ContentPage newInstance(int page, int position, int count) {
@@ -38,12 +38,17 @@ public class ContentPage extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View view = inflater.inflate(R.layout.activity_content_page, container, false);
+        View view = inflater.inflate(R.layout.activity_content_scroll, container, false);
 
-        //content = models.get(position).getContent();
+        title = models.get(position).getTitle();
+        content = models.get(position).getContent();
         contentView = (TextView) view.findViewById(R.id.content);
-        if(count < NewsContent.newsContents.length){
-            contentView.setText(NewsContent.newsContents[count]);
+
+        if(count == 1){
+            contentView.setText(title);
+        }
+        else{
+            contentView.setText(content);
         }
 
         return view;

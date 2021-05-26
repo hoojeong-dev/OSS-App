@@ -77,7 +77,7 @@ public class NewsList extends Activity {
 
     public void setting(View v){
         setLayoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        settingLayout = (LinearLayout) setLayoutInflater.inflate(R.layout.activity_setting_page, null);
+        settingLayout = (LinearLayout) setLayoutInflater.inflate(R.layout.activity_setting_view, null);
         settingLayout.setBackgroundColor(Color.parseColor("#99000000"));
         setLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         addContentView(settingLayout, setLayoutParams);

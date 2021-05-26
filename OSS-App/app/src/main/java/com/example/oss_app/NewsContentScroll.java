@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,18 +19,16 @@ import androidx.viewpager.widget.ViewPager;
 
 import java.util.List;
 
-import me.relex.circleindicator.CircleIndicator;
-
-public class NewsContent extends AppCompatActivity {
+public class NewsContentScroll extends AppCompatActivity {
 
     List<NewsListModel> models = NewsList.models;
     FragmentPagerAdapter adapterViewPager;
     static int modelPosition, currentPosition;
     String category, key, title, content = null;
-    TextView titleView;
     static String[] newsContents;
-    static int currentCount;
-    static int count;
+    static int currentCount, count, pageValue;
+    static int nextValue, preValue, pageType = 2;
+    ViewPager vpPager;
 
     LayoutInflater setLayoutInflater, playLayoutInflater;
     LinearLayout settingLayout, playLayout;
@@ -43,22 +40,18 @@ public class NewsContent extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_news_content);
+        setContentView(R.layout.activity_content_view);
 
         Intent intent = getIntent();
         modelPosition = intent.getExtras().getInt("position");
+
+        count = 0;
 
         category = models.get(modelPosition).getCategory();
         key = models.get(modelPosition).getKey();
         content = models.get(modelPosition).getContent();
 
-        title = models.get(modelPosition).getTitle();
-        titleView = (TextView) findViewById(R.id.title);
-        titleView.setText(title);
-
-        setNewContents();
-
-        ViewPager vpPager = (ViewPager) findViewById(R.id.vpPager);
+        vpPager = (ViewPager) findViewById(R.id.vpPager);
         adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
         vpPager.setAdapter(adapterViewPager);
 
@@ -76,15 +69,62 @@ public class NewsContent extends AppCompatActivity {
             public void onPageScrollStateChanged(int state) {
             }
         });
-
+/*
         CircleIndicator indicator = (CircleIndicator) findViewById(R.id.indicator);
         indicator.setViewPager(vpPager);
+ */
+    }
+
+    public static class MyPagerAdapter extends FragmentPagerAdapter {
+
+
+        public MyPagerAdapter(FragmentManager fragmentManager) {
+            super(fragmentManager);
+        }
+
+        // Returns total number of pages
+        @Override
+        public int getCount() {
+            return 3;
+        }
+
+        // Returns the fragment to display for that page
+        @Override
+        public Fragment getItem(int position) {
+            switch (position) {
+                case 0:
+                case 1:
+                    count++;
+                    return ContentPage.newInstance(0, modelPosition, count);
+                case 2:
+                    return SummaryPage.newInstance(1, modelPosition);
+                default:
+                    return null;
+            }
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return "Page " + position;
+        }
+
+    }
+
+    public void pageView(View v){
+        Intent intent = new Intent(v.getContext(), NewsContentPage.class);
+        intent.putExtra("position", modelPosition);
+        v.getContext().startActivity(intent);
+
+        Button pageView = (Button) findViewById(R.id.pageView);
+        pageView.setText("Page");
+
+        MainActivity.pageType = 2;
     }
 
     public void setting(View v) {
 
         setLayoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        settingLayout = (LinearLayout) setLayoutInflater.inflate(R.layout.activity_setting_page, null);
+        settingLayout = (LinearLayout) setLayoutInflater.inflate(R.layout.activity_setting_view, null);
         settingLayout.setBackgroundColor(Color.parseColor("#99000000"));
         setLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         addContentView(settingLayout, setLayoutParams);
@@ -118,9 +158,9 @@ public class NewsContent extends AppCompatActivity {
         } else {
             String msg = "", path = "category/" + category + "/" + key;
 
-            if (currentPosition == 0)
+            if (currentPosition == 0 || currentPosition == 1)
                 msg = "읽어";
-            if (currentPosition == 1)
+            if (currentPosition == 2)
                 msg = "요약";
             System.out.println("=================" + msg);
 
@@ -155,73 +195,5 @@ public class NewsContent extends AppCompatActivity {
     public void inVisiblePlay(View v) {
         ((ViewManager) playLayout.getParent()).removeView(playLayout);
         soundPlay.closePlayer();
-    }
-
-    public void setNewContents() {
-
-        String[] sample = new String[1000];
-        int maxLength = 300;
-        int textLen = content.length();
-        int loopCnt = textLen / maxLength + 1;
-        String result = "";
-        count = 0;
-        currentCount = 0;
-
-        for (int i = 0; i < loopCnt; i++) {
-            int lastIndex = (i + 1) * maxLength;
-
-            if (textLen > lastIndex) {
-                result = content.substring(i * maxLength, lastIndex);
-                System.out.println(result);
-                sample[count] = result;
-                count++;
-            } else {
-                result = content.substring(i * maxLength);
-                sample[count] = result;
-                count++;
-            }
-        }
-
-        System.out.println("count : " + count);
-        newsContents = new String[count];
-
-        for(int i=0; i<count; i++){
-            newsContents[i] = sample[i];
-        }
-    }
-
-    public static class MyPagerAdapter extends FragmentPagerAdapter {
-
-
-        public MyPagerAdapter(FragmentManager fragmentManager) {
-            super(fragmentManager);
-        }
-
-        // Returns total number of pages
-        @Override
-        public int getCount() {
-            return count + 1;
-        }
-
-        // Returns the fragment to display for that page
-        @Override
-        public Fragment getItem(int position) {
-
-            if (currentCount < count) {
-                currentCount++;
-                return ContentPage.newInstance(0, modelPosition, currentCount-1);
-            }
-            else if (currentCount == count) {
-                return SummaryPage.newInstance(1, modelPosition);
-            }
-
-            return null;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return "Page " + position;
-        }
-
     }
 }

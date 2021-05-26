@@ -37,7 +37,7 @@ public class SummaryPage extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View view = inflater.inflate(R.layout.activity_summary_page, container, false);
+        View view = inflater.inflate(R.layout.activity_summary_view, container, false);
 
         keywords = models.get(position).getKeywords();
         summary = models.get(position).getSummary();

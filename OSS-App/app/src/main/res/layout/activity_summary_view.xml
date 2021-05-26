@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.3"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="8.5"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/previous1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#00FFFFFF"/>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="5"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:gravity="top|center"
+                    android:text="KEYWORDS"
+                    android:textSize="25dp" />
+                <TextView
+                    android:id="@+id/keywords"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="삼성전자, 갤럭시, 주식"
+                    android:textSize="20dp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:gravity="center"
+                    android:text="Summary"
+                    android:textSize="25dp" />
+                <ScrollView
+                    android:id="@+id/scrollView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/summary"
+                        android:layout_width="match_parent"
+                        android:layout_height="327dp"
+                        android:gravity="center"
+                        android:lineSpacingExtra="13dp"
+                        android:text="당신은 이미 주어진 에세이 주제를 가지고 있거나, 스스로 정한 주제에 대해 자유롭게 작성할 수도 있습니다. 만약 특정한 주제가 주어졌다면, 당신이 작성하고 싶은 글의 종류에 대해 생각해 봐야 합니다. 이 주제에 대한 일반적 개괄인가 아니면 특정 형태의 분석인가? 당신은 이미 주어진 에세이 주제를 가지고 있거나, 스스로 정한 주제에 대해 자유롭게 작성할 수도 있습니다."
+                        android:textSize="20dp" />
+                </ScrollView>
+            </LinearLayout>
+            <Button
+                android:id="@+id/next1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#00FFFFFF"/>
+        </LinearLayout>
+        <Button
+            android:id="@+id/next2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#00FFFFFF"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"/>
+    </LinearLayout>
+
+    <com.example.oss_app.PointView
+    android:id="@+id/view_point"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
+    <com.example.oss_app.CalibrationViewer
+    android:id="@+id/view_calibration"
+    android:visibility="invisible"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

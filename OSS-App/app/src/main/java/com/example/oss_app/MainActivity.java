@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     private CalibrationModeType calibrationType = CalibrationModeType.FIVE_POINT;
     private CalibrationViewer viewCalibration;
     static PointView viewPoint;
+    static int pageType = 2;
 
     Button btncali;
 
@@ -94,6 +95,14 @@ public class MainActivity extends AppCompatActivity {
         onStop();
         Intent intent = new Intent(this, SpeechToText.class);
         startActivity(intent);
+    }
+
+
+
+    private void startTracking() {
+        if (isGazeNonNull()) {
+            gazeTracker.startTracking();
+        }
     }
 
     private void stopTracking() {
@@ -256,11 +265,6 @@ public class MainActivity extends AppCompatActivity {
         startTracking();
         //hideProgress();
     }
-    private void startTracking() {
-        if (isGazeNonNull()) {
-            gazeTracker.startTracking();
-        }
-    }
 
     private void initFail(InitializationErrorType error) {
         String err = "";
@@ -318,8 +322,8 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 viewPoint.setType(type == ScreenState.INSIDE_OF_SCREEN ? PointView.TYPE_DEFAULT : PointView.TYPE_OUT_OF_SCREEN);
                 viewPoint.setPosition(x, y);
-                System.out.println("x좌표는"+x);
-                System.out.print("    y좌표는"+y);
+                //System.out.println("x좌표는"+x);
+                //System.out.print("    y좌표는"+y);
             }
         });
     }

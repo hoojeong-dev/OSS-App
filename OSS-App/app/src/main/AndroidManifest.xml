@@ -16,7 +16,7 @@
         android:theme="@style/AppThem.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity android:name=".SpeechToText"></activity>
-        <activity android:name=".NewsContent" />
+        <activity android:name=".NewsContentScroll" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity">
@@ -28,6 +28,7 @@
         </activity>
         <activity android:name=".NewsList" />
         <activity android:name=".CategoryPage" />
+        <activity android:name=".NewsContentPage" />
     </application>
 
 </manifest>

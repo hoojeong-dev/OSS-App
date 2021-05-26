@@ -67,9 +67,16 @@ public class NewsListAdapter extends BaseAdapter {
         LinearLayout clickLayout = (LinearLayout) convertView.findViewById(R.id.clickLayout);
         clickLayout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), NewsContent.class);
-                intent.putExtra("position", position);
-                v.getContext().startActivity(intent);
+                if(MainActivity.pageType == 1){
+                    Intent intent = new Intent(v.getContext(), NewsContentScroll.class);
+                    intent.putExtra("position", position);
+                    v.getContext().startActivity(intent);
+                }
+                else if(MainActivity.pageType == 2){
+                    Intent intent = new Intent(v.getContext(), NewsContentPage.class);
+                    intent.putExtra("position", position);
+                    v.getContext().startActivity(intent);
+                }
             }
         });
 
