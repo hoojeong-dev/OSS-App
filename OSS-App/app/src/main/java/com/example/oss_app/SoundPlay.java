@@ -5,7 +5,7 @@ import android.media.MediaPlayer;
 import java.io.IOException;
 
 // xml 수정 + view로 모든 페이지에 ㄱㄱ
-public class SoundPlay{
+public class SoundPlay {
 
     public static String url;
     MediaPlayer player;

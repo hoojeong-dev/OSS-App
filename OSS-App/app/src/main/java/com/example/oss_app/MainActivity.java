@@ -6,21 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import android.Manifest;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.HandlerThread;
-import android.provider.Settings;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-
-import com.example.oss_app.calibration.CalibrationDataStorage;
-
 import camp.visual.gazetracker.GazeTracker;
 import camp.visual.gazetracker.callback.CalibrationCallback;
 import camp.visual.gazetracker.callback.GazeCallback;
@@ -35,6 +20,26 @@ import camp.visual.gazetracker.gaze.GazeInfo;
 import camp.visual.gazetracker.state.ScreenState;
 import camp.visual.gazetracker.state.TrackingState;
 import camp.visual.gazetracker.util.ViewLayoutChecker;
+
+import android.Manifest;
+import android.app.Instrumentation;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.SystemClock;
+import android.provider.Settings;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
+
+import com.example.oss_app.calibration.CalibrationDataStorage;
+
+import java.util.Arrays;
 
 import static android.content.ContentValues.TAG;
 
@@ -53,6 +58,20 @@ public class MainActivity extends AppCompatActivity {
     private CalibrationViewer viewCalibration;
     static PointView viewPoint;
     static int pageType = 2;
+    static int a1,a2,a3,a4,a5,a6,a7;
+    static int count =0, count2=0, count3=0, safebar = 0, pagenum, Lsafebar=30;
+    float display_x;
+    float display_y;
+
+    float [] tempx = new float[10];
+    float [] tempy = new float[10];
+    float [] ltempx = new float[20];
+    float [] ltempy = new float[20];
+
+    MyQueue xq = new MyQueue();
+    MyQueue yq = new MyQueue();
+    MyQueue lxq = new MyQueue();
+    MyQueue lyq = new MyQueue();
 
     Button btncali;
 
@@ -64,22 +83,32 @@ public class MainActivity extends AppCompatActivity {
 
         ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.INTERNET}, 0);
         DisplayMetrics dm = getApplicationContext().getResources().getDisplayMetrics(); // 디스플레이 메트릭스를 dm이라는 변수에 저장 dm = 디스플레이 메트릭스 형식
+        display_x = dm.widthPixels; // x축 픽셀 수 = x축의 길이
+        display_y = dm.heightPixels;
 
         btncali = (Button) findViewById(R.id.btncali);
         viewPoint = findViewById(R.id.view_point);
         viewCalibration = findViewById(R.id.view_calibration);
 
+        pagenum = 0;
+
+        initGaze();
         checkPermission();
         initHandler();
+        xq.newQueue(10);
+        yq.newQueue(10);
+        lxq.newQueue(20);
+        lyq.newQueue(20);
     }
 
     public void calibration(View v){
+
         startCalibration();
     }
 
     public void login(View v) {
-        onStop();
-        stopTracking();
+        //onStop();
+        //stopTracking();
         Intent intent = new Intent(this, LoginActivity.class);
         startActivityForResult(intent, 2);
     }
@@ -96,8 +125,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SpeechToText.class);
         startActivity(intent);
     }
-
-
 
     private void startTracking() {
         if (isGazeNonNull()) {
@@ -175,6 +202,7 @@ public class MainActivity extends AppCompatActivity {
 
         initGaze();
     }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -188,6 +216,7 @@ public class MainActivity extends AppCompatActivity {
         // 화면 전환후에도 체크하기 위해
         setOffsetOfView();
     }
+
     private void setOffsetOfView() {
         viewLayoutChecker.setOverlayView(viewPoint, new ViewLayoutChecker.ViewLayoutListener() {
             @Override
@@ -218,7 +247,6 @@ public class MainActivity extends AppCompatActivity {
         //releaseGaze();
     }
 
-
     void initHandler() {
         backgroundThread.start();
         backgroundHandler = new Handler(backgroundThread.getLooper());
@@ -227,6 +255,7 @@ public class MainActivity extends AppCompatActivity {
     private void releaseHandler() {
         backgroundThread.quitSafely();
     }
+
     private InitializationCallback initializationCallback = new InitializationCallback() {
         @Override
         public void onInitialized(GazeTracker gazeTracker, InitializationErrorType error) {
@@ -295,6 +324,54 @@ public class MainActivity extends AppCompatActivity {
                                 float[] filteredPoint = oneEuroFilterManager.getFilteredValues();
                                 System.out.println(filteredPoint[0]);
                                 showGazePoint(filteredPoint[0], filteredPoint[1], gazeInfo.screenState);
+                                xq.enqueue(filteredPoint[0]);
+                                yq.enqueue(filteredPoint[1]);
+                                lxq.enqueue(filteredPoint[0]);
+                                lyq.enqueue(filteredPoint[1]);
+                                count=0;
+                                count2=0;
+                                count3=0;
+
+                                if(pagenum==1) {
+                                    System.out.println("page1======================================");
+                                    for (int i = 0; i < 10; i++) {
+                                        if (xq.QArray[0] + 70 > xq.QArray[i] && xq.QArray[0] - 70 < xq.QArray[i] && yq.QArray[0] + 100 > yq.QArray[i] && yq.QArray[0] - 100 < yq.QArray[i]) {
+                                            count++;
+                                        }
+                                    }
+                                    if (count > 7 && safebar < 0) {
+                                        Instrumentation inst = new Instrumentation();
+                                        long downTime = SystemClock.uptimeMillis();
+                                        long eventTime = SystemClock.uptimeMillis();
+                                        MotionEvent event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_DOWN, xq.QArray[0], yq.QArray[0], 0);
+                                        MotionEvent event2 = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_UP, xq.QArray[0], yq.QArray[0], 0);
+                                        inst.sendPointerSync(event);
+                                        inst.sendPointerSync(event2);
+                                        System.out.println("%%%%%%%%%%%%%%%%%%%");
+                                        safebar = 20;
+                                    }
+                                }
+                                else if(pagenum == 2){
+                                    for (int i = 0; i < 10; i++) {
+                                        if (xq.QArray[0] + 70 > xq.QArray[i] && xq.QArray[0] - 70 < xq.QArray[i] && yq.QArray[0] + 100 > yq.QArray[i] && yq.QArray[0] - 100 < yq.QArray[i]) {
+                                            count++;
+                                        }
+                                    }
+                                    if (count > 7 && safebar < 0) {
+                                        Instrumentation inst = new Instrumentation();
+                                        long downTime = SystemClock.uptimeMillis();
+                                        long eventTime = SystemClock.uptimeMillis();
+                                        MotionEvent event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_DOWN, xq.QArray[0], yq.QArray[0], 0);
+                                        MotionEvent event2 = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_UP, xq.QArray[0], yq.QArray[0], 0);
+                                        inst.sendPointerSync(event);
+                                        inst.sendPointerSync(event2);
+                                        System.out.println("%%%%%%%%%%%%%%%%%%%");
+                                        safebar = 20;
+
+                                    }
+                                }
+                                safebar--;
+                                System.out.println(safebar);
                             }
                         } else {
                             showGazePoint(gazeInfo.x, gazeInfo.y, gazeInfo.screenState);
@@ -307,6 +384,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
+
     private void showTrackingWarning() {
         runOnUiThread(new Runnable() {
             @Override
@@ -327,6 +405,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     private void setCalibrationPoint(final float x, final float y) {
         runOnUiThread(new Runnable() {
             @Override
@@ -339,6 +418,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     private void setCalibrationProgress(final float progress) {
         runOnUiThread(new Runnable() {
             @Override
@@ -347,6 +427,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     private CalibrationCallback calibrationCallback = new CalibrationCallback() {
         @Override
         public void onCalibrationProgress(float progress) {
@@ -375,6 +456,7 @@ public class MainActivity extends AppCompatActivity {
             showToast("calibrationFinished", true);
         }
     };
+
     private void hideCalibrationView() {
         runOnUiThread(new Runnable() {
             @Override
@@ -419,12 +501,14 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "이 디바이스는 gazeinfo 설정이 필요 없습니다.");
         } else {
             // 예시입니다. SM-T720은 갤럭시탭 s5e 모델명
-            gazeDevice.addDeviceInfo("SM-T720", -72f, -4f);
+            System.out.println("111111111111111111111111111111111111111111111");
+            gazeDevice.addDeviceInfo("SM-T720", -10f, -3f);
         }
 
         String licenseKey = "dev_l0ocjnf2dyy2xbweoq182w01nad2l7k8nli5083i";
         GazeTracker.initGazeTracker(getApplicationContext(), gazeDevice, licenseKey, initializationCallback);
     }
+
     private void showToast(final String msg, final boolean isShort) {
         runOnUiThread(new Runnable() {
             @Override
@@ -432,6 +516,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     private boolean startCollectSamples() {
         boolean isSuccess = false;
         if (isGazeNonNull()) {
@@ -466,6 +551,7 @@ public class MainActivity extends AppCompatActivity {
         }
         //setViewAtGazeTrackerState();
     }
+
     private boolean startCalibration() {
         boolean isSuccess = false;
         if (isGazeNonNull()) {

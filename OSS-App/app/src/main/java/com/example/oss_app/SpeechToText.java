@@ -1,8 +1,5 @@
 package com.example.oss_app;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
 import android.Manifest;
 import android.content.Intent;
 import android.os.Build;
@@ -14,6 +11,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import java.util.ArrayList;
 
@@ -29,7 +29,7 @@ public class SpeechToText extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_speech_to_text);
-
+        MainActivity.viewPoint = findViewById(R.id.view_point);
         // 안드로이드 6.0버전 이상인지 체크해서 퍼미션 체크
         if(Build.VERSION.SDK_INT >= 23){
             ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.INTERNET,

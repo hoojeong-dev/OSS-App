@@ -30,6 +30,7 @@ public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        MainActivity.viewPoint = findViewById(R.id.view_point);
     }
 
     public void submit(View v) {

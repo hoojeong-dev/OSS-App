@@ -6,103 +6,92 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-    <!-- 페이지 터치 넘김 -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center">
 
-        <LinearLayout
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:gravity="right">
+            android:layout_height="match_parent">
+            <!-- 페이지 터치 넘김 -->
             <Button
+                android:id="@+id/previous1"
                 android:onClick="previous"
-                android:layout_width="265dp"
-                android:layout_height="match_parent"
-                android:background="#00FFFFFF">
-            </Button>
-            <Button
-                android:id="@+id/camera"
-                android:onClick="camera"
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:gravity="left|bottom"
-                android:text="ㅁ"
-                android:textSize="35dp"
-                android:visibility="invisible"
-                android:textColor="#FF000000"
-                android:background="#00FFFFFF"/>
-            <Button
-                android:id="@+id/play"
-                android:onClick="play"
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:gravity="left|bottom"
-                android:text=">"
-                android:textSize="35dp"
-                android:textColor="#FF000000"
-                android:background="#00FFFFFF"/>
+                android:background="#888FFFFF"
+                android:layout_width="650dp"
+                android:layout_height="90dp"/>
+
             <Button
                 android:id="@+id/setting"
                 android:onClick="setting"
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:gravity="left|bottom"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="top|right"
+                android:layout_width="70dp"
+                android:layout_height="90dp"
                 android:text="⋮"
                 android:textSize="35dp"
-                android:textColor="#FF000000"
+                android:gravity="left|bottom"
                 android:background="#00FFFFFF"/>
-        </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="7.8"
-            android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.3"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="8.5"
-                android:orientation="horizontal">
-                <Button
-                    android:onClick="previous"
-                    android:layout_width="55dp"
-                    android:layout_height="match_parent"
-                    android:background="#00FFFFFF"/>
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="5"
-                    android:layout_height="match_parent">
-                    <TextView
-                        android:id="@+id/content"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:lineSpacingExtra="13dp"
-                        android:textSize="20dp">
-                    </TextView>
-                </LinearLayout>
-                <Button
-                    android:onClick="next"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="#00FFFFFF"/>
-            </LinearLayout>
             <Button
+                android:id="@+id/previous2"
+                android:onClick="previous"
+                android:layout_alignParentLeft="true"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:background="#60FFFFFF"/>
+            <Button
+                android:id="@+id/next2"
                 android:onClick="next"
+                android:layout_below="@id/setting"
+                android:layout_alignParentRight="true"
+                android:layout_width="100dp"
+                android:layout_height="1100dp"
+                android:background="#60FFFFFF"/>
+
+            <Button
+                android:id="@+id/a"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="10dp"
+                android:layout_below="@id/previous1"
                 android:background="#00FFFFFF"/>
-        </LinearLayout>
-    </LinearLayout>
+
+            <TextView
+                android:id="@+id/content"
+                android:breakStrategy="simple"
+                android:layout_below="@id/a"
+                android:layout_width="200dp"
+                android:layout_centerInParent="true"
+                android:layout_height="560dp"
+                android:lineSpacingExtra="13dp"
+                android:textSize="20dp">
+            </TextView>
+
+            <Button
+                android:id="@+id/next1"
+                android:onClick="next"
+                android:layout_alignParentBottom="true"
+                android:layout_width="1150dp"
+                android:layout_height="100dp"
+                android:background="#888FFFFF"/>
+
+            <TextView
+                android:id="@+id/t"
+                android:layout_width="20dp"
+                android:layout_height="400dp"
+                android:background="#00ffffff"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"/>
+            <TextView
+                android:id="@+id/b"
+                android:layout_width="400dp"
+                android:layout_height="20dp"
+                android:background="#00ffffff"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"/>
+        </RelativeLayout>
+    </FrameLayout>
+
 
     <com.example.oss_app.PointView
         android:id="@+id/view_point"

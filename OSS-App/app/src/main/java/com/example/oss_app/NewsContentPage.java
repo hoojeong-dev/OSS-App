@@ -7,16 +7,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewManager;
-import android.widget.Button;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
@@ -36,10 +35,17 @@ public class NewsContentPage extends AppCompatActivity {
     SoundPlay soundPlay = new SoundPlay();
     HttpConnection httpConnection = new HttpConnection();
 
+    private Animation fab_open, fab_close;
+    private Boolean isFabOpen = false;
+    private FloatingActionButton fab, fab1, fab2, fab3;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        MainActivity.pagenum=2;
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_content_page);
+        MainActivity.viewPoint = findViewById(R.id.view_point);
 
         Intent intent = getIntent();
         modelPosition = intent.getExtras().getInt("position");
@@ -59,12 +65,24 @@ public class NewsContentPage extends AppCompatActivity {
         contentView.setText(title);
         contentcount = 0;
         System.out.println("contentcount : " + contentcount);
+
+        fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
+        fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
+
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab1 = (FloatingActionButton) findViewById(R.id.fab1);
+        fab2 = (FloatingActionButton) findViewById(R.id.fab2);
+        fab3 = (FloatingActionButton) findViewById(R.id.fab3);
+
+
+
 /*
         CircleIndicator indicator = (CircleIndicator) findViewById(R.id.indicator);
         indicator.setViewPager(vpPager);
  */
     }
 
+    // 뷰에 띄울 텍스트 설정
     public void setNewContents() {
 
         String[] sample = new String[1000];
@@ -98,23 +116,15 @@ public class NewsContentPage extends AppCompatActivity {
         }
     }
 
-    public void pageView(View v){
-        Intent intent = new Intent(v.getContext(), NewsContentScroll.class);
-        intent.putExtra("position", modelPosition);
-        v.getContext().startActivity(intent);
-
-        Button pageView = (Button) findViewById(R.id.pageView);
-        pageView.setText("Scroll");
-
-        MainActivity.pageType = 1;
-    }
-
+    // 이전 페이지로
     public void previous(View v){
         System.out.println(contentcount + "---------------" + count);
         contentcount--;
 
         if(contentcount > 0 && contentcount <= count - 1){
             setContentView(R.layout.activity_content_page);
+            MainActivity.viewPoint = findViewById(R.id.view_point);
+
             contentView = (TextView) findViewById(R.id.content);
             contentView.setText(newsContents[contentcount]);
             pageValue = 1;
@@ -130,18 +140,22 @@ public class NewsContentPage extends AppCompatActivity {
         }
     }
 
+
+    // 다음 페이지로
     public void next(View v){
         System.out.println(contentcount + "---------------" + count);
         contentcount++;
 
         if(contentcount > 0 && contentcount <= count - 1){
             setContentView(R.layout.activity_content_page);
+            MainActivity.viewPoint = findViewById(R.id.view_point);
             contentView = (TextView) findViewById(R.id.content);
             contentView.setText(newsContents[contentcount]);
             pageValue = 1;
         }
         else if(contentcount == count){
             setContentView(R.layout.activity_summary_page);
+            MainActivity.viewPoint = findViewById(R.id.view_point);
             keywordView = (TextView) findViewById(R.id.keywords);
             keywordView.setText(keyword);
             summaryView = (TextView) findViewById(R.id.summary);
@@ -158,6 +172,7 @@ public class NewsContentPage extends AppCompatActivity {
 
         setLayoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         settingLayout = (LinearLayout) setLayoutInflater.inflate(R.layout.activity_setting_view, null);
+        MainActivity.viewPoint = findViewById(R.id.view_point);
         settingLayout.setBackgroundColor(Color.parseColor("#99000000"));
         setLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         addContentView(settingLayout, setLayoutParams);
@@ -177,8 +192,28 @@ public class NewsContentPage extends AppCompatActivity {
         //MainActivity.stopTracking();
     }
 
-    public void play(View v) {
+    public void fab(View v){
+        anim();
+    }
 
+    // control mode 설정
+    public void fab1_controlmode(View v){
+
+    }
+
+    // view mode 설정
+    public void fab2_viewmode(View v){
+        anim();
+        Intent intent = new Intent(v.getContext(), NewsContentScroll.class);
+        intent.putExtra("position", modelPosition);
+        v.getContext().startActivity(intent);
+
+        MainActivity.pageType = 1;
+    }
+
+    // tts 재생
+    public void fab3_tts(View v) {
+        anim();
         playLayoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         playLayout = (LinearLayout) playLayoutInflater.inflate(R.layout.activity_sound_play, null);
         playLayout.setBackgroundColor(Color.parseColor("#99000000"));
@@ -228,5 +263,25 @@ public class NewsContentPage extends AppCompatActivity {
     public void inVisiblePlay(View v) {
         ((ViewManager) playLayout.getParent()).removeView(playLayout);
         soundPlay.closePlayer();
+    }
+
+    public void anim() {
+        if (isFabOpen) {
+            fab1.startAnimation(fab_close);
+            fab2.startAnimation(fab_close);
+            fab3.startAnimation(fab_close);
+            fab1.setClickable(false);
+            fab2.setClickable(false);
+            fab3.setClickable(false);
+            isFabOpen = false;
+        } else {
+            fab1.startAnimation(fab_open);
+            fab2.startAnimation(fab_open);
+            fab3.startAnimation(fab_open);
+            fab1.setClickable(true);
+            fab2.setClickable(true);
+            fab3.setClickable(true);
+            isFabOpen = true;
+        }
     }
 }

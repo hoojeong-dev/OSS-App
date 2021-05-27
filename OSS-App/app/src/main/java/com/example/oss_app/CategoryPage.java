@@ -21,6 +21,7 @@ public class CategoryPage extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_page);
+        MainActivity.viewPoint = findViewById(R.id.view_point);
 
         NewsListDAO newsListDAO = new NewsListDAO();
         MyContentsDAO myContentsDAO = new MyContentsDAO();
@@ -30,13 +31,13 @@ public class CategoryPage extends Activity {
         models = new ArrayList<>();
         models.add(new CategoryModel(R.drawable.society_image, "Society", ""));
         models.add(new CategoryModel(R.drawable.sports_image, "Sports", ""));
-        models.add(new CategoryModel(R.drawable.poster, "Entertain", ""));
-        models.add(new CategoryModel(R.drawable.namecard, "Politics", ""));
+        models.add(new CategoryModel(R.drawable.brochure, "Entertain", ""));
+        models.add(new CategoryModel(R.drawable.brochure, "Politics", ""));
         models.add(new CategoryModel(R.drawable.it_image, "IT", ""));
         models.add(new CategoryModel(R.drawable.economic_image, "Economic", ""));
         models.add(new CategoryModel(R.drawable.foreign_image, "Foreign", ""));
         models.add(new CategoryModel(R.drawable.brochure, "Culture", ""));
-        models.add(new CategoryModel(R.drawable.sticker, "My", ""));
+        models.add(new CategoryModel(R.drawable.brochure, "My", ""));
 
         adapter = new CategoryAdapter(models, this);
 

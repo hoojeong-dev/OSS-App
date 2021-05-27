@@ -61,6 +61,7 @@
                         android:layout_height="327dp"
                         android:gravity="center"
                         android:lineSpacingExtra="13dp"
+                        android:breakStrategy="simple"
                         android:text="당신은 이미 주어진 에세이 주제를 가지고 있거나, 스스로 정한 주제에 대해 자유롭게 작성할 수도 있습니다. 만약 특정한 주제가 주어졌다면, 당신이 작성하고 싶은 글의 종류에 대해 생각해 봐야 합니다. 이 주제에 대한 일반적 개괄인가 아니면 특정 형태의 분석인가? 당신은 이미 주어진 에세이 주제를 가지고 있거나, 스스로 정한 주제에 대해 자유롭게 작성할 수도 있습니다."
                         android:textSize="20dp" />
                 </ScrollView>

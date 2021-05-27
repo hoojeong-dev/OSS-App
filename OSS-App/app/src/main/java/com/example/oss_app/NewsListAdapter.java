@@ -2,6 +2,7 @@ package com.example.oss_app;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +61,16 @@ public class NewsListAdapter extends BaseAdapter {
         animation.addAnimation(alphaAnimation);
         convertView.setAnimation(animation);
 
+        String sentiment = models.get(position).getSentiment();
         titleTextView = (TextView) convertView.findViewById(R.id.newstitle);
+
+        if(sentiment.equals("positive"))
+            titleTextView.setBackgroundColor(Color.parseColor("#8883C3"));
+        else if (sentiment.equals("negative"))
+            titleTextView.setBackgroundColor(Color.parseColor("#CC8F90"));
+        else
+            titleTextView.setBackgroundColor(Color.parseColor("#BF91CD"));
+
         titleTextView.getShadowRadius();
         titleTextView.setText(models.get(position).getTitle());
 

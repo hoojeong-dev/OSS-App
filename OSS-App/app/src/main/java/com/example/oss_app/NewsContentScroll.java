@@ -7,7 +7,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewManager;
-import android.widget.Button;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -17,6 +18,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.List;
 
 public class NewsContentScroll extends AppCompatActivity {
@@ -24,11 +27,13 @@ public class NewsContentScroll extends AppCompatActivity {
     List<NewsListModel> models = NewsList.models;
     FragmentPagerAdapter adapterViewPager;
     static int modelPosition, currentPosition;
-    String category, key, title, content = null;
-    static String[] newsContents;
-    static int currentCount, count, pageValue;
-    static int nextValue, preValue, pageType = 2;
+    String category, key, content = null;
+    static int count;
     ViewPager vpPager;
+
+    private Animation fab_open, fab_close;
+    private Boolean isFabOpen = false;
+    private FloatingActionButton fab, fab1, fab2, fab3;
 
     LayoutInflater setLayoutInflater, playLayoutInflater;
     LinearLayout settingLayout, playLayout;
@@ -41,6 +46,7 @@ public class NewsContentScroll extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_content_view);
+        MainActivity.viewPoint = findViewById(R.id.view_point);
 
         Intent intent = getIntent();
         modelPosition = intent.getExtras().getInt("position");
@@ -69,6 +75,9 @@ public class NewsContentScroll extends AppCompatActivity {
             public void onPageScrollStateChanged(int state) {
             }
         });
+
+        fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
+        fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
 /*
         CircleIndicator indicator = (CircleIndicator) findViewById(R.id.indicator);
         indicator.setViewPager(vpPager);
@@ -110,17 +119,6 @@ public class NewsContentScroll extends AppCompatActivity {
 
     }
 
-    public void pageView(View v){
-        Intent intent = new Intent(v.getContext(), NewsContentPage.class);
-        intent.putExtra("position", modelPosition);
-        v.getContext().startActivity(intent);
-
-        Button pageView = (Button) findViewById(R.id.pageView);
-        pageView.setText("Page");
-
-        MainActivity.pageType = 2;
-    }
-
     public void setting(View v) {
 
         setLayoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -144,8 +142,28 @@ public class NewsContentScroll extends AppCompatActivity {
         //MainActivity.stopTracking();
     }
 
-    public void play(View v) {
+    public void fab(View v){
+        anim();
+    }
 
+    // control mode 설정
+    public void fab1_controlmode(View v){
+
+    }
+
+    // view mode 설정
+    public void fab2_viewmode(View v){
+        anim();
+        Intent intent = new Intent(v.getContext(), NewsContentPage.class);
+        intent.putExtra("position", modelPosition);
+        v.getContext().startActivity(intent);
+
+        MainActivity.pageType = 2;
+    }
+
+    // tts 재생
+    public void fab3_tts(View v) {
+        anim();
         playLayoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         playLayout = (LinearLayout) playLayoutInflater.inflate(R.layout.activity_sound_play, null);
         playLayout.setBackgroundColor(Color.parseColor("#99000000"));
@@ -195,5 +213,25 @@ public class NewsContentScroll extends AppCompatActivity {
     public void inVisiblePlay(View v) {
         ((ViewManager) playLayout.getParent()).removeView(playLayout);
         soundPlay.closePlayer();
+    }
+
+    public void anim() {
+        if (isFabOpen) {
+            fab1.startAnimation(fab_close);
+            fab2.startAnimation(fab_close);
+            fab3.startAnimation(fab_close);
+            fab1.setClickable(false);
+            fab2.setClickable(false);
+            fab3.setClickable(false);
+            isFabOpen = false;
+        } else {
+            fab1.startAnimation(fab_open);
+            fab2.startAnimation(fab_open);
+            fab3.startAnimation(fab_open);
+            fab1.setClickable(true);
+            fab2.setClickable(true);
+            fab3.setClickable(true);
+            isFabOpen = true;
+        }
     }
 }

@@ -1,55 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    tools:context=".RegisterActivity">
+    tools:context=".MainActivity">
 
-    <EditText
-        android:id="@+id/userid"
-        android:layout_width="250dp"
-        android:layout_height="60dp"
-        android:hint="Enter your ID"
-        android:singleLine="true"
-        android:textStyle="bold" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
 
-    <EditText
-        android:id="@+id/username"
-        android:layout_width="250dp"
-        android:layout_height="60dp"
-        android:layout_below="@+id/userid"
-        android:hint="Enter your Name"
-        android:singleLine="true"
-        android:textStyle="bold" />
+        <EditText
+            android:id="@+id/userid"
+            android:layout_width="250dp"
+            android:layout_height="60dp"
+            android:hint="Enter your ID"
+            android:singleLine="true"
+            android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/userpw"
-        android:layout_width="250dp"
-        android:layout_height="60dp"
-        android:layout_below="@+id/username"
-        android:hint="Enter your Password"
-        android:inputType="textPassword"
-        android:singleLine="true"
-        android:textStyle="bold" />
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="250dp"
+            android:layout_height="60dp"
+            android:layout_below="@+id/userid"
+            android:hint="Enter your Name"
+            android:singleLine="true"
+            android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/userpw2"
-        android:layout_width="250dp"
-        android:layout_height="60dp"
-        android:layout_below="@+id/userpw"
-        android:hint="Enter your Password"
-        android:inputType="textPassword"
-        android:singleLine="true"
-        android:textStyle="bold" />
+        <EditText
+            android:id="@+id/userpw"
+            android:layout_width="250dp"
+            android:layout_height="60dp"
+            android:layout_below="@+id/username"
+            android:hint="Enter your Password"
+            android:inputType="textPassword"
+            android:singleLine="true"
+            android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/registerButton"
-        android:layout_width="250dp"
-        android:layout_height="60dp"
-        android:layout_below="@+id/userpw2"
-        android:background="#00FFFFFF"
-        android:onClick="register"
-        android:text="Register"
-        android:textStyle="bold" />
-</RelativeLayout>
+        <EditText
+            android:id="@+id/userpw2"
+            android:layout_width="250dp"
+            android:layout_height="60dp"
+            android:layout_below="@+id/userpw"
+            android:hint="Enter your Password"
+            android:inputType="textPassword"
+            android:singleLine="true"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/registerButton"
+            android:layout_width="250dp"
+            android:layout_height="60dp"
+            android:layout_below="@+id/userpw2"
+            android:background="#00FFFFFF"
+            android:onClick="register"
+            android:text="Register"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <com.example.oss_app.PointView
+        android:id="@+id/view_point"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.example.oss_app.CalibrationViewer
+        android:id="@+id/view_calibration"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible" />
+</androidx.constraintlayout.widget.ConstraintLayout>

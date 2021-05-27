@@ -46,8 +46,13 @@ public class NewsList extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        MainActivity.safebar=100;
+        MainActivity.pagenum=1;
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_list);
+
+        MainActivity.viewPoint = findViewById(R.id.view_point);
 
         camera = findViewById(R.id.camera1);
         listView = findViewById(R.id.listview);
