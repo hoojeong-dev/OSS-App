@@ -1,41 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".NewsList">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_gravity="center"
-        android:layout_weight="1"
-        android:gravity="right">
+    tools:context=".MainActivity">
 
-        <TextView
-            android:id="@+id/category"
-            android:layout_width="285dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="left"
-            android:text="Category"
-            android:textSize="34dp" />
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|right"
-            android:text="Setting"
-            android:background="#00ff0000"/>
-    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="7">
-        <ListView
-            android:id="@+id/listview"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="0dp"
+            android:layout_weight="1.2"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <TextView
+                android:layout_width="45dp"
+                android:layout_height="match_parent"/>
+            <TextView
+                android:id="@+id/category"
+                android:layout_width="270dp"
+                android:layout_height="match_parent"
+                android:background="#00ff0000"
+                android:gravity="left|center|bottom"
+                android:text="category"
+                android:textSize="34dp" />
+            <Button
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:gravity="left|bottom"
+                android:text="ㅁ"
+                android:textSize="35dp"
+                android:visibility="invisible"
+                android:id="@+id/camera1"
+                android:onClick="camera1"
+
+                android:textColor="#FF000000"
+                android:background="#00FFFFFF"/>
+            <Button
+                android:onClick="setting"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:gravity="left|bottom"
+                android:text="⋮"
+                android:textSize="35dp"
+                android:textColor="#FF000000"
+                android:background="#00FFFFFF"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.4">
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="7.2">
+            <ListView
+                android:id="@+id/listview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+
+    <com.example.oss_app.PointView
+        android:id="@+id/view_point"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <com.example.oss_app.CalibrationViewer
+        android:id="@+id/view_calibration"
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

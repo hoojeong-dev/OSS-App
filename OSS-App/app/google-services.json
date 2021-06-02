@@ -1,20 +1,21 @@
 {
   "project_info": {
-    "project_number": "863670861906",
-    "project_id": "oss-newslist",
-    "storage_bucket": "oss-newslist.appspot.com"
+    "project_number": "878361217130",
+    "firebase_url": "https://oss-project-f6fb6-default-rtdb.firebaseio.com",
+    "project_id": "oss-project-f6fb6",
+    "storage_bucket": "oss-project-f6fb6.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:863670861906:android:6b1473d4e1c3c3b0c75f8b",
+        "mobilesdk_app_id": "1:878361217130:android:01e86532216c7e91bee213",
         "android_client_info": {
           "package_name": "com.example.oss_app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "863670861906-epe13it4m2dt2dgmu6s7c1vtlrr8uqo5.apps.googleusercontent.com",
+          "client_id": "878361217130-lbsipc2d77g51209g78lkcsuaifcmiht.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.oss_app",
@@ -22,20 +23,20 @@
           }
         },
         {
-          "client_id": "863670861906-3od0ni3icbei28jojab3tuj2bk82jauk.apps.googleusercontent.com",
+          "client_id": "878361217130-k8u2bts9smmte8mojqie49ci06sjrecr.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAQlNlCEPTUHpfauWP0GVArS2SH2KHZfA4"
+          "current_key": "AIzaSyApvPi2Kdyr2iD-XeLivrPGUEgwAGB4dLY"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "863670861906-3od0ni3icbei28jojab3tuj2bk82jauk.apps.googleusercontent.com",
+              "client_id": "878361217130-k8u2bts9smmte8mojqie49ci06sjrecr.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -2,6 +2,7 @@ package com.example.oss_app;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,34 +13,33 @@ import android.view.animation.TranslateAnimation;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class NewsListAdapter extends BaseAdapter {
 
-    private ArrayList<NewsListModel> models;
-    private Context context;
-    private TextView titleTextView;
+    List<NewsListModel> models;
+    TextView titleTextView;
+    String category;
 
-    public NewsListAdapter(ArrayList<NewsListModel> models, Context context){
+    public NewsListAdapter(List<NewsListModel> models, String category) {
         this.models = models;
-        this.context = context;
+        this.category = category;
     }
 
     @Override
     public int getCount() {
-        return 0;
+        return models.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return models.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -49,7 +49,7 @@ public class NewsListAdapter extends BaseAdapter {
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.activity_news_list, parent, false);
+            convertView = inflater.inflate(R.layout.activity_news_list_item, parent, false);
         }
 
         TranslateAnimation translateAnimation = new TranslateAnimation(300, 0, 0, 0);
@@ -61,14 +61,34 @@ public class NewsListAdapter extends BaseAdapter {
         animation.addAnimation(alphaAnimation);
         convertView.setAnimation(animation);
 
+        String sentiment = models.get(position).getSentiment();
         titleTextView = (TextView) convertView.findViewById(R.id.newstitle);
+
+        if(sentiment.equals("positive"))
+            titleTextView.setBackgroundColor(Color.parseColor("#8883C3"));
+        else if (sentiment.equals("negative"))
+            titleTextView.setBackgroundColor(Color.parseColor("#CC8F90"));
+        else
+            titleTextView.setBackgroundColor(Color.parseColor("#BF91CD"));
+
         titleTextView.getShadowRadius();
+        titleTextView.setText(models.get(position).getTitle());
 
-        NewsListModel newsListModel = models.get(position);
-
-        titleTextView.setText(newsListModel.getTitle());
-
-        //클릭 메소드 작성
+        LinearLayout clickLayout = (LinearLayout) convertView.findViewById(R.id.clickLayout);
+        clickLayout.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if(MainActivity.pageType == 1){
+                    Intent intent = new Intent(v.getContext(), NewsContentScroll.class);
+                    intent.putExtra("position", position);
+                    v.getContext().startActivity(intent);
+                }
+                else if(MainActivity.pageType == 2){
+                    Intent intent = new Intent(v.getContext(), NewsContentPage.class);
+                    intent.putExtra("position", position);
+                    v.getContext().startActivity(intent);
+                }
+            }
+        });
 
         return convertView;
     }

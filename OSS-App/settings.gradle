@@ -1,2 +1,4 @@
 include ':app'
 rootProject.name = "OSS-App"
+include ':gazetracker-release'
+include ':libgaze-release'
