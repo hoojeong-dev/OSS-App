@@ -3,25 +3,33 @@
     package="com.example.oss_app">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppThem.NoActionBar">
-        <activity android:name=".Sign_in"></activity>
-        <activity android:name=".Sign_up" />
-        <activity android:name=".NewsList" />
-        <activity android:name=".CategoryPage" />
-        <activity android:name=".MainActivity">
+        android:theme="@style/AppThem.NoActionBar"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".IntroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".OcrView" />
+        <activity android:name=".MainActivity"/>
+        <activity android:name=".SpeechToText" />
+        <activity android:name=".NewsContentScroll" />
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".NewsList" />
+        <activity android:name=".CategoryPage" />
+        <activity android:name=".NewsContentPage" />
     </application>
-
 </manifest>

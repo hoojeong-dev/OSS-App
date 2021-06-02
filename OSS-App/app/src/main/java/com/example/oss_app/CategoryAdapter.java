@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.PagerAdapter;
 
 import java.util.List;
@@ -40,17 +41,13 @@ public class CategoryAdapter extends PagerAdapter {
         layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.activity_category_item, container, false);
 
-        ImageView imageView;
-        TextView title, desc;
+        TextView title;
         String str;
 
-        imageView = view.findViewById(R.id.image);
         title = view.findViewById(R.id.title);
-        desc = view.findViewById(R.id.desc);
 
-        imageView.setImageResource(models.get(position).getImage());
+        title.setBackground(ContextCompat.getDrawable(context, models.get(position).getImage()));
         title.setText(models.get(position).getTitle());
-        desc.setText(models.get(position).getDesc());
         str = models.get(position).getTitle();
 
         view.setOnClickListener(new View.OnClickListener() {

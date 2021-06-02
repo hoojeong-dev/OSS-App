@@ -1,41 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".NewsList">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_gravity="center"
-        android:layout_weight="1"
-        android:gravity="right">
+    tools:context=".MainActivity">
 
-        <TextView
-            android:id="@+id/category"
-            android:layout_width="285dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="left"
-            android:text="Category"
-            android:textSize="34dp" />
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|right"
-            android:text="Setting"
-            android:background="#00ff0000"/>
-    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="7">
-        <ListView
-            android:id="@+id/listview"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="0dp"
+            android:layout_weight="0.6">
+            <Button
+                android:id="@+id/back"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_gravity="top|right"
+                android:background="#00FFFFFF"
+                android:gravity="center|bottom"
+                android:onClick="pageback"
+                android:layout_marginRight="10dp"
+                android:text=">"
+                android:textSize="35dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.6"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <TextView
+                android:layout_width="45dp"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:id="@+id/category"
+                android:layout_width="240dp"
+                android:layout_height="match_parent"
+                android:background="#00ff0000"
+                android:gravity="left|center|bottom"
+                android:text="category"
+                android:textSize="34dp" />
+            <LinearLayout
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:gravity="left|bottom">
+                <Button
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:gravity="left|bottom"
+                    android:id="@+id/camera"
+                    android:onClick="cameraOCR"
+                    android:visibility="invisible"
+                    android:textColor="#FF000000"
+                    android:background="@drawable/black_camera"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:gravity="left|bottom">
+                <ImageButton
+                    android:id="@+id/mode"
+                    android:onClick="controlMode"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:gravity="left|bottom"
+                    android:textColor="#FF000000"
+                    android:background="@drawable/black_eye_2"/>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.4">
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="7.2">
+            <ListView
+                android:id="@+id/listview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+
+    <com.example.oss_app.PointView
+        android:id="@+id/view_point"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <com.example.oss_app.CalibrationViewer
+        android:id="@+id/view_calibration"
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
