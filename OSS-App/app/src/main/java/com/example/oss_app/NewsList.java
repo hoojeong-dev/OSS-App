@@ -9,10 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.core.content.ContextCompat;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,10 +40,7 @@ public class NewsList extends Activity {
     TextView category;
     String str, sendResult;
     Button camera;
-
-    LayoutInflater setLayoutInflater;
-    LinearLayout settingLayout;
-    LinearLayout.LayoutParams setLayoutParams;
+    ImageButton modebtn;
 
     String userUrl = "http://20.194.21.177:8000/insert/" + LoginActivity.userid;
 
@@ -54,7 +54,13 @@ public class NewsList extends Activity {
 
         MainActivity.viewPoint = findViewById(R.id.view_point);
 
-        camera = findViewById(R.id.camera1);
+        if(MainActivity.mode == 0)
+            MainActivity.viewPoint.setVisibility(View.INVISIBLE);
+        else
+            MainActivity.viewPoint.setVisibility(View.VISIBLE);
+
+        modebtn = findViewById(R.id.mode);
+        camera = findViewById(R.id.camera);
         listView = findViewById(R.id.listview);
         category = findViewById(R.id.category);
 
@@ -63,6 +69,15 @@ public class NewsList extends Activity {
         category.setText(str);
 
         models.clear();
+
+        if(OcrView.saveState){
+            String result = sendContents(OcrView.title, OcrView.contents);
+
+            if(result.equals("success"))
+                Toast.makeText(getApplicationContext(), "Success!", Toast.LENGTH_LONG).show();
+            else
+                Toast.makeText(getApplicationContext(), "Failed to Connect to Server. Please try again later.", Toast.LENGTH_LONG).show();
+        }
 
         if(str.equals("My")){
             camera.setVisibility(View.VISIBLE);
@@ -78,41 +93,27 @@ public class NewsList extends Activity {
 
         adapter = new NewsListAdapter(models, str);
         listView.setAdapter(adapter);
+
+        modebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(MainActivity.mode == 0) {
+                    MainActivity.mode = 1;
+                    modebtn.setBackground(ContextCompat.getDrawable(NewsList.this, R.drawable.black_eye));
+                    MainActivity.viewPoint.setVisibility(View.VISIBLE);
+                }
+                else if(MainActivity.mode == 1) {
+                    MainActivity.mode = 0;
+                    modebtn.setBackground(ContextCompat.getDrawable(NewsList.this, R.drawable.black_eye_2));
+                    MainActivity.viewPoint.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
-    public void setting(View v){
-        setLayoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        settingLayout = (LinearLayout) setLayoutInflater.inflate(R.layout.activity_setting_view, null);
-        settingLayout.setBackgroundColor(Color.parseColor("#99000000"));
-        setLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        addContentView(settingLayout, setLayoutParams);
-    }
-
-    public void inVisibleSetting(View v){
-        ((ViewManager)settingLayout.getParent()).removeView(settingLayout);
-    }
-
-    //시선 or 터치 함수
-    public void controlMode(View v){
-
-    }
-
-    //폰트 사이즈 설정 함수 -> 다른 기능으로 대체 가능
-    public void fontSize(View v){
-
-    }
-
-    public void camera1(View v){
-        String title, content;
-
-        title = "안녕하세요";
-        content = "이것은 테스트 입니다.";
-        String result = sendContents(title, content);
-
-        if(result.equals("success"))
-            Toast.makeText(getApplicationContext(), "Success!", Toast.LENGTH_LONG).show();
-        else
-            Toast.makeText(getApplicationContext(), "Failed to Connect to Server. Please try again later.", Toast.LENGTH_LONG).show();
+    public void cameraOCR(View v){
+        Intent intent = new Intent(this, OcrView.class);
+        startActivity(intent);
     }
 
     public String sendContents(String title, String content){
@@ -171,5 +172,10 @@ public class NewsList extends Activity {
                 }
             }
         });
+    }
+
+    public void pageback(View v){
+        Intent intent = new Intent(this, CategoryPage.class);
+        startActivity(intent);
     }
 }

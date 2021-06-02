@@ -1,6 +1,7 @@
 package com.example.oss_app;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,48 +18,39 @@ import androidx.core.app.ActivityCompat;
 
 import java.util.ArrayList;
 
-public class SpeechToText extends AppCompatActivity {
+public class SpeechToText{
 
-    TextView textView;
-    Button button;
+    Context context;
+    static ArrayList<String> matches;
+    static Boolean sttResult;
     Intent intent;
     SpeechRecognizer mRecognizer;
-    final int PERMISSION = 1;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_speech_to_text);
-        MainActivity.viewPoint = findViewById(R.id.view_point);
-        // 안드로이드 6.0버전 이상인지 체크해서 퍼미션 체크
-        if(Build.VERSION.SDK_INT >= 23){
-            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.INTERNET,
-                    Manifest.permission.RECORD_AUDIO},PERMISSION);
-        }
-
-        textView = findViewById(R.id.result);
-        button = findViewById(R.id.stt);
-
+    public void sttSet(Context context){
+        this.context = context;
+        sttResult = false;
         // RecognizerIntent 생성
         intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE,getPackageName()); // 여분의 키
+        intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE,context.getPackageName()); // 여분의 키
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE,"ko-KR");
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mRecognizer = SpeechRecognizer.createSpeechRecognizer(SpeechToText.this); // 새 SpeechRecognizer 를 만드는 팩토리 메서드
-                mRecognizer.setRecognitionListener(listener); // 리스너 설정
-                mRecognizer.startListening(intent); // 듣기 시작
-            }
-        });
+    }
+
+    public void sttStart(){
+        System.out.println("1111111111111111111111111111111111111");
+        mRecognizer = SpeechRecognizer.createSpeechRecognizer(context); // 새 SpeechRecognizer 를 만드는 팩토리 메서드
+        System.out.println("222222222222222222222222222222222222222");
+        mRecognizer.setRecognitionListener(listener); // 리스너 설정
+        System.out.println("333333333333333333333333333333333333333");
+        mRecognizer.startListening(intent); // 듣기 시작
+        System.out.println("4444444444444444444444444444444444444444");
     }
 
     private RecognitionListener listener = new RecognitionListener() {
         @Override
         public void onReadyForSpeech(Bundle params) {
             // 말하기 시작할 준비가되면 호출
-            Toast.makeText(getApplicationContext(),"음성인식 시작",Toast.LENGTH_SHORT).show();
+            Toast.makeText(context.getApplicationContext(),"음성인식 시작",Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -119,19 +111,15 @@ public class SpeechToText extends AppCompatActivity {
                     break;
             }
 
-            Toast.makeText(getApplicationContext(), "에러 발생 : " + message,Toast.LENGTH_SHORT).show();
+            Toast.makeText(context.getApplicationContext(), "에러 발생 : " + message,Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onResults(Bundle results) {
             // 인식 결과가 준비되면 호출
             // 말을 하면 ArrayList에 단어를 넣고 textView에 단어를 이어줌
-            ArrayList<String> matches =
-                    results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-
-            for(int i = 0; i < matches.size() ; i++){
-                textView.setText(matches.get(i));
-            }
+            matches = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+            sttResult = true;
         }
 
         @Override

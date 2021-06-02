@@ -31,6 +31,11 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         MainActivity.viewPoint = findViewById(R.id.view_point);
+
+        if(MainActivity.mode == 0)
+            MainActivity.viewPoint.setVisibility(View.INVISIBLE);
+        else
+            MainActivity.viewPoint.setVisibility(View.VISIBLE);
     }
 
     public void submit(View v) {

@@ -35,11 +35,13 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.example.oss_app.calibration.CalibrationDataStorage;
-
-import java.util.Arrays;
 
 import static android.content.ContentValues.TAG;
 
@@ -57,23 +59,19 @@ public class MainActivity extends AppCompatActivity {
     private CalibrationModeType calibrationType = CalibrationModeType.FIVE_POINT;
     private CalibrationViewer viewCalibration;
     static PointView viewPoint;
-    static int pageType = 2;
-    static int a1,a2,a3,a4,a5,a6,a7;
+    static int pageType = 2, mode = 0;
     static int count =0, count2=0, count3=0, safebar = 0, pagenum, Lsafebar=30;
     float display_x;
     float display_y;
-
-    float [] tempx = new float[10];
-    float [] tempy = new float[10];
-    float [] ltempx = new float[20];
-    float [] ltempy = new float[20];
 
     MyQueue xq = new MyQueue();
     MyQueue yq = new MyQueue();
     MyQueue lxq = new MyQueue();
     MyQueue lyq = new MyQueue();
 
-    Button btncali;
+    ImageButton modebtn, titleImage;
+    Button btncali, sign_in_btn, sign_up_btn;
+    TextView title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,16 +79,30 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Animation fadein = new AlphaAnimation(0.0f, 10.f);
+        fadein.setDuration(10000);
+
         ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.INTERNET}, 0);
         DisplayMetrics dm = getApplicationContext().getResources().getDisplayMetrics(); // 디스플레이 메트릭스를 dm이라는 변수에 저장 dm = 디스플레이 메트릭스 형식
         display_x = dm.widthPixels; // x축 픽셀 수 = x축의 길이
         display_y = dm.heightPixels;
 
+        titleImage = (ImageButton) findViewById(R.id.titleImage);
+        modebtn = (ImageButton) findViewById(R.id.mode);
+        title = (TextView) findViewById(R.id.title);
         btncali = (Button) findViewById(R.id.btncali);
         viewPoint = findViewById(R.id.view_point);
         viewCalibration = findViewById(R.id.view_calibration);
+        sign_in_btn = findViewById(R.id.sign_in_btn);
+        sign_up_btn = findViewById(R.id.sign_up_btn);
 
+        viewPoint.setVisibility(View.INVISIBLE);
         pagenum = 0;
+
+        titleImage.startAnimation(fadein);
+        modebtn.startAnimation(fadein);
+        title.startAnimation(fadein);
+        btncali.startAnimation(fadein);
 
         initGaze();
         checkPermission();
@@ -99,31 +111,44 @@ public class MainActivity extends AppCompatActivity {
         yq.newQueue(10);
         lxq.newQueue(20);
         lyq.newQueue(20);
-    }
 
-    public void calibration(View v){
-
-        startCalibration();
+        btncali.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startCalibration();
+                sign_up_btn.setText("REGISTER");
+                sign_in_btn.setText("Login");
+                Animation fadeintstart = new AlphaAnimation(0.0f, 10.f);
+                fadeintstart.setDuration(20000);
+                sign_up_btn.startAnimation(fadeintstart);
+                sign_in_btn.startAnimation(fadeintstart);
+            }
+        });
     }
 
     public void login(View v) {
-        //onStop();
-        //stopTracking();
         Intent intent = new Intent(this, LoginActivity.class);
-        startActivityForResult(intent, 2);
+        startActivity(intent);
     }
 
     public void register(View v) {
-        onStop();
-        stopTracking();
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
     }
 
-    public void speech(View v) {
-        onStop();
-        Intent intent = new Intent(this, SpeechToText.class);
-        startActivity(intent);
+    public void controlMode(View v){
+        ImageButton modebtn = (ImageButton) findViewById(R.id.mode);
+
+        if(mode == 0) {
+            mode = 1;
+            modebtn.setBackground(ContextCompat.getDrawable(this, R.drawable.black_eye));
+            viewPoint.setVisibility(View.VISIBLE);
+        }
+        else if(mode == 1) {
+            mode = 0;
+            modebtn.setBackground(ContextCompat.getDrawable(this, R.drawable.black_eye_2));
+            viewPoint.setVisibility(View.GONE);
+        }
     }
 
     private void startTracking() {
@@ -332,7 +357,7 @@ public class MainActivity extends AppCompatActivity {
                                 count2=0;
                                 count3=0;
 
-                                if(pagenum==1) {
+                                if(pagenum == 1 && mode == 1) {
                                     System.out.println("page1======================================");
                                     for (int i = 0; i < 10; i++) {
                                         if (xq.QArray[0] + 70 > xq.QArray[i] && xq.QArray[0] - 70 < xq.QArray[i] && yq.QArray[0] + 100 > yq.QArray[i] && yq.QArray[0] - 100 < yq.QArray[i]) {
@@ -351,7 +376,7 @@ public class MainActivity extends AppCompatActivity {
                                         safebar = 20;
                                     }
                                 }
-                                else if(pagenum == 2){
+                                else if(pagenum == 2 && mode == 1){
                                     for (int i = 0; i < 10; i++) {
                                         if (xq.QArray[0] + 70 > xq.QArray[i] && xq.QArray[0] - 70 < xq.QArray[i] && yq.QArray[0] + 100 > yq.QArray[i] && yq.QArray[0] - 100 < yq.QArray[i]) {
                                             count++;

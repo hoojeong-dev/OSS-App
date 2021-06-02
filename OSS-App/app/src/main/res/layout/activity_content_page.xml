@@ -10,85 +10,84 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <!-- 페이지 터치 넘김 -->
-            <Button
+            <TextView
                 android:id="@+id/previous1"
-                android:onClick="previous"
-                android:background="#888FFFFF"
-                android:layout_width="650dp"
-                android:layout_height="90dp"/>
+                android:layout_width="270dp"
+                android:layout_height="80dp"
+                android:layout_centerHorizontal="true"
+                android:background="#888FFFFF"/>
 
             <Button
                 android:id="@+id/setting"
-                android:onClick="setting"
-                android:layout_alignParentRight="true"
-                android:layout_gravity="top|right"
-                android:layout_width="70dp"
+                android:layout_width="80dp"
                 android:layout_height="90dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="top|right"
+                android:background="#00FFFFFF"
+                android:gravity="center|bottom"
+                android:onClick="setting"
                 android:text="⋮"
-                android:textSize="35dp"
-                android:gravity="left|bottom"
-                android:background="#00FFFFFF"/>
+                android:textSize="35dp" />
+
+            <Button
+                android:id="@+id/back"
+                android:layout_width="80dp"
+                android:layout_height="90dp"
+                android:layout_alignParentLeft="true"
+                android:layout_gravity="top|right"
+                android:background="#00FFFFFF"
+                android:gravity="center|bottom"
+                android:onClick="pageback"
+                android:layout_marginRight="10dp"
+                android:text=">"
+                android:textSize="35dp" />
 
             <Button
                 android:id="@+id/previous2"
-                android:onClick="previous"
-                android:layout_alignParentLeft="true"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:background="#60FFFFFF"/>
+                android:layout_width="70dp"
+                android:layout_height="700dp"
+                android:layout_below="@+id/back"
+                android:background="#60FFFFFF"
+                android:onClick="previous" />
+
             <Button
                 android:id="@+id/next2"
-                android:onClick="next"
+                android:layout_width="70dp"
+                android:layout_height="1100dp"
                 android:layout_below="@id/setting"
                 android:layout_alignParentRight="true"
-                android:layout_width="100dp"
-                android:layout_height="1100dp"
-                android:background="#60FFFFFF"/>
+                android:background="#60FFFFFF"
+                android:onClick="next" />
 
             <Button
                 android:id="@+id/a"
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
                 android:layout_below="@id/previous1"
-                android:background="#00FFFFFF"/>
+                android:background="#00FFFFFF" />
 
             <TextView
                 android:id="@+id/content"
-                android:breakStrategy="simple"
-                android:layout_below="@id/a"
-                android:layout_width="200dp"
+                android:layout_width="250dp"
+                android:layout_height="665dp"
                 android:layout_centerInParent="true"
-                android:layout_height="560dp"
+                android:breakStrategy="simple"
                 android:lineSpacingExtra="13dp"
-                android:textSize="20dp">
-            </TextView>
+                android:textSize="20dp"></TextView>
 
             <Button
                 android:id="@+id/next1"
-                android:onClick="next"
-                android:layout_alignParentBottom="true"
                 android:layout_width="1150dp"
-                android:layout_height="100dp"
-                android:background="#888FFFFF"/>
-
-            <TextView
-                android:id="@+id/t"
-                android:layout_width="20dp"
-                android:layout_height="400dp"
-                android:background="#00ffffff"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"/>
-            <TextView
-                android:id="@+id/b"
-                android:layout_width="400dp"
-                android:layout_height="20dp"
-                android:background="#00ffffff"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"/>
+                android:layout_height="80dp"
+                android:layout_alignParentBottom="true"
+                android:background="#888FFFFF"
+                android:onClick="next" />
         </RelativeLayout>
     </FrameLayout>
 

@@ -29,6 +29,11 @@ public class RegisterActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         MainActivity.viewPoint = findViewById(R.id.view_point);
+
+        if(MainActivity.mode == 0)
+            MainActivity.viewPoint.setVisibility(View.INVISIBLE);
+        else
+            MainActivity.viewPoint.setVisibility(View.VISIBLE);
     }
 
     public void register(View v) {

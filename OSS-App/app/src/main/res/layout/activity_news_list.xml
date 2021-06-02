@@ -14,41 +14,65 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1.2"
+            android:layout_weight="0.6">
+            <Button
+                android:id="@+id/back"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_gravity="top|right"
+                android:background="#00FFFFFF"
+                android:gravity="center|bottom"
+                android:onClick="pageback"
+                android:layout_marginRight="10dp"
+                android:text=">"
+                android:textSize="35dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.6"
             android:orientation="horizontal"
             android:gravity="center">
             <TextView
                 android:layout_width="45dp"
                 android:layout_height="match_parent"/>
+
             <TextView
                 android:id="@+id/category"
-                android:layout_width="270dp"
+                android:layout_width="240dp"
                 android:layout_height="match_parent"
                 android:background="#00ff0000"
                 android:gravity="left|center|bottom"
                 android:text="category"
                 android:textSize="34dp" />
-            <Button
-                android:layout_width="50dp"
+            <LinearLayout
+                android:layout_width="60dp"
                 android:layout_height="match_parent"
-                android:gravity="left|bottom"
-                android:text="ㅁ"
-                android:textSize="35dp"
-                android:visibility="invisible"
-                android:id="@+id/camera1"
-                android:onClick="camera1"
-
-                android:textColor="#FF000000"
-                android:background="#00FFFFFF"/>
-            <Button
-                android:onClick="setting"
-                android:layout_width="50dp"
+                android:gravity="left|bottom">
+                <Button
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:gravity="left|bottom"
+                    android:id="@+id/camera"
+                    android:onClick="cameraOCR"
+                    android:visibility="invisible"
+                    android:textColor="#FF000000"
+                    android:background="@drawable/black_camera"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="70dp"
                 android:layout_height="match_parent"
-                android:gravity="left|bottom"
-                android:text="⋮"
-                android:textSize="35dp"
-                android:textColor="#FF000000"
-                android:background="#00FFFFFF"/>
+                android:gravity="left|bottom">
+                <ImageButton
+                    android:id="@+id/mode"
+                    android:onClick="controlMode"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:gravity="left|bottom"
+                    android:textColor="#FF000000"
+                    android:background="@drawable/black_eye_2"/>
+            </LinearLayout>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"

@@ -1,157 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-    <!-- 페이지 터치 넘김 -->
-    <LinearLayout
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="right"
-            android:orientation="horizontal">
+            android:layout_height="match_parent">
+            <!-- 페이지 터치 넘김 -->
+            <Button
+                android:id="@+id/previous1"
+                android:layout_width="650dp"
+                android:layout_height="80dp"
+                android:background="#888FFFFF"
+                android:onClick="previous" />
 
             <Button
-                android:layout_width="265dp"
-                android:layout_height="match_parent"
+                android:id="@+id/back"
+                android:layout_width="80dp"
+                android:layout_height="90dp"
+                android:layout_alignParentLeft="true"
+                android:layout_gravity="top|right"
                 android:background="#00FFFFFF"
-                android:onClick="previous"></Button>
-
-            <Button
-                android:id="@+id/camera"
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:background="#00FFFFFF"
-                android:gravity="left|bottom"
-                android:onClick="camera"
-                android:text="ㅁ"
-                android:textColor="#FF000000"
-                android:textSize="35dp"
-                android:visibility="invisible" />
-
-            <Button
-                android:id="@+id/play"
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:background="#00FFFFFF"
-                android:gravity="left|bottom"
-                android:onClick="play"
+                android:gravity="center|bottom"
+                android:onClick="pageback"
+                android:layout_marginRight="10dp"
                 android:text=">"
-                android:textColor="#FF000000"
                 android:textSize="35dp" />
 
             <Button
                 android:id="@+id/setting"
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
+                android:layout_width="80dp"
+                android:layout_height="90dp"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="top|right"
                 android:background="#00FFFFFF"
-                android:gravity="left|bottom"
+                android:gravity="center|bottom"
                 android:onClick="setting"
                 android:text="⋮"
-                android:textColor="#FF000000"
                 android:textSize="35dp" />
-        </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="7.8"
-            android:orientation="vertical">
+            <Button
+                android:id="@+id/previous2"
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:background="#60FFFFFF"
+                android:onClick="previous" />
+
+            <Button
+                android:id="@+id/next2"
+                android:layout_width="70dp"
+                android:layout_height="1100dp"
+                android:layout_below="@id/setting"
+                android:layout_alignParentRight="true"
+                android:background="#60FFFFFF"
+                android:onClick="next" />
+
+            <Button
+                android:id="@+id/a"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:layout_below="@id/previous1"
+                android:background="#00FFFFFF" />
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.3" />
+                android:layout_width="250dp"
+                android:layout_height="665dp"
+                android:layout_below="@id/a"
+                android:layout_centerInParent="true"
+                android:orientation="vertical"
+                android:gravity="center">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:gravity="top|center"
+                    android:text="KEYWORDS"
+                    android:textSize="25dp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="8.5"
-                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/keywords"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="삼성전자, 갤럭시, 주식"
+                    android:textSize="20dp" />
 
-                <Button
-                    android:layout_width="55dp"
-                    android:layout_height="match_parent"
-                    android:background="#00FFFFFF"
-                    android:onClick="previous" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:gravity="center"
+                    android:text="Summary"
+                    android:textSize="25dp" />
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="5"
-                    android:orientation="vertical">
+                <ScrollView
+                    android:id="@+id/scrollView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
                     <TextView
+                        android:id="@+id/summary"
                         android:layout_width="match_parent"
-                        android:layout_height="75dp"
-                        android:gravity="top|center"
-                        android:text="KEYWORDS"
-                        android:textSize="25dp" />
-
-                    <TextView
-                        android:id="@+id/keywords"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="327dp"
+                        android:breakStrategy="simple"
                         android:gravity="center"
-                        android:text="삼성전자, 갤럭시, 주식"
+                        android:lineSpacingExtra="13dp"
+                        android:text="당신은 이미 주어진 에세이 주제를 가지고 있거나, 스스로 정한 주제에 대해 자유롭게 작성할 수도 있습니다. 만약 특정한 주제가 주어졌다면, 당신이 작성하고 싶은 글의 종류에 대해 생각해 봐야 합니다. 이 주제에 대한 일반적 개괄인가 아니면 특정 형태의 분석인가? 당신은 이미 주어진 에세이 주제를 가지고 있거나, 스스로 정한 주제에 대해 자유롭게 작성할 수도 있습니다."
                         android:textSize="20dp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:gravity="center"
-                        android:text="Summary"
-                        android:textSize="25dp" />
-
-                    <ScrollView
-                        android:id="@+id/scrollView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/summary"
-                            android:layout_width="match_parent"
-                            android:layout_height="327dp"
-                            android:breakStrategy="simple"
-                            android:gravity="center"
-                            android:lineSpacingExtra="13dp"
-                            android:text="당신은 이미 주어진 에세이 주제를 가지고 있거나, 스스로 정한 주제에 대해 자유롭게 작성할 수도 있습니다. 만약 특정한 주제가 주어졌다면, 당신이 작성하고 싶은 글의 종류에 대해 생각해 봐야 합니다. 이 주제에 대한 일반적 개괄인가 아니면 특정 형태의 분석인가? 당신은 이미 주어진 에세이 주제를 가지고 있거나, 스스로 정한 주제에 대해 자유롭게 작성할 수도 있습니다."
-                            android:textSize="20dp" />
-                    </ScrollView>
-                </LinearLayout>
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="#00FFFFFF"
-                    android:onClick="next" />
+                </ScrollView>
             </LinearLayout>
 
             <Button
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:background="#00FFFFFF"
+                android:id="@+id/next1"
+                android:layout_width="1150dp"
+                android:layout_height="80dp"
+                android:layout_alignParentBottom="true"
+                android:background="#888FFFFF"
                 android:onClick="next" />
-        </LinearLayout>
-    </LinearLayout>
+        </RelativeLayout>
+    </FrameLayout>
+
 
     <com.example.oss_app.PointView
         android:id="@+id/view_point"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
     <com.example.oss_app.CalibrationViewer
         android:id="@+id/view_calibration"
+        android:visibility="invisible"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="invisible" />
+        android:layout_height="match_parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,6 +14,8 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
 import java.util.List;
 
 public class NewsListAdapter extends BaseAdapter {
@@ -65,11 +67,11 @@ public class NewsListAdapter extends BaseAdapter {
         titleTextView = (TextView) convertView.findViewById(R.id.newstitle);
 
         if(sentiment.equals("positive"))
-            titleTextView.setBackgroundColor(Color.parseColor("#8883C3"));
+            titleTextView.setBackground(ContextCompat.getDrawable(context, R.drawable.list_blue));
         else if (sentiment.equals("negative"))
-            titleTextView.setBackgroundColor(Color.parseColor("#CC8F90"));
+            titleTextView.setBackground(ContextCompat.getDrawable(context, R.drawable.list_red));
         else
-            titleTextView.setBackgroundColor(Color.parseColor("#BF91CD"));
+            titleTextView.setBackground(ContextCompat.getDrawable(context, R.drawable.list_purple));
 
         titleTextView.getShadowRadius();
         titleTextView.setText(models.get(position).getTitle());

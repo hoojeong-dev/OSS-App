@@ -8,24 +8,60 @@
     android:gravity="center"
     tools:context=".SpeechToText">
 
-    <TextView
-        android:id="@+id/result"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="30dp"
-        android:text="result"/>
-
     <LinearLayout
-        android:id="@+id/middleView"
+        android:onClick="inVisibleStt"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:orientation="horizontal" />
-    <Button
-        android:id="@+id/stt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="STT"
-        android:textSize="30dp" />
+        android:layout_height="0dp"
+        android:layout_weight="3"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <LinearLayout
+            android:onClick="inVisibleStt"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="#FFFFFFFF"
+                android:textSize="30dp"
+                android:text="result"/>
+
+            <LinearLayout
+                android:id="@+id/middleView"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:orientation="horizontal" />
+            <Button
+                android:id="@+id/stt"
+                android:onClick="sttBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="STT"
+                android:textSize="30dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:onClick="inVisibleStt"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+    </LinearLayout>
+    <LinearLayout
+        android:onClick="inVisibleStt"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"/>
 </LinearLayout>

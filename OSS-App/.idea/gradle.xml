@@ -14,6 +14,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/gazetracker-release" />
             <option value="$PROJECT_DIR$/libgaze-release" />
+            <option value="$PROJECT_DIR$/sdk" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

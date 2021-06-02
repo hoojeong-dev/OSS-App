@@ -24,8 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:gravity="left|center"
-            android:text="  CATEGORY"
-            android:textColor="@color/white"
+            android:text="   CATEGORY"
             android:textSize="40dp" />
     </RelativeLayout>
 

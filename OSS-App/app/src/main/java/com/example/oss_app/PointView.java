@@ -1,6 +1,9 @@
 package com.example.oss_app;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -40,11 +43,17 @@ public class PointView extends View {
     public static final int TYPE_DEFAULT = 0;
     public static final int TYPE_OUT_OF_SCREEN = 1;
     private int type = TYPE_DEFAULT;
+    private Bitmap point;
     private Paint paint;
     private void init() {
+        Resources resources = getResources();
+        point = BitmapFactory.decodeResource(resources, R.drawable.pointer_3);
         paint = new Paint();
-        paint.setColor(Color.parseColor("#d3d3d3"));
+
+        /*
+        paint.setColor(Color.parseColor("#FFFFFF"));
         paint.setStrokeWidth(2f);
+         */
     }
 
     private float offsetX, offsetY;
@@ -61,13 +70,14 @@ public class PointView extends View {
 
     public void setType(int type) {
         //paint.setColor(type == TYPE_DEFAULT ? defaultColor : outOfScreenColor);
-        paint.setColor(Color.parseColor("#d3d3d3"));
+        //paint.setColor(Color.parseColor("#d3d3d3"));
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.drawCircle(position.x, position.y, 50, paint );
+        canvas.drawBitmap(point, position.x, position.y, paint);
+        //canvas.drawCircle(position.x, position.y, 50, paint );
 
 
         //canvas.drawLine(0, position.y, getWidth(), position.y, paint);
