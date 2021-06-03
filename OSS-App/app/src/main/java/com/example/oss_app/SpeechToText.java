@@ -25,6 +25,7 @@ public class SpeechToText extends AppCompatActivity {
     SpeechRecognizer mRecognizer;
     final int PERMISSION = 1;
     static String pageName;
+    static int modelPosition;
     static Boolean resultType = false;
     ArrayList<String> matches = null;
     static String sttResult = null;
@@ -38,6 +39,7 @@ public class SpeechToText extends AppCompatActivity {
 
         intentPage = getIntent();
         pageName = intentPage.getExtras().getString("pageName");
+        modelPosition = intentPage.getExtras().getInt("position");
 
         // 안드로이드 6.0버전 이상인지 체크해서 퍼미션 체크
         if(Build.VERSION.SDK_INT >= 23){
@@ -154,17 +156,16 @@ public class SpeechToText extends AppCompatActivity {
 
                 if(pageName.equals("NewsContentPage")){
                     Intent intentBack = new Intent(SpeechToText.this, NewsContentPage.class);
-                    intentBack.putExtra("position", NewsContentPage.modelPosition);
+                    intentBack.putExtra("position", modelPosition);
                     startActivity(intentBack);
                 } else if(pageName.equals("NewsContentScroll")){
                     Intent intentBack = new Intent(SpeechToText.this, NewsContentScroll.class);
-                    intentBack.putExtra("position", NewsContentPage.modelPosition);
+                    intentBack.putExtra("position", modelPosition);
                     startActivity(intentBack);
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
         }
 
         @Override

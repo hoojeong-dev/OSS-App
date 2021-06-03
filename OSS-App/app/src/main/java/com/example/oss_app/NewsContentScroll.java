@@ -235,6 +235,7 @@ public class NewsContentScroll extends AppCompatActivity {
     public void stt(View v){
         Intent intent = new Intent(this, SpeechToText.class);
         intent.putExtra("pageName", "NewsContentScroll");
+        intent.putExtra("position", modelPosition);
         startActivity(intent);
     }
 

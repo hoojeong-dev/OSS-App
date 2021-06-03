@@ -79,7 +79,7 @@ public class OcrView extends AppCompatActivity {
         setContentView(R.layout.activity_ocr_view);
 
         MainActivity.viewPoint = findViewById(R.id.view_point);
-        MainActivity.viewPoint.setVisibility(View.INVISIBLE);
+        MainActivity.viewPoint.setVisibility(View.GONE);
 
         cameraSurfaceView = (CameraSurfaceView) findViewById(R.id.surfaceView);
 

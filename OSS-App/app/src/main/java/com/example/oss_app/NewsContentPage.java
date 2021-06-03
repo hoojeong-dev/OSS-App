@@ -233,10 +233,6 @@ public class NewsContentPage extends AppCompatActivity {
     }
 
     public void tts(View v){
-        loadTTS();
-    }
-
-    public void loadTTS(){
         playLayoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         playLayout = (LinearLayout) playLayoutInflater.inflate(R.layout.activity_sound_play, null);
         playLayout.setBackgroundColor(Color.parseColor("#99000000"));
@@ -256,10 +252,6 @@ public class NewsContentPage extends AppCompatActivity {
                 msg = "읽어";
             else if (pageValue == 2)
                 msg = "요약";
-            else if(SpeechToText.resultType && sttmsg.equals("읽어"))
-                msg = "읽어";
-            else if(SpeechToText.resultType && sttmsg.equals("요약"))
-                msg = "요약";
 
             System.out.println("=================" + msg);
 
@@ -272,10 +264,36 @@ public class NewsContentPage extends AppCompatActivity {
                 soundPlay.setPlayUrl(soundUrl);
                 ((ViewManager) settingLayout.getParent()).removeView(settingLayout);
                 addContentView(playLayout, playLayoutParams);
-
-                sttmsg = "null";
-                SpeechToText.resultType = false;
             }
+        }
+    }
+
+    public void loadTTS(){
+        playLayoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        playLayout = (LinearLayout) playLayoutInflater.inflate(R.layout.activity_sound_play, null);
+        playLayout.setBackgroundColor(Color.parseColor("#99000000"));
+        MainActivity.viewPoint = findViewById(R.id.view_point);
+        MainActivity.viewPoint.setVisibility(View.GONE);
+        playLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+
+        String msg = "", path = "category/" + category + "/" + key;
+
+        if(SpeechToText.resultType && sttmsg.equals("읽어"))
+            msg = "읽어";
+        else if(SpeechToText.resultType && sttmsg.equals("요약"))
+            msg = "요약";
+
+        String soundUrl = httpConnection.sendTTS(msg, path);
+
+        if (soundUrl.equals("failure")) {
+            Toast.makeText(getApplicationContext(), "Failed to Connect to Server. Please try again later.", Toast.LENGTH_LONG).show();
+            soundPlay.closePlayer();
+        } else {
+            soundPlay.setPlayUrl(soundUrl);
+            addContentView(playLayout, playLayoutParams);
+
+            sttmsg = "null";
+            SpeechToText.resultType = false;
         }
     }
 
@@ -308,6 +326,7 @@ public class NewsContentPage extends AppCompatActivity {
     public void stt(View v){
         Intent intent = new Intent(this, SpeechToText.class);
         intent.putExtra("pageName", "NewsContentPage");
+        intent.putExtra("position", modelPosition);
         startActivity(intent);
     }
 
