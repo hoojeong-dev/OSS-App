@@ -1,58 +1,68 @@
 package com.example.oss_app;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.hardware.Camera;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 
 public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Callback{
-    SurfaceHolder surfaceHolder;
-    Camera camera = null;
 
-    Context context;
-
-    public CameraSurfaceView(Context context) {
-        super(context);
-        init(context);
-    }
+    private Camera mCamera;
+    private Context context;
 
     public CameraSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context);
-    }
-
-    private void init(Context context)
-    {
         this.context = context;
-        surfaceHolder = getHolder();
-        surfaceHolder.addCallback(this);
+
+        mCamera = OcrView.getCamera();
+        if(mCamera == null)
+            mCamera = Camera.open();
+
         setFocusableInTouchMode(true);
         setFocusable(true);
-
     }
 
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
-        camera = Camera.open();
-
         try{
-            Camera.Parameters parameters = camera.getParameters();
+            if(mCamera == null)
+                mCamera = Camera.open();
+
+            Camera.Parameters parameters = mCamera.getParameters();
 
             if (getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE) {
                 parameters.set("orientation", "portrait");
-                camera.setDisplayOrientation(90);
+                mCamera.setDisplayOrientation(90);
                 parameters.setRotation(90);
             } else {
                 parameters.set("orientation", "landscape");
-                camera.setDisplayOrientation(0);
+                mCamera.setDisplayOrientation(0);
                 parameters.setRotation(0);
             }
-            camera.setParameters(parameters);
-            camera.setPreviewDisplay(surfaceHolder);
+            mCamera.setParameters(parameters);
+            mCamera.setPreviewDisplay(surfaceHolder);
+
+            // 카메라 미리보기를 시작한다.
+            mCamera.startPreview();
+
+            // 자동포커스 설정
+            mCamera.autoFocus(new Camera.AutoFocusCallback() {
+                public void onAutoFocus(boolean success, Camera camera) {
+                    if (success) {
+
+                    }
+                }
+            });
         }catch(Exception e)
         {
             e.printStackTrace();
@@ -61,7 +71,7 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
         this.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                camera.autoFocus(new Camera.AutoFocusCallback() {
+                mCamera.autoFocus(new Camera.AutoFocusCallback() {
                     @Override
                     public void onAutoFocus(boolean b, Camera camera) {
 
@@ -73,21 +83,23 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
 
     @Override
     public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
-        camera.startPreview();
+        mCamera.startPreview();
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-        camera.stopPreview();
-        camera.release();
-        camera = null;
+        if(mCamera != null){
+            mCamera.stopPreview();
+            mCamera.release();
+            mCamera = null;
+        }
     }
 
     public boolean capture(Camera.PictureCallback callback)
     {
-        if (camera != null)
+        if (mCamera != null)
         {
-            camera.takePicture(null, null, callback);
+            mCamera.takePicture(null, null, callback);
             return true;
         }
         else

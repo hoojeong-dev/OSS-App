@@ -233,70 +233,11 @@ public class NewsContentScroll extends AppCompatActivity {
     }
 
     public void stt(View v){
-        sttLayoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        sttLayout = (LinearLayout) sttLayoutInflater.inflate(R.layout.activity_speech_to_text, null);
-        sttLayout.setBackgroundColor(Color.parseColor("#99000000"));
-        MainActivity.viewPoint = findViewById(R.id.view_point);
-        MainActivity.viewPoint.setVisibility(View.GONE);
-        sttLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-
-        if(Build.VERSION.SDK_INT >= 23){
-            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.INTERNET,
-                    Manifest.permission.RECORD_AUDIO},PERMISSION);
-        }
-        speechToText.sttSet(NewsContentScroll.this);
-        ((ViewManager) settingLayout.getParent()).removeView(settingLayout);
-        addContentView(sttLayout, sttLayoutParams);
+        Intent intent = new Intent(this, SpeechToText.class);
+        intent.putExtra("pageName", "NewsContentScroll");
+        startActivity(intent);
     }
 
-    public void sttBtn(View v){
-        TextView result = (TextView) findViewById(R.id.result);
-        speechToText.sttStart();
-        /*
-        while(SpeechToText.sttResult){
-            for(int i = 0; i < SpeechToText.matches.size() ; i++){
-                result.setText(SpeechToText.matches.get(i));
-                System.out.println(SpeechToText.matches.get(i));
-                if(i-1 == SpeechToText.matches.size())
-                    break;
-            }
-        }
-        */
-        if(SpeechToText.sttResult){
-            for(int i = 0; i < SpeechToText.matches.size() ; i++){
-                result.setText(SpeechToText.matches.get(i));
-                System.out.println(SpeechToText.matches.get(i));
-            }
-        }
-
-        if(SpeechToText.sttResult){
-            if(MainActivity.mode == 0)
-                MainActivity.viewPoint.setVisibility(View.INVISIBLE);
-            else
-                MainActivity.viewPoint.setVisibility(View.VISIBLE);
-
-            ((ViewManager) sttLayout.getParent()).removeView(sttLayout);
-        }
-
-        sttmsg = (String) result.getText();
-
-        if(sttmsg.contains("읽어") || sttmsg.contains("일거") || sttmsg.contains("읽거")){
-            sttmsg = "읽어";
-            sttState = true;
-        } else if(sttmsg.contains("요약") || sttmsg.contains("예약") || sttmsg.contains("얘약")){
-            sttmsg = "요약";
-            sttState = true;
-        }
-    }
-
-    public void inVisibleStt(View v) {
-        if(MainActivity.mode == 0)
-            MainActivity.viewPoint.setVisibility(View.INVISIBLE);
-        else
-            MainActivity.viewPoint.setVisibility(View.VISIBLE);
-
-        ((ViewManager) sttLayout.getParent()).removeView(sttLayout);
-    }
     public void pageback(View v){
         Intent intent = new Intent(this, NewsList.class);
         intent.putExtra("value", category);

@@ -1,9 +1,14 @@
 package com.example.oss_app;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,8 +16,10 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.hardware.Camera;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.SurfaceHolder;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,6 +38,12 @@ import java.io.OutputStream;
 
 public class OcrView extends AppCompatActivity {
 
+    private static CameraSurfaceView cameraSurfaceView;
+    private SurfaceHolder holder;
+    public static OcrView getInstance;
+    private static Camera mCamera;
+    private int RESULT_PERMISSIONS = 100;
+
     LayoutInflater ocrLayoutInflater;
     LinearLayout ocrLayout;
     LinearLayout.LayoutParams ocrLayoutParams;
@@ -46,13 +59,33 @@ public class OcrView extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ocr_view);
-        MainActivity.viewPoint = findViewById(R.id.view_point);
-        MainActivity.viewPoint.setVisibility(View.INVISIBLE);
+
+        requestPermissionCamera();
 
         title = null;
         saveState = false;
         contents = null;
+    }
+
+    public static Camera getCamera(){
+        return mCamera;
+    }
+
+    private void setInit(){
+        getInstance = this;
+
+        // 왜 안 열림 시바알
+        mCamera = Camera.open();
+        setContentView(R.layout.activity_ocr_view);
+
+        MainActivity.viewPoint = findViewById(R.id.view_point);
+        MainActivity.viewPoint.setVisibility(View.INVISIBLE);
+
+        cameraSurfaceView = (CameraSurfaceView) findViewById(R.id.surfaceView);
+
+        holder = cameraSurfaceView.getHolder();
+        holder.addCallback(cameraSurfaceView);
+        holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 
         imageView = findViewById(R.id.imageView);
         surfaceView = findViewById(R.id.surfaceView);
@@ -70,6 +103,38 @@ public class OcrView extends AppCompatActivity {
         String dir = getFilesDir() + "/tesseract";
         if (checkLanguageFile(dir + "/tessdata"))
             tessBaseAPI.init(dir, "eng");
+    }
+
+    public boolean requestPermissionCamera(){
+        int sdkVersion = Build.VERSION.SDK_INT;
+        if(sdkVersion >= Build.VERSION_CODES.M) {
+
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(OcrView.this, new String[]{Manifest.permission.CAMERA}, RESULT_PERMISSIONS);
+            }else {
+                setInit();
+            }
+        }else{  // version 6 이하일때
+            setInit();
+            return true;
+        }
+        return true;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (RESULT_PERMISSIONS == requestCode) {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // 권한 허가시
+                setInit();
+            } else {
+                // 권한 거부시
+            }
+            return;
+        }
     }
 
     public void backPage(View v){
