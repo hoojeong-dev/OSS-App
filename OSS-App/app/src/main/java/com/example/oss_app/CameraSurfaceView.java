@@ -27,9 +27,6 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
         mCamera = OcrView.getCamera();
         if(mCamera == null)
             mCamera = Camera.open();
-
-        setFocusableInTouchMode(true);
-        setFocusable(true);
     }
 
     @Override

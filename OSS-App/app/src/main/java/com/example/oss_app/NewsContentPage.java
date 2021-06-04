@@ -2,6 +2,7 @@ package com.example.oss_app;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -9,7 +10,9 @@ import android.os.Bundle;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewManager;
 import android.view.animation.Animation;
@@ -17,9 +20,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Magnifier;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -83,6 +88,35 @@ public class NewsContentPage extends AppCompatActivity {
             sttmsg = SpeechToText.sttResult;
             loadTTS();
         }
+
+        /*
+        Magnifier magnifier = new Magnifier(contentView);
+
+        public Magnifier.Builder setSize(250, 30);
+
+        contentView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getActionMasked()) {
+                    case MotionEvent.ACTION_DOWN:
+                        // Fall through.
+                    case MotionEvent.ACTION_MOVE: {
+                        final int[] viewPosition = new int[2];
+                        v.getLocationOnScreen(viewPosition);
+                        magnifier.show(event.getRawX() - viewPosition[0],
+                                event.getRawY() - viewPosition[1]);
+                        break;
+                    }
+                    case MotionEvent.ACTION_CANCEL:
+                        // Fall through.
+                    case MotionEvent.ACTION_UP: {
+                        magnifier.dismiss();
+                    }
+                }
+                return true;
+            }
+        });
+        */
 /*
         CircleIndicator indicator = (CircleIndicator) findViewById(R.id.indicator);
         indicator.setViewPager(vpPager);
@@ -152,7 +186,6 @@ public class NewsContentPage extends AppCompatActivity {
         }
     }
 
-
     // 다음 페이지로
     public void next(View v){
         System.out.println(contentcount + "---------------" + count);
@@ -196,6 +229,19 @@ public class NewsContentPage extends AppCompatActivity {
         settingLayout.setBackgroundColor(Color.parseColor("#99000000"));
         setLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         addContentView(settingLayout, setLayoutParams);
+
+        ImageButton mode = (ImageButton) findViewById(R.id.mode);
+        if(MainActivity.mode == 0) {
+            mode.setBackground(ContextCompat.getDrawable(this, R.drawable.black_eye_2));
+        }
+        else if(MainActivity.mode == 1) {
+            mode.setBackground(ContextCompat.getDrawable(this, R.drawable.black_eye));
+        }
+
+        if(category.equals("MY")) {
+            LinearLayout removebtn = findViewById(R.id.removebtn);
+            removebtn.setVisibility(View.VISIBLE);
+        }
     }
 
     public void inVisibleSetting(View v) {
@@ -314,13 +360,13 @@ public class NewsContentPage extends AppCompatActivity {
     }
 
     public void inVisiblePlay(View v) {
+        ((ViewManager) playLayout.getParent()).removeView(playLayout);
+        soundPlay.closePlayer();
+
         if(MainActivity.mode == 0)
             MainActivity.viewPoint.setVisibility(View.INVISIBLE);
         else
             MainActivity.viewPoint.setVisibility(View.VISIBLE);
-
-        ((ViewManager) playLayout.getParent()).removeView(playLayout);
-        soundPlay.closePlayer();
     }
 
     public void stt(View v){
@@ -334,5 +380,30 @@ public class NewsContentPage extends AppCompatActivity {
         Intent intent = new Intent(this, NewsList.class);
         intent.putExtra("value", category);
         startActivity(intent);
+    }
+
+    public void removeContents(View v){
+        AlertDialog.Builder oDialog = new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Light_Dialog);
+
+        oDialog.setMessage("해당 글을 삭제하시겠습니까?")
+                .setTitle("eye-world")
+                .setPositiveButton("아니오", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        System.out.println("취소");
+                    }
+                })
+                .setNeutralButton("예", new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        NewsList.removeContents = title;
+                        Toast.makeText(getApplicationContext(), "삭제했습니다.", Toast.LENGTH_LONG).show();
+                    }
+                })
+                .setCancelable(false) // 백버튼으로 팝업창이 닫히지 않도록 한다.
+                .show();
     }
 }

@@ -41,6 +41,9 @@ public class NewsList extends Activity {
     String str, sendResult;
     Button camera;
     ImageButton modebtn;
+    static String removeContents;
+    NewsListDAO newsListDAO = new NewsListDAO();
+    MyContentsDAO myContentsDAO = new MyContentsDAO();
 
     String userUrl = "http://20.194.21.177:8000/insert/" + LoginActivity.userid;
 
@@ -54,24 +57,30 @@ public class NewsList extends Activity {
 
         MainActivity.viewPoint = findViewById(R.id.view_point);
 
-        if(MainActivity.mode == 0)
-            MainActivity.viewPoint.setVisibility(View.INVISIBLE);
-        else
-            MainActivity.viewPoint.setVisibility(View.VISIBLE);
-
         modebtn = findViewById(R.id.mode);
         camera = findViewById(R.id.camera);
         listView = findViewById(R.id.listview);
         category = findViewById(R.id.category);
 
+        if(MainActivity.mode == 0){
+            modebtn.setBackground(ContextCompat.getDrawable(NewsList.this, R.drawable.black_eye_2));
+            MainActivity.viewPoint.setVisibility(View.INVISIBLE);
+        } else {
+            modebtn.setBackground(ContextCompat.getDrawable(NewsList.this, R.drawable.black_eye));
+            MainActivity.viewPoint.setVisibility(View.VISIBLE);
+        }
+
         Intent intent = getIntent();
         str = intent.getExtras().getString("value");
         category.setText(str);
 
+        removeContents = null;
         models.clear();
 
-        if(OcrView.saveState){
+        if(OcrView.saveState && str.equals("My")){
             String result = sendContents(OcrView.title, OcrView.contents);
+
+            System.out.println(OcrView.title + "                " + OcrView.contents);
 
             if(result.equals("success"))
                 Toast.makeText(getApplicationContext(), "Success!", Toast.LENGTH_LONG).show();
@@ -79,9 +88,19 @@ public class NewsList extends Activity {
                 Toast.makeText(getApplicationContext(), "Failed to Connect to Server. Please try again later.", Toast.LENGTH_LONG).show();
         }
 
+        newsListDAO.LoadData();
+        myContentsDAO.LoadData();
+
         if(str.equals("My")){
             camera.setVisibility(View.VISIBLE);
             models = MyContentsDAO.contentsModels;
+
+            if(removeContents != null){
+                for(int i=0; i< models.size(); i++){
+                    if(models.get(i).getTitle().equals(removeContents))
+                        models.remove(i);
+                }
+            }
         }
         else{
             for(int i=0; i<NewsListDAO.allmodels.size(); i++){

@@ -16,6 +16,8 @@
             android:id="@+id/loginUserid"
             android:layout_width="250dp"
             android:layout_height="60dp"
+            android:letterSpacing="0.1"
+            android:fontFamily="@font/square_regular"
             android:hint="Enter your ID"
             android:singleLine="true" />
 
@@ -25,6 +27,8 @@
             android:layout_height="60dp"
             android:layout_below="@+id/loginUserid"
             android:hint="Enter Password"
+            android:letterSpacing="0.1"
+            android:fontFamily="@font/square_regular"
             android:inputType="textPassword"
             android:singleLine="true"
             android:textStyle="bold" />
@@ -36,6 +40,8 @@
             android:layout_below="@+id/loginPassword"
             android:background="#00FFFFFF"
             android:onClick="submit"
+            android:letterSpacing="0.1"
+            android:fontFamily="@font/square_ebold"
             android:text="Login"
             android:textStyle="bold" />
     </RelativeLayout>

@@ -2,6 +2,7 @@ package com.example.oss_app;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -17,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -34,7 +36,7 @@ public class NewsContentScroll extends AppCompatActivity {
     List<NewsListModel> models = NewsList.models;
     FragmentPagerAdapter adapterViewPager;
     static int modelPosition, currentPosition;
-    String category, key, content = null, sttmsg = "null";
+    String category, key, content = null, sttmsg = "null", title;
     static int count;
     ViewPager vpPager;
 
@@ -65,6 +67,7 @@ public class NewsContentScroll extends AppCompatActivity {
 
         count = 0;
 
+        title = models.get(modelPosition).getTitle();
         category = models.get(modelPosition).getCategory();
         key = models.get(modelPosition).getKey();
         content = models.get(modelPosition).getContent();
@@ -87,6 +90,11 @@ public class NewsContentScroll extends AppCompatActivity {
             public void onPageScrollStateChanged(int state) {
             }
         });
+
+        if(SpeechToText.resultType){
+            sttmsg = SpeechToText.sttResult;
+            loadTTS();
+        }
 /*
         CircleIndicator indicator = (CircleIndicator) findViewById(R.id.indicator);
         indicator.setViewPager(vpPager);
@@ -134,6 +142,19 @@ public class NewsContentScroll extends AppCompatActivity {
         settingLayout.setBackgroundColor(Color.parseColor("#99000000"));
         setLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         addContentView(settingLayout, setLayoutParams);
+
+        ImageButton mode = (ImageButton) findViewById(R.id.mode);
+        if(MainActivity.mode == 0) {
+            mode.setBackground(ContextCompat.getDrawable(this, R.drawable.black_eye_2));
+        }
+        else if(MainActivity.mode == 1) {
+            mode.setBackground(ContextCompat.getDrawable(this, R.drawable.black_eye));
+        }
+
+        if(category.equals("MY")) {
+            LinearLayout removebtn = findViewById(R.id.removebtn);
+            removebtn.setVisibility(View.VISIBLE);
+        }
     }
 
     public void inVisibleSetting(View v) {
@@ -206,6 +227,35 @@ public class NewsContentScroll extends AppCompatActivity {
         }
     }
 
+    public void loadTTS(){
+        playLayoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        playLayout = (LinearLayout) playLayoutInflater.inflate(R.layout.activity_sound_play, null);
+        playLayout.setBackgroundColor(Color.parseColor("#99000000"));
+        MainActivity.viewPoint = findViewById(R.id.view_point);
+        MainActivity.viewPoint.setVisibility(View.GONE);
+        playLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+
+        String msg = "", path = "category/" + category + "/" + key;
+
+        if(SpeechToText.resultType && sttmsg.equals("읽어"))
+            msg = "읽어";
+        else if(SpeechToText.resultType && sttmsg.equals("요약"))
+            msg = "요약";
+
+        String soundUrl = httpConnection.sendTTS(msg, path);
+
+        if (soundUrl.equals("failure")) {
+            Toast.makeText(getApplicationContext(), "Failed to Connect to Server. Please try again later.", Toast.LENGTH_LONG).show();
+            soundPlay.closePlayer();
+        } else {
+            soundPlay.setPlayUrl(soundUrl);
+            addContentView(playLayout, playLayoutParams);
+
+            sttmsg = "null";
+            SpeechToText.resultType = false;
+        }
+    }
+
     public void playbtn(View v) {
         soundPlay.playAudio();
     }
@@ -234,7 +284,7 @@ public class NewsContentScroll extends AppCompatActivity {
 
     public void stt(View v){
         Intent intent = new Intent(this, SpeechToText.class);
-        intent.putExtra("pageName", "NewsContentScroll");
+        intent.putExtra("pageName", "NewsContentPage");
         intent.putExtra("position", modelPosition);
         startActivity(intent);
     }
@@ -243,5 +293,31 @@ public class NewsContentScroll extends AppCompatActivity {
         Intent intent = new Intent(this, NewsList.class);
         intent.putExtra("value", category);
         startActivity(intent);
+    }
+
+
+    public void removeContents(View v){
+        AlertDialog.Builder oDialog = new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Light_Dialog);
+
+        oDialog.setMessage("해당 글을 삭제하시겠습니까?")
+                .setTitle("eye-world")
+                .setPositiveButton("아니오", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        System.out.println("취소");
+                    }
+                })
+                .setNeutralButton("예", new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        NewsList.removeContents = title;
+                        Toast.makeText(getApplicationContext(), "삭제했습니다.", Toast.LENGTH_LONG).show();
+                    }
+                })
+                .setCancelable(false) // 백버튼으로 팝업창이 닫히지 않도록 한다.
+                .show();
     }
 }

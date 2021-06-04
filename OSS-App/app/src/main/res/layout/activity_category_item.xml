@@ -29,6 +29,7 @@
                     android:background="@drawable/culture"
                     android:gravity="center|bottom"
                     android:paddingBottom="95dp"
+                    android:fontFamily="@font/square_bold"
                     android:text="culture"
                     android:textColor="#FFFFFF"
                     android:textSize="50dp" />

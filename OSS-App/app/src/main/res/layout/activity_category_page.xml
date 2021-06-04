@@ -24,6 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:gravity="left|center"
+            android:fontFamily="@font/square_ebold"
             android:text="   CATEGORY"
             android:textSize="40dp" />
     </RelativeLayout>
