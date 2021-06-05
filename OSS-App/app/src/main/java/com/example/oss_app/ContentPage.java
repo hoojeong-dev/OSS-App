@@ -1,5 +1,6 @@
 package com.example.oss_app;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ public class ContentPage extends Fragment {
     int page, position, count;
     String title, content;
     TextView contentView;
+    Typeface bold, regular;
 
     public static ContentPage newInstance(int page, int position, int count) {
         ContentPage fragment = new ContentPage();
@@ -44,11 +46,18 @@ public class ContentPage extends Fragment {
         content = models.get(position).getContent();
         contentView = (TextView) view.findViewById(R.id.content);
 
+        //bold = Typeface.createFromAsset(getResources().getAssets(), "font/square_bold.ttf");
+        //regular = Typeface.createFromAsset(getResources().getAssets(), "font/square_regular.ttf");
+
         if(count == 1){
             contentView.setText(title);
+            contentView.setTextSize(30);
+            //contentView.setTypeface(bold);
         }
         else{
             contentView.setText(content);
+            contentView.setTextSize(20);
+            //contentView.setTypeface(regular);
         }
 
         return view;

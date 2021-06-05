@@ -355,7 +355,7 @@ public class MainActivity extends AppCompatActivity {
                         if (isUseGazeFilter) {
                             if (oneEuroFilterManager.filterValues(gazeInfo.timestamp, gazeInfo.x, gazeInfo.y)) {
                                 float[] filteredPoint = oneEuroFilterManager.getFilteredValues();
-                                System.out.println(filteredPoint[0]);
+                                //System.out.println(filteredPoint[0]);
                                 showGazePoint(filteredPoint[0], filteredPoint[1], gazeInfo.screenState);
                                 xq.enqueue(filteredPoint[0]);
                                 yq.enqueue(filteredPoint[1]);

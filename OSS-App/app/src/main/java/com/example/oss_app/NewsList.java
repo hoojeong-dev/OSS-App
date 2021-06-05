@@ -42,7 +42,6 @@ public class NewsList extends Activity {
     Button camera;
     ImageButton modebtn;
     static String removeContents;
-    NewsListDAO newsListDAO = new NewsListDAO();
     MyContentsDAO myContentsDAO = new MyContentsDAO();
 
     String userUrl = "http://20.194.21.177:8000/insert/" + LoginActivity.userid;
@@ -53,6 +52,7 @@ public class NewsList extends Activity {
         MainActivity.pagenum=1;
 
         super.onCreate(savedInstanceState);
+        models.clear();
         setContentView(R.layout.activity_news_list);
 
         MainActivity.viewPoint = findViewById(R.id.view_point);
@@ -62,6 +62,12 @@ public class NewsList extends Activity {
         listView = findViewById(R.id.listview);
         category = findViewById(R.id.category);
 
+        Intent intent = getIntent();
+        str = intent.getExtras().getString("value");
+        category.setText(str);
+
+        removeContents = null;
+
         if(MainActivity.mode == 0){
             modebtn.setBackground(ContextCompat.getDrawable(NewsList.this, R.drawable.black_eye_2));
             MainActivity.viewPoint.setVisibility(View.INVISIBLE);
@@ -70,26 +76,16 @@ public class NewsList extends Activity {
             MainActivity.viewPoint.setVisibility(View.VISIBLE);
         }
 
-        Intent intent = getIntent();
-        str = intent.getExtras().getString("value");
-        category.setText(str);
-
-        removeContents = null;
-        models.clear();
 
         if(OcrView.saveState && str.equals("My")){
             String result = sendContents(OcrView.title, OcrView.contents);
-
-            System.out.println(OcrView.title + "                " + OcrView.contents);
-
-            if(result.equals("success"))
+            myContentsDAO.LoadData();
+            if(result.equals("success")){
                 Toast.makeText(getApplicationContext(), "Success!", Toast.LENGTH_LONG).show();
+            }
             else
                 Toast.makeText(getApplicationContext(), "Failed to Connect to Server. Please try again later.", Toast.LENGTH_LONG).show();
         }
-
-        newsListDAO.LoadData();
-        myContentsDAO.LoadData();
 
         if(str.equals("My")){
             camera.setVisibility(View.VISIBLE);
@@ -101,6 +97,15 @@ public class NewsList extends Activity {
                         models.remove(i);
                 }
             }
+            System.out.println("======================================================================================");
+            for(int i=0; i<MyContentsDAO.contentsModels.size(); i++){
+                System.out.println(MyContentsDAO.contentsModels.get(i).getTitle());
+            }
+            System.out.println(MyContentsDAO.contentsModels.size());
+            myContentsDAO.LoadData();
+            models = MyContentsDAO.contentsModels;
+            System.out.println("======================================================================================");
+            System.out.println(MyContentsDAO.contentsModels.size());
         }
         else{
             for(int i=0; i<NewsListDAO.allmodels.size(); i++){

@@ -32,20 +32,6 @@
             <LinearLayout
                 android:layout_width="250dp"
                 android:layout_height="match_parent"/>
-            <LinearLayout
-                android:layout_gravity="right"
-                android:layout_width="70dp"
-                android:layout_height="match_parent"
-                android:gravity="left|bottom">
-                <ImageButton
-                    android:id="@+id/mode"
-                    android:onClick="controlMode"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:gravity="left|bottom"
-                    android:textColor="#FF000000"
-                    android:background="@drawable/black_eye_2"/>
-            </LinearLayout>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -59,10 +45,10 @@
 
             <TextView
                 android:id="@+id/category"
-                android:layout_width="300dp"
+                android:layout_width="240dp"
                 android:layout_height="match_parent"
                 android:background="#00ff0000"
-                android:fontFamily="@font/square_bold"
+                android:fontFamily="@font/square_ebold"
                 android:gravity="left|center|bottom"
                 android:text="category"
                 android:textSize="34dp" />
@@ -77,9 +63,23 @@
                     android:gravity="left|bottom"
                     android:id="@+id/camera"
                     android:onClick="cameraOCR"
-                    android:visibility="invisible"
+
                     android:textColor="#FF000000"
                     android:background="@drawable/black_camera"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_gravity="right"
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:gravity="left|bottom">
+                <ImageButton
+                    android:id="@+id/mode"
+                    android:onClick="controlMode"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:gravity="left|bottom"
+                    android:textColor="#FF000000"
+                    android:background="@drawable/black_eye_2"/>
             </LinearLayout>
         </LinearLayout>
         <LinearLayout

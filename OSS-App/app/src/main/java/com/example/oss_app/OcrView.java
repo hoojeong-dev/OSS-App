@@ -138,6 +138,7 @@ public class OcrView extends AppCompatActivity {
     }
 
     public void backPage(View v){
+        System.out.println("nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
         Intent intent = new Intent(this, NewsList.class);
         intent.putExtra("value", "My");
         startActivity(intent);
@@ -157,7 +158,7 @@ public class OcrView extends AppCompatActivity {
         EditText gettitle = (EditText) findViewById(R.id.title);
         title = String.valueOf(gettitle.getText());
 
-        System.out.println("==========================" + title);
+        System.out.println("==============================================" + title);
 
         Intent intent = new Intent(this, NewsList.class);
         intent.putExtra("value", "My");
@@ -251,7 +252,7 @@ public class OcrView extends AppCompatActivity {
             //String match = "[^\uAC00-\uD7A3xfe0-9a-zA-Z\\s]";
             //result = result.replaceAll(match, " ");
             //result = result.replaceAll(" ", "");
-            //result = "2021. 6. 3. Eye tracking -Wlklpedla One study focused on what particular features caused people to notice an ad, whether they viewed ads in a particular order and how viewing times varied. The study revealed that ad size, graphics, color, and copy all influence attention to advertisements. Knowing this allows researchers to assess in great detail how often a sample of consumers fixates on the target logo, product or ad. As a result, an advertiser can quantify the success of a given campaign in terms of actual visual attention.區Another example of this is a study that found that in a search engine resultl 1age, authorship snippets received more attention than the paid ads or even the first organic result효으 Yet another example of commercial eye-tracking research comes from the field of recruitment. A study analyzed how recruiters screen Linkedin profiles and presented results as heat maps.區Safety applications Scientists in 2017 constructed a Deep Integrated Neural Network (DINN) out of a Deep Neural Network and a convolutional neural network.~ The goal was to use deep learning to examine images of drivers and determine their level of drowsiness by \"classify[ing] eye states.\" With enough images, the proposed DINN could ideally determine when drivers blink, how often they blink, and for how long. From there, it could judge how tired a given driver appears to be, effectively conducting an eye-tracking exercise. The DINN was trained on data from over 2,400 subjects and correctly diagnosed their states 96%-99.5% of the time. Most other artificial intelligence models performed at rates above 90%.~ This technology could ideally provide another avenue for driver drowsiness detection. Game theory applications In a 2019 study, a Convolutional Neural Network (CNN) was constructed with the ability to identify individual chess pieces the same way other CNNs can identify facial features.區l1twas then fed eye-tracking input data from thirty chess players of various skilllevels. With this data, the CNN used gaze estimation to determine parts of the chess board to which a player was paying close attention. It then generated a saliency map to illustrate those parts of the board. Ultimately, the CNN would combine its knowledge of the board and pieces with its saliency map to predict the players' next move. Regardless of the training dataset the neural network system was trained upon, it predicted the next move more accurately than if it had selected any possible move at random, and the saliency maps drawn for any given player and situation were more than 54% similar.區Assistive technology People with severe motor impairment can use eye trackin? !or interacting with computers 區as it is faster than single switch scanning techniques and intmt1ve to operate.~갭띄 Motor impairment caused by Cerebral Palsy 固。rAmyotrophic lateral sclerosis often affects speech, and users with Severe Speech and Motor Impairment (SSMI) use a type of software known as Augmentative and Alternative Communication (AAC) aid,區Jthat displays icons, words and letters on screen 15.21 and uses text-to-speech software to generate spoken output陶In recent times, researchers also explored eye tracking to control robotic arms 回and powered wheelchairs.~ Eye tracking is also helpful in analysing visual search patterns,~ detecting presence of ~딱쁩혼 and detecting early signs of learning disability by analysing eye gaze movement during reading.i Aviation applications https://en.wikipedia.org/wikl/Eye_tracklng 10/19";
+            result = "일본의 경우 가상자산 상장 시 우리나라 금융당국에 해당하는 금융청의 화이트리스트 코인 심사를 거치도록 해 불량코인을 걸러내고 있는데, 비트코인과 이더리움 등 대장주 위주로만 거래가 집중되고 기타 코인들의 성장은 정체되는 부작용이 나타났다는 진단이다.";
             textView.setText(result);
 
             contents = result;

@@ -152,8 +152,10 @@ public class NewsContentScroll extends AppCompatActivity {
         }
 
         if(category.equals("MY")) {
-            LinearLayout removebtn = findViewById(R.id.removebtn);
-            removebtn.setVisibility(View.VISIBLE);
+            LinearLayout removeBack = findViewById(R.id.removeBack);
+            removeBack.setBackground(ContextCompat.getDrawable(this, R.drawable.button_circle));
+            ImageButton remove = findViewById(R.id.remove);
+            remove.setVisibility(View.VISIBLE);
         }
     }
 

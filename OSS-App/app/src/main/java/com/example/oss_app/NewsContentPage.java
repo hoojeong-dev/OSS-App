@@ -5,8 +5,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
@@ -24,6 +27,7 @@ import android.widget.Magnifier;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -41,17 +45,17 @@ public class NewsContentPage extends AppCompatActivity {
     String category, key, title, content = null, keyword, summary, sttmsg = "null";
     static String[] newsContents;
     static int currentCount, count, contentcount, pageValue;
-    TextView contentView, keywordView, summaryView;
+    TextView titleView, keywordView, summaryView;
 
     LayoutInflater setLayoutInflater, playLayoutInflater, sttLayoutInflater;
     LinearLayout settingLayout, playLayout, sttLayout;
     LinearLayout.LayoutParams setLayoutParams, playLayoutParams, sttLayoutParams;
 
+    Typeface bold, regular;
     SoundPlay soundPlay = new SoundPlay();
-    SpeechToText speechToText = new SpeechToText();
     HttpConnection httpConnection = new HttpConnection();
-    final int PERMISSION = 1;
 
+    @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         MainActivity.pagenum=2;
@@ -79,8 +83,11 @@ public class NewsContentPage extends AppCompatActivity {
 
         setNewContents();
 
-        contentView = (TextView) findViewById(R.id.content);
-        contentView.setText(title);
+        titleView = (TextView) findViewById(R.id.text8);
+        titleView.setText(title);
+        titleView.setTextSize(30);
+        titleView.setWidth(140);
+
         contentcount = 0;
         System.out.println("contentcount : " + contentcount);
 
@@ -88,46 +95,13 @@ public class NewsContentPage extends AppCompatActivity {
             sttmsg = SpeechToText.sttResult;
             loadTTS();
         }
-
-        /*
-        Magnifier magnifier = new Magnifier(contentView);
-
-        public Magnifier.Builder setSize(250, 30);
-
-        contentView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getActionMasked()) {
-                    case MotionEvent.ACTION_DOWN:
-                        // Fall through.
-                    case MotionEvent.ACTION_MOVE: {
-                        final int[] viewPosition = new int[2];
-                        v.getLocationOnScreen(viewPosition);
-                        magnifier.show(event.getRawX() - viewPosition[0],
-                                event.getRawY() - viewPosition[1]);
-                        break;
-                    }
-                    case MotionEvent.ACTION_CANCEL:
-                        // Fall through.
-                    case MotionEvent.ACTION_UP: {
-                        magnifier.dismiss();
-                    }
-                }
-                return true;
-            }
-        });
-        */
-/*
-        CircleIndicator indicator = (CircleIndicator) findViewById(R.id.indicator);
-        indicator.setViewPager(vpPager);
- */
     }
 
     // 뷰에 띄울 텍스트 설정
     public void setNewContents() {
 
         String[] sample = new String[1000];
-        int maxLength = 180;
+        int maxLength = 217;
         int textLen = content.length();
         int loopCnt = textLen / maxLength + 1;
         String result = "";
@@ -171,16 +145,27 @@ public class NewsContentPage extends AppCompatActivity {
             else
                 MainActivity.viewPoint.setVisibility(View.VISIBLE);
 
-            contentView = (TextView) findViewById(R.id.content);
-            contentView.setText(newsContents[contentcount]);
+            titleView = (TextView) findViewById(R.id.text8);
+            titleView.setTextSize(22);
+            titleView.setWidth(40);
+            setContents(contentcount);
+
             pageValue = 1;
         }
         else if(contentcount == 0){
-            contentView.setText(title);
+            titleView = (TextView) findViewById(R.id.text8);
+            titleView.setText(title);
+            titleView.setTextSize(30);
+            titleView.setWidth(140);
+
             pageValue = 1;
         }
         else if(contentcount < 0){
-            contentView.setText(title);
+            titleView = (TextView) findViewById(R.id.text8);
+            titleView.setText(title);
+            titleView.setTextSize(30);
+            titleView.setWidth(140);
+
             pageValue = 1;
             Toast.makeText(getApplicationContext(), "First Page", Toast.LENGTH_LONG).show();
         }
@@ -198,8 +183,9 @@ public class NewsContentPage extends AppCompatActivity {
                 MainActivity.viewPoint.setVisibility(View.INVISIBLE);
             else
                 MainActivity.viewPoint.setVisibility(View.VISIBLE);
-            contentView = (TextView) findViewById(R.id.content);
-            contentView.setText(newsContents[contentcount]);
+
+            setContents(contentcount);
+
             pageValue = 1;
         }
         else if(contentcount == count){
@@ -221,6 +207,97 @@ public class NewsContentPage extends AppCompatActivity {
         }
     }
 
+    public void clickText(View v){
+        switch (v.getId()){
+            case R.id.text1:
+            case R.id.text2:
+            case R.id.text3:
+            case R.id.text4:
+            case R.id.text5:
+            case R.id.text6:
+            case R.id.text7:
+            case R.id.text8:
+            case R.id.text9:
+            case R.id.text10:
+            case R.id.text11:
+            case R.id.text12:
+            case R.id.text13:
+            case R.id.text14:
+            case R.id.text15:
+            case R.id.text16:
+                TextView text = findViewById(v.getId());
+                text.setTextSize(25);
+                text.setPaintFlags(text.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
+
+                Handler mHandler = new Handler();
+                mHandler.postDelayed(new Runnable()  {
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "Change", Toast.LENGTH_LONG).show();
+                        text.setTextSize(22);
+                        text.setPaintFlags(text.getPaintFlags() & (~Paint.FAKE_BOLD_TEXT_FLAG));
+                    }
+                }, 3000);
+        }
+    }
+
+    public void setContents(int contentcount){
+        TextView text1 = findViewById(R.id.text1);
+        TextView text2 = findViewById(R.id.text2);
+        TextView text3 = findViewById(R.id.text3);
+        TextView text4 = findViewById(R.id.text4);
+        TextView text5 = findViewById(R.id.text5);
+        TextView text6 = findViewById(R.id.text6);
+        TextView text7 = findViewById(R.id.text7);
+        TextView text8 = findViewById(R.id.text8);
+        TextView text9 = findViewById(R.id.text9);
+        TextView text10 = findViewById(R.id.text10);
+        TextView text11 = findViewById(R.id.text11);
+        TextView text12 = findViewById(R.id.text12);
+        TextView text13 = findViewById(R.id.text13);
+        TextView text14 = findViewById(R.id.text14);
+        TextView text15 = findViewById(R.id.text15);
+        TextView text16 = findViewById(R.id.text16);
+
+        String[] sample = new String[1000];
+        int maxLength = 13;
+        int textLen = newsContents[contentcount].length();
+        int loopCnt = textLen / maxLength + 1;
+        String result = "";
+        int countSet = 1;
+
+        for (int i = 0; i < loopCnt; i++) {
+            int lastIndex = (i + 1) * maxLength;
+
+            if (textLen > lastIndex) {
+                result = newsContents[contentcount].substring(i * maxLength, lastIndex);
+                System.out.println(result);
+                sample[countSet] = result;
+                countSet++;
+            } else {
+                result = newsContents[contentcount].substring(i * maxLength);
+                sample[countSet] = result;
+                countSet++;
+            }
+        }
+
+        text1.setText(sample[0]);
+        text2.setText(sample[2]);
+        text3.setText(sample[3]);
+        text4.setText(sample[4]);
+        text5.setText(sample[5]);
+        text6.setText(sample[6]);
+        text7.setText(sample[7]);
+        text8.setText(sample[8]);
+        text9.setText(sample[9]);
+        text10.setText(sample[10]);
+        text11.setText(sample[11]);
+        text12.setText(sample[12]);
+        text13.setText(sample[13]);
+        text14.setText(sample[14]);
+        text15.setText(sample[15]);
+        text16.setText(sample[16]);
+    }
+
     public void setting(View v) {
         setLayoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         settingLayout = (LinearLayout) setLayoutInflater.inflate(R.layout.activity_setting_view, null);
@@ -239,8 +316,10 @@ public class NewsContentPage extends AppCompatActivity {
         }
 
         if(category.equals("MY")) {
-            LinearLayout removebtn = findViewById(R.id.removebtn);
-            removebtn.setVisibility(View.VISIBLE);
+            LinearLayout removeBack = findViewById(R.id.removeBack);
+            removeBack.setBackground(ContextCompat.getDrawable(this, R.drawable.button_circle));
+            ImageButton remove = findViewById(R.id.remove);
+            remove.setVisibility(View.VISIBLE);
         }
     }
 

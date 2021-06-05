@@ -52,6 +52,9 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
             // 카메라 미리보기를 시작한다.
             mCamera.startPreview();
 
+            parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+            mCamera.setParameters(parameters);
+            /*
             // 자동포커스 설정
             mCamera.autoFocus(new Camera.AutoFocusCallback() {
                 public void onAutoFocus(boolean success, Camera camera) {
@@ -60,6 +63,7 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
                     }
                 }
             });
+             */
         }catch(Exception e)
         {
             e.printStackTrace();

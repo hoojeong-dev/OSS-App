@@ -106,22 +106,22 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/removebtn"
                 android:layout_width="80dp"
                 android:layout_height="70dp"
                 android:gravity="center|top"
-                android:visibility="gone"
                 android:layout_marginRight="10dp">
                 <LinearLayout
+                    android:id="@+id/removeBack"
                     android:layout_width="60dp"
                     android:layout_height="65dp"
-                    android:background="@drawable/button_circle"
+                    android:background="#00FFFFFF"
                     android:gravity="center">
                     <ImageButton
                         android:id="@+id/remove"
                         android:onClick="removeContents"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
+                        android:visibility="gone"
                         android:background="@drawable/black_trash"/>
                 </LinearLayout>
             </LinearLayout>

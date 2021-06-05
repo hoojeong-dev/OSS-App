@@ -30,8 +30,7 @@
             android:letterSpacing="0.1"
             android:fontFamily="@font/square_regular"
             android:inputType="textPassword"
-            android:singleLine="true"
-            android:textStyle="bold" />
+            android:singleLine="true"/>
 
         <Button
             android:id="@+id/btn"
@@ -41,9 +40,8 @@
             android:background="#00FFFFFF"
             android:onClick="submit"
             android:letterSpacing="0.1"
-            android:fontFamily="@font/square_ebold"
-            android:text="Login"
-            android:textStyle="bold" />
+            android:fontFamily="@font/square_bold"
+            android:text="Login"/>
     </RelativeLayout>
 
     <com.example.oss_app.PointView

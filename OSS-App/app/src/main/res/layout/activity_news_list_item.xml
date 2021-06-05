@@ -26,8 +26,9 @@
                 android:layout_width="350dp"
                 android:layout_height="136dp"
                 android:breakStrategy="simple"
-                android:background="@drawable/cardnews"
+                android:background="@drawable/list_red"
                 android:gravity="center"
+                android:fontFamily="@font/square_regular"
                 android:textColor="@color/white"
                 android:textSize="25dp" />
         </LinearLayout>

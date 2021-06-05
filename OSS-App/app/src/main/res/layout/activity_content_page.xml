@@ -50,8 +50,167 @@
                 android:textSize="35dp" />
 
             <Button
+                android:id="@+id/a"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:layout_below="@id/previous1"
+                android:background="#00FFFFFF" />
+
+            <LinearLayout
+                android:layout_width="310dp"
+                android:layout_height="665dp"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:orientation="vertical">
+                <TextView
+                    android:onClick="clickText"
+                    android:id="@+id/text1"
+                    android:layout_width="280dp"
+                    android:layout_height="40dp"
+                    android:gravity="center|left"
+                    android:layout_centerInParent="true"
+                    android:letterSpacing="0.1"
+                    android:textSize="22dp"/>
+                <TextView
+                    android:onClick="clickText"
+                    android:id="@+id/text2"
+                    android:layout_width="280dp"
+                    android:layout_height="40dp"
+                    android:gravity="center|left"
+                    android:layout_centerInParent="true"
+                    android:letterSpacing="0.1"
+                    android:textSize="22dp"/>
+                <TextView
+                    android:onClick="clickText"
+                    android:id="@+id/text3"
+                    android:layout_width="280dp"
+                    android:layout_height="40dp"
+                    android:gravity="center|left"
+                    android:layout_centerInParent="true"
+                    android:letterSpacing="0.1"
+                    android:textSize="22dp"/>
+                <TextView
+                    android:onClick="clickText"
+                    android:id="@+id/text4"
+                    android:layout_width="280dp"
+                    android:layout_height="40dp"
+                    android:gravity="center|left"
+                    android:layout_centerInParent="true"
+                    android:letterSpacing="0.1"
+                    android:textSize="22dp"/>
+                <TextView
+                    android:onClick="clickText"
+                    android:id="@+id/text5"
+                    android:layout_width="280dp"
+                    android:layout_height="40dp"
+                    android:gravity="center|left"
+                    android:layout_centerInParent="true"
+                    android:letterSpacing="0.1"
+                    android:textSize="22dp"/>
+                <TextView
+                    android:onClick="clickText"
+                    android:id="@+id/text6"
+                    android:layout_width="280dp"
+                    android:layout_height="40dp"
+                    android:gravity="center|left"
+                    android:layout_centerInParent="true"
+                    android:letterSpacing="0.1"
+                    android:textSize="22dp"/>
+                <TextView
+                    android:onClick="clickText"
+                    android:id="@+id/text7"
+                    android:layout_width="280dp"
+                    android:layout_height="40dp"
+                    android:gravity="center|left"
+                    android:layout_centerInParent="true"
+                    android:letterSpacing="0.1"
+                    android:textSize="22dp"/>
+                <TextView
+                    android:onClick="clickText"
+                    android:id="@+id/text8"
+                    android:layout_width="280dp"
+                    android:layout_height="40dp"
+                    android:gravity="center|left"
+                    android:layout_centerInParent="true"
+                    android:letterSpacing="0.1"
+                    android:textSize="22dp"/>
+                <TextView
+                    android:onClick="clickText"
+                    android:id="@+id/text9"
+                    android:layout_width="280dp"
+                    android:layout_height="40dp"
+                    android:gravity="center|left"
+                    android:layout_centerInParent="true"
+                    android:letterSpacing="0.1"
+                    android:textSize="22dp"/>
+                <TextView
+                    android:onClick="clickText"
+                    android:id="@+id/text10"
+                    android:layout_width="280dp"
+                    android:layout_height="40dp"
+                    android:gravity="center|left"
+                    android:layout_centerInParent="true"
+                    android:letterSpacing="0.1"
+                    android:textSize="22dp"/>
+                <TextView
+                    android:onClick="clickText"
+                    android:id="@+id/text11"
+                    android:layout_width="280dp"
+                    android:layout_height="40dp"
+                    android:gravity="center|left"
+                    android:layout_centerInParent="true"
+                    android:letterSpacing="0.1"
+                    android:textSize="22dp"/>
+                <TextView
+                    android:onClick="clickText"
+                    android:id="@+id/text12"
+                    android:layout_width="280dp"
+                    android:layout_height="40dp"
+                    android:gravity="center|left"
+                    android:layout_centerInParent="true"
+                    android:letterSpacing="0.1"
+                    android:textSize="22dp"/>
+                <TextView
+                    android:onClick="clickText"
+                    android:id="@+id/text13"
+                    android:layout_width="280dp"
+                    android:layout_height="40dp"
+                    android:gravity="center|left"
+                    android:layout_centerInParent="true"
+                    android:letterSpacing="0.1"
+                    android:textSize="22dp"/>
+                <TextView
+                    android:onClick="clickText"
+                    android:id="@+id/text14"
+                    android:layout_width="280dp"
+                    android:layout_height="40dp"
+                    android:gravity="center|left"
+                    android:layout_centerInParent="true"
+                    android:letterSpacing="0.1"
+                    android:textSize="22dp"/>
+                <TextView
+                    android:onClick="clickText"
+                    android:id="@+id/text15"
+                    android:layout_width="280dp"
+                    android:layout_height="40dp"
+                    android:gravity="center|left"
+                    android:layout_centerInParent="true"
+                    android:letterSpacing="0.1"
+                    android:textSize="22dp"/>
+                <TextView
+                    android:onClick="clickText"
+                    android:id="@+id/text16"
+                    android:layout_width="280dp"
+                    android:layout_height="40dp"
+                    android:gravity="center|left"
+                    android:layout_centerInParent="true"
+                    android:letterSpacing="0.1"
+                    android:textSize="22dp"/>
+            </LinearLayout>
+
+            <Button
                 android:id="@+id/previous2"
-                android:layout_width="70dp"
+                android:layout_width="50dp"
                 android:layout_height="700dp"
                 android:layout_below="@+id/back"
                 android:background="#00FFFFFF"
@@ -59,30 +218,12 @@
 
             <Button
                 android:id="@+id/next2"
-                android:layout_width="70dp"
+                android:layout_width="50dp"
                 android:layout_height="1100dp"
                 android:layout_below="@id/setting"
                 android:layout_alignParentRight="true"
                 android:background="#00FFFFFF"
                 android:onClick="next" />
-
-            <Button
-                android:id="@+id/a"
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:layout_below="@id/previous1"
-                android:background="#00FFFFFF" />
-
-            <TextView
-                android:id="@+id/content"
-                android:layout_width="250dp"
-                android:layout_height="665dp"
-                android:layout_centerInParent="true"
-                android:breakStrategy="simple"
-                android:fontFamily="@font/square_regular"
-                android:letterSpacing="0.1"
-                android:lineSpacingExtra="13dp"
-                android:textSize="20dp"></TextView>
 
             <Button
                 android:id="@+id/next1"
