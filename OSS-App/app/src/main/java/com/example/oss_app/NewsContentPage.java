@@ -2,14 +2,20 @@ package com.example.oss_app;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewManager;
 import android.view.animation.Animation;
@@ -17,9 +23,12 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Magnifier;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -36,18 +45,17 @@ public class NewsContentPage extends AppCompatActivity {
     String category, key, title, content = null, keyword, summary, sttmsg = "null";
     static String[] newsContents;
     static int currentCount, count, contentcount, pageValue;
-    TextView contentView, keywordView, summaryView;
+    TextView titleView, keywordView, summaryView;
 
     LayoutInflater setLayoutInflater, playLayoutInflater, sttLayoutInflater;
     LinearLayout settingLayout, playLayout, sttLayout;
     LinearLayout.LayoutParams setLayoutParams, playLayoutParams, sttLayoutParams;
 
+    Typeface bold, regular;
     SoundPlay soundPlay = new SoundPlay();
-    SpeechToText speechToText = new SpeechToText();
     HttpConnection httpConnection = new HttpConnection();
-    final int PERMISSION = 1;
-    Boolean sttState = false;
 
+    @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         MainActivity.pagenum=2;
@@ -75,21 +83,25 @@ public class NewsContentPage extends AppCompatActivity {
 
         setNewContents();
 
-        contentView = (TextView) findViewById(R.id.content);
-        contentView.setText(title);
+        titleView = (TextView) findViewById(R.id.text8);
+        titleView.setText(title);
+        titleView.setTextSize(30);
+        titleView.setWidth(140);
+
         contentcount = 0;
         System.out.println("contentcount : " + contentcount);
-/*
-        CircleIndicator indicator = (CircleIndicator) findViewById(R.id.indicator);
-        indicator.setViewPager(vpPager);
- */
+
+        if(SpeechToText.resultType){
+            sttmsg = SpeechToText.sttResult;
+            loadTTS();
+        }
     }
 
     // 뷰에 띄울 텍스트 설정
     public void setNewContents() {
 
         String[] sample = new String[1000];
-        int maxLength = 180;
+        int maxLength = 217;
         int textLen = content.length();
         int loopCnt = textLen / maxLength + 1;
         String result = "";
@@ -133,21 +145,31 @@ public class NewsContentPage extends AppCompatActivity {
             else
                 MainActivity.viewPoint.setVisibility(View.VISIBLE);
 
-            contentView = (TextView) findViewById(R.id.content);
-            contentView.setText(newsContents[contentcount]);
+            titleView = (TextView) findViewById(R.id.text8);
+            titleView.setTextSize(22);
+            titleView.setWidth(40);
+            setContents(contentcount);
+
             pageValue = 1;
         }
         else if(contentcount == 0){
-            contentView.setText(title);
+            titleView = (TextView) findViewById(R.id.text8);
+            titleView.setText(title);
+            titleView.setTextSize(30);
+            titleView.setWidth(140);
+
             pageValue = 1;
         }
         else if(contentcount < 0){
-            contentView.setText(title);
+            titleView = (TextView) findViewById(R.id.text8);
+            titleView.setText(title);
+            titleView.setTextSize(30);
+            titleView.setWidth(140);
+
             pageValue = 1;
             Toast.makeText(getApplicationContext(), "First Page", Toast.LENGTH_LONG).show();
         }
     }
-
 
     // 다음 페이지로
     public void next(View v){
@@ -161,8 +183,9 @@ public class NewsContentPage extends AppCompatActivity {
                 MainActivity.viewPoint.setVisibility(View.INVISIBLE);
             else
                 MainActivity.viewPoint.setVisibility(View.VISIBLE);
-            contentView = (TextView) findViewById(R.id.content);
-            contentView.setText(newsContents[contentcount]);
+
+            setContents(contentcount);
+
             pageValue = 1;
         }
         else if(contentcount == count){
@@ -184,6 +207,97 @@ public class NewsContentPage extends AppCompatActivity {
         }
     }
 
+    public void clickText(View v){
+        switch (v.getId()){
+            case R.id.text1:
+            case R.id.text2:
+            case R.id.text3:
+            case R.id.text4:
+            case R.id.text5:
+            case R.id.text6:
+            case R.id.text7:
+            case R.id.text8:
+            case R.id.text9:
+            case R.id.text10:
+            case R.id.text11:
+            case R.id.text12:
+            case R.id.text13:
+            case R.id.text14:
+            case R.id.text15:
+            case R.id.text16:
+                TextView text = findViewById(v.getId());
+                text.setTextSize(25);
+                text.setPaintFlags(text.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
+
+                Handler mHandler = new Handler();
+                mHandler.postDelayed(new Runnable()  {
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "Change", Toast.LENGTH_LONG).show();
+                        text.setTextSize(22);
+                        text.setPaintFlags(text.getPaintFlags() & (~Paint.FAKE_BOLD_TEXT_FLAG));
+                    }
+                }, 3000);
+        }
+    }
+
+    public void setContents(int contentcount){
+        TextView text1 = findViewById(R.id.text1);
+        TextView text2 = findViewById(R.id.text2);
+        TextView text3 = findViewById(R.id.text3);
+        TextView text4 = findViewById(R.id.text4);
+        TextView text5 = findViewById(R.id.text5);
+        TextView text6 = findViewById(R.id.text6);
+        TextView text7 = findViewById(R.id.text7);
+        TextView text8 = findViewById(R.id.text8);
+        TextView text9 = findViewById(R.id.text9);
+        TextView text10 = findViewById(R.id.text10);
+        TextView text11 = findViewById(R.id.text11);
+        TextView text12 = findViewById(R.id.text12);
+        TextView text13 = findViewById(R.id.text13);
+        TextView text14 = findViewById(R.id.text14);
+        TextView text15 = findViewById(R.id.text15);
+        TextView text16 = findViewById(R.id.text16);
+
+        String[] sample = new String[1000];
+        int maxLength = 13;
+        int textLen = newsContents[contentcount].length();
+        int loopCnt = textLen / maxLength + 1;
+        String result = "";
+        int countSet = 1;
+
+        for (int i = 0; i < loopCnt; i++) {
+            int lastIndex = (i + 1) * maxLength;
+
+            if (textLen > lastIndex) {
+                result = newsContents[contentcount].substring(i * maxLength, lastIndex);
+                System.out.println(result);
+                sample[countSet] = result;
+                countSet++;
+            } else {
+                result = newsContents[contentcount].substring(i * maxLength);
+                sample[countSet] = result;
+                countSet++;
+            }
+        }
+
+        text1.setText(sample[0]);
+        text2.setText(sample[2]);
+        text3.setText(sample[3]);
+        text4.setText(sample[4]);
+        text5.setText(sample[5]);
+        text6.setText(sample[6]);
+        text7.setText(sample[7]);
+        text8.setText(sample[8]);
+        text9.setText(sample[9]);
+        text10.setText(sample[10]);
+        text11.setText(sample[11]);
+        text12.setText(sample[12]);
+        text13.setText(sample[13]);
+        text14.setText(sample[14]);
+        text15.setText(sample[15]);
+        text16.setText(sample[16]);
+    }
+
     public void setting(View v) {
         setLayoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         settingLayout = (LinearLayout) setLayoutInflater.inflate(R.layout.activity_setting_view, null);
@@ -192,6 +306,21 @@ public class NewsContentPage extends AppCompatActivity {
         settingLayout.setBackgroundColor(Color.parseColor("#99000000"));
         setLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         addContentView(settingLayout, setLayoutParams);
+
+        ImageButton mode = (ImageButton) findViewById(R.id.mode);
+        if(MainActivity.mode == 0) {
+            mode.setBackground(ContextCompat.getDrawable(this, R.drawable.black_eye_2));
+        }
+        else if(MainActivity.mode == 1) {
+            mode.setBackground(ContextCompat.getDrawable(this, R.drawable.black_eye));
+        }
+
+        if(category.equals("MY")) {
+            LinearLayout removeBack = findViewById(R.id.removeBack);
+            removeBack.setBackground(ContextCompat.getDrawable(this, R.drawable.button_circle));
+            ImageButton remove = findViewById(R.id.remove);
+            remove.setVisibility(View.VISIBLE);
+        }
     }
 
     public void inVisibleSetting(View v) {
@@ -248,10 +377,6 @@ public class NewsContentPage extends AppCompatActivity {
                 msg = "읽어";
             else if (pageValue == 2)
                 msg = "요약";
-            else if(sttState && sttmsg.equals("읽어"))
-                msg = "읽어";
-            else if(sttState && sttmsg.equals("요약"))
-                msg = "요약";
 
             System.out.println("=================" + msg);
 
@@ -264,10 +389,36 @@ public class NewsContentPage extends AppCompatActivity {
                 soundPlay.setPlayUrl(soundUrl);
                 ((ViewManager) settingLayout.getParent()).removeView(settingLayout);
                 addContentView(playLayout, playLayoutParams);
-
-                sttmsg = "null";
-                sttState = false;
             }
+        }
+    }
+
+    public void loadTTS(){
+        playLayoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        playLayout = (LinearLayout) playLayoutInflater.inflate(R.layout.activity_sound_play, null);
+        playLayout.setBackgroundColor(Color.parseColor("#99000000"));
+        MainActivity.viewPoint = findViewById(R.id.view_point);
+        MainActivity.viewPoint.setVisibility(View.GONE);
+        playLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+
+        String msg = "", path = "category/" + category + "/" + key;
+
+        if(SpeechToText.resultType && sttmsg.equals("읽어"))
+            msg = "읽어";
+        else if(SpeechToText.resultType && sttmsg.equals("요약"))
+            msg = "요약";
+
+        String soundUrl = httpConnection.sendTTS(msg, path);
+
+        if (soundUrl.equals("failure")) {
+            Toast.makeText(getApplicationContext(), "Failed to Connect to Server. Please try again later.", Toast.LENGTH_LONG).show();
+            soundPlay.closePlayer();
+        } else {
+            soundPlay.setPlayUrl(soundUrl);
+            addContentView(playLayout, playLayoutParams);
+
+            sttmsg = "null";
+            SpeechToText.resultType = false;
         }
     }
 
@@ -288,177 +439,50 @@ public class NewsContentPage extends AppCompatActivity {
     }
 
     public void inVisiblePlay(View v) {
-        if(MainActivity.mode == 0)
-            MainActivity.viewPoint.setVisibility(View.INVISIBLE);
-        else
-            MainActivity.viewPoint.setVisibility(View.VISIBLE);
-
         ((ViewManager) playLayout.getParent()).removeView(playLayout);
         soundPlay.closePlayer();
-    }
 
-    TextView textView;
-    Button button;
-    Intent intentStt;
-    SpeechRecognizer mRecognizer;
-
-    public void stt(View v){
-        sttLayoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        sttLayout = (LinearLayout) sttLayoutInflater.inflate(R.layout.activity_speech_to_text, null);
-        sttLayout.setBackgroundColor(Color.parseColor("#99000000"));
-        MainActivity.viewPoint = findViewById(R.id.view_point);
-        MainActivity.viewPoint.setVisibility(View.GONE);
-        sttLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-
-        if(Build.VERSION.SDK_INT >= 23){
-            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.INTERNET,
-                    Manifest.permission.RECORD_AUDIO},PERMISSION);
-        }
-        speechToText.sttSet(NewsContentPage.this);
-        ((ViewManager) settingLayout.getParent()).removeView(settingLayout);
-        addContentView(sttLayout, sttLayoutParams);
-
-        textView = findViewById(R.id.result);
-        button = findViewById(R.id.stt);
-
-        // RecognizerIntent 생성
-        intentStt = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        intentStt.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE,getPackageName()); // 여분의 키
-        intentStt.putExtra(RecognizerIntent.EXTRA_LANGUAGE,"ko-KR");
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mRecognizer = SpeechRecognizer.createSpeechRecognizer(NewsContentPage.this); // 새 SpeechRecognizer 를 만드는 팩토리 메서드
-                mRecognizer.setRecognitionListener(sttlistener); // 리스너 설정
-                mRecognizer.startListening(intentStt); // 듣기 시작
-            }
-        });
-    }
-
-    private RecognitionListener sttlistener = new RecognitionListener() {
-        @Override
-        public void onReadyForSpeech(Bundle params) {
-            // 말하기 시작할 준비가되면 호출
-            Toast.makeText(getApplicationContext(),"음성인식 시작",Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        public void onBeginningOfSpeech() {
-            // 말하기 시작했을 때 호출
-        }
-
-        @Override
-        public void onRmsChanged(float rmsdB) {
-            // 입력받는 소리의 크기를 알려줌
-        }
-
-        @Override
-        public void onBufferReceived(byte[] buffer) {
-            // 말을 시작하고 인식이 된 단어를 buffer에 담음
-        }
-
-        @Override
-        public void onEndOfSpeech() {
-            // 말하기를 중지하면 호출
-        }
-
-        @Override
-        public void onError(int error) {
-            // 네트워크 또는 인식 오류가 발생했을 때 호출
-            String message;
-
-            switch (error) {
-                case SpeechRecognizer.ERROR_AUDIO:
-                    message = "오디오 에러";
-                    break;
-                case SpeechRecognizer.ERROR_CLIENT:
-                    message = "클라이언트 에러";
-                    break;
-                case SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS:
-                    message = "퍼미션 없음";
-                    break;
-                case SpeechRecognizer.ERROR_NETWORK:
-                    message = "네트워크 에러";
-                    break;
-                case SpeechRecognizer.ERROR_NETWORK_TIMEOUT:
-                    message = "네트웍 타임아웃";
-                    break;
-                case SpeechRecognizer.ERROR_NO_MATCH:
-                    message = "찾을 수 없음";
-                    break;
-                case SpeechRecognizer.ERROR_RECOGNIZER_BUSY:
-                    message = "RECOGNIZER 가 바쁨";
-                    break;
-                case SpeechRecognizer.ERROR_SERVER:
-                    message = "서버가 이상함";
-                    break;
-                case SpeechRecognizer.ERROR_SPEECH_TIMEOUT:
-                    message = "말하는 시간초과";
-                    break;
-                default:
-                    message = "알 수 없는 오류임";
-                    break;
-            }
-
-            Toast.makeText(getApplicationContext(), "에러 발생 : " + message,Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        public void onResults(Bundle results) {
-            // 인식 결과가 준비되면 호출
-            // 말을 하면 ArrayList에 단어를 넣고 textView에 단어를 이어줌
-            ArrayList<String> matches =
-                    results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-
-            for(int i = 0; i < matches.size() ; i++){
-                textView.setText(matches.get(i));
-                System.out.println(matches.get(i));
-            }
-
-            if(SpeechToText.sttResult){
-                if(MainActivity.mode == 0)
-                    MainActivity.viewPoint.setVisibility(View.INVISIBLE);
-                else
-                    MainActivity.viewPoint.setVisibility(View.VISIBLE);
-
-                ((ViewManager) sttLayout.getParent()).removeView(sttLayout);
-            }
-
-            sttmsg = (String) textView.getText();
-
-            if(sttmsg.contains("읽어") || sttmsg.contains("일거") || sttmsg.contains("읽거")){
-                sttmsg = "읽어";
-                sttState = true;
-            } else if(sttmsg.contains("요약") || sttmsg.contains("예약") || sttmsg.contains("얘약")){
-                sttmsg = "요약";
-                sttState = true;
-            }
-        }
-
-        @Override
-        public void onPartialResults(Bundle partialResults) {
-            // 부분 인식 결과를 사용할 수 있을 때 호출
-        }
-
-        @Override
-        public void onEvent(int eventType, Bundle params) {
-            // 향후 이벤트를 추가하기 위해 예약
-        }
-    };
-
-    public void inVisibleStt(View v) {
         if(MainActivity.mode == 0)
             MainActivity.viewPoint.setVisibility(View.INVISIBLE);
         else
             MainActivity.viewPoint.setVisibility(View.VISIBLE);
+    }
 
-        ((ViewManager) sttLayout.getParent()).removeView(sttLayout);
+    public void stt(View v){
+        Intent intent = new Intent(this, SpeechToText.class);
+        intent.putExtra("pageName", "NewsContentPage");
+        intent.putExtra("position", modelPosition);
+        startActivity(intent);
     }
 
     public void pageback(View v){
         Intent intent = new Intent(this, NewsList.class);
         intent.putExtra("value", category);
         startActivity(intent);
+    }
+
+    public void removeContents(View v){
+        AlertDialog.Builder oDialog = new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Light_Dialog);
+
+        oDialog.setMessage("해당 글을 삭제하시겠습니까?")
+                .setTitle("eye-world")
+                .setPositiveButton("아니오", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        System.out.println("취소");
+                    }
+                })
+                .setNeutralButton("예", new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        NewsList.removeContents = title;
+                        Toast.makeText(getApplicationContext(), "삭제했습니다.", Toast.LENGTH_LONG).show();
+                    }
+                })
+                .setCancelable(false) // 백버튼으로 팝업창이 닫히지 않도록 한다.
+                .show();
     }
 }

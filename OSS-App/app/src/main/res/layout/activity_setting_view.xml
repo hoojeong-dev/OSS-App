@@ -104,6 +104,27 @@
                         android:background="@drawable/black_touch"/>
                 </LinearLayout>
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:gravity="center|top"
+                android:layout_marginRight="10dp">
+                <LinearLayout
+                    android:id="@+id/removeBack"
+                    android:layout_width="60dp"
+                    android:layout_height="65dp"
+                    android:background="#00FFFFFF"
+                    android:gravity="center">
+                    <ImageButton
+                        android:id="@+id/remove"
+                        android:onClick="removeContents"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:visibility="gone"
+                        android:background="@drawable/black_trash"/>
+                </LinearLayout>
+            </LinearLayout>
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="463dp"

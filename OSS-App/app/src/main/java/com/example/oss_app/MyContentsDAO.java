@@ -20,18 +20,27 @@ public class MyContentsDAO {
     static String getResult;
     String getUrl = "http://20.194.21.177:8000/getdata/" + LoginActivity.userid;
     static List<NewsListModel> contentsModels = new ArrayList<>();
+    NewsListModel newsListModel = new NewsListModel();
 
     public void LoadData(){
+        contentsModels.clear();
+
         String result = getContent();
         result = result.replaceAll("\\{\\{", "");
         result = result.replaceAll("\\}\\}", "\n");
 
         String[] text = result.split("\n");
 
+        System.out.println(text.length);
+        System.out.println("======================================================================================");
+        for(int i=0;i<text.length; i++){
+            System.out.println(text[i]);
+        }
+
         try{
             for(int i=0; i< text.length; i++){
                 String[] content = text[i].split("//");
-                NewsListModel newsListModel = new NewsListModel("My", "0", content[0], content[1], content[2], content[3], content[4]);
+                newsListModel = new NewsListModel("My", "0", content[0], content[1], content[2], content[4], content[3]);
                 contentsModels.add(newsListModel);
             }
         }catch(Exception e){

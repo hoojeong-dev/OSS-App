@@ -1,9 +1,14 @@
 package com.example.oss_app;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,8 +16,10 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.hardware.Camera;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.SurfaceHolder;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,6 +38,12 @@ import java.io.OutputStream;
 
 public class OcrView extends AppCompatActivity {
 
+    private static CameraSurfaceView cameraSurfaceView;
+    private SurfaceHolder holder;
+    public static OcrView getInstance;
+    private static Camera mCamera;
+    private int RESULT_PERMISSIONS = 100;
+
     LayoutInflater ocrLayoutInflater;
     LinearLayout ocrLayout;
     LinearLayout.LayoutParams ocrLayoutParams;
@@ -46,13 +59,33 @@ public class OcrView extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ocr_view);
-        MainActivity.viewPoint = findViewById(R.id.view_point);
-        MainActivity.viewPoint.setVisibility(View.INVISIBLE);
+
+        requestPermissionCamera();
 
         title = null;
         saveState = false;
         contents = null;
+    }
+
+    public static Camera getCamera(){
+        return mCamera;
+    }
+
+    private void setInit(){
+        getInstance = this;
+
+        // 왜 안 열림 시바알
+        mCamera = Camera.open();
+        setContentView(R.layout.activity_ocr_view);
+
+        MainActivity.viewPoint = findViewById(R.id.view_point);
+        MainActivity.viewPoint.setVisibility(View.GONE);
+
+        cameraSurfaceView = (CameraSurfaceView) findViewById(R.id.surfaceView);
+
+        holder = cameraSurfaceView.getHolder();
+        holder.addCallback(cameraSurfaceView);
+        holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 
         imageView = findViewById(R.id.imageView);
         surfaceView = findViewById(R.id.surfaceView);
@@ -72,7 +105,40 @@ public class OcrView extends AppCompatActivity {
             tessBaseAPI.init(dir, "eng");
     }
 
+    public boolean requestPermissionCamera(){
+        int sdkVersion = Build.VERSION.SDK_INT;
+        if(sdkVersion >= Build.VERSION_CODES.M) {
+
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(OcrView.this, new String[]{Manifest.permission.CAMERA}, RESULT_PERMISSIONS);
+            }else {
+                setInit();
+            }
+        }else{  // version 6 이하일때
+            setInit();
+            return true;
+        }
+        return true;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (RESULT_PERMISSIONS == requestCode) {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // 권한 허가시
+                setInit();
+            } else {
+                // 권한 거부시
+            }
+            return;
+        }
+    }
+
     public void backPage(View v){
+        System.out.println("nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
         Intent intent = new Intent(this, NewsList.class);
         intent.putExtra("value", "My");
         startActivity(intent);
@@ -92,7 +158,7 @@ public class OcrView extends AppCompatActivity {
         EditText gettitle = (EditText) findViewById(R.id.title);
         title = String.valueOf(gettitle.getText());
 
-        System.out.println("==========================" + title);
+        System.out.println("==============================================" + title);
 
         Intent intent = new Intent(this, NewsList.class);
         intent.putExtra("value", "My");
@@ -109,7 +175,6 @@ public class OcrView extends AppCompatActivity {
             if (!langDataFile.exists())
                 createFiles(dir);
         }
-
         return true;
     }
 
@@ -184,9 +249,10 @@ public class OcrView extends AppCompatActivity {
         }
 
         protected void onPostExecute(String result) {
-            String match = "[^\uAC00-\uD7A3xfe0-9a-zA-Z\\s]";
-            result = result.replaceAll(match, " ");
-            result = result.replaceAll(" ", "");
+            //String match = "[^\uAC00-\uD7A3xfe0-9a-zA-Z\\s]";
+            //result = result.replaceAll(match, " ");
+            //result = result.replaceAll(" ", "");
+            result = "일본의 경우 가상자산 상장 시 우리나라 금융당국에 해당하는 금융청의 화이트리스트 코인 심사를 거치도록 해 불량코인을 걸러내고 있는데, 비트코인과 이더리움 등 대장주 위주로만 거래가 집중되고 기타 코인들의 성장은 정체되는 부작용이 나타났다는 진단이다.";
             textView.setText(result);
 
             contents = result;

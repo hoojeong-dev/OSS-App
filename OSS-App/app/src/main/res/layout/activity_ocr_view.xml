@@ -45,8 +45,10 @@
                 android:layout_marginRight="16dp"
                 android:background="#00FFFFFF"
                 android:onClick="backPage"
+                android:letterSpacing="0.1"
+                android:fontFamily="@font/square_bold"
                 android:text=">"
-                android:textSize="30dp" />
+                android:textSize="20dp" />
 
             <Button
                 android:id="@+id/button"
@@ -55,6 +57,8 @@
                 android:layout_margin="0dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
+                android:letterSpacing="0.1"
+                android:fontFamily="@font/square_regular"
                 android:text="텍스트 인식" />
 
             <Button
@@ -65,6 +69,8 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:background="#00FFFFFF"
+                android:letterSpacing="0.1"
+                android:fontFamily="@font/square_bold"
                 android:onClick="saveContents"
                 android:text="Save"
                 android:textSize="15dp" />
@@ -96,6 +102,8 @@
                         android:paddingTop="10dp"
                         android:paddingRight="15dp"
                         android:paddingBottom="0dp"
+                        android:letterSpacing="0.1"
+                        android:fontFamily="@font/square_bold"
                         android:text="여기에 텍스트 인식 결과가 표시됩니다."
                         android:textSize="18sp" />
                 </LinearLayout>

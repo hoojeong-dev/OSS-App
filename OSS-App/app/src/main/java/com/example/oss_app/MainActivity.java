@@ -96,6 +96,14 @@ public class MainActivity extends AppCompatActivity {
         sign_in_btn = findViewById(R.id.sign_in_btn);
         sign_up_btn = findViewById(R.id.sign_up_btn);
 
+        if(MainActivity.mode == 0){
+            modebtn.setBackground(ContextCompat.getDrawable(this, R.drawable.eye_2));
+            MainActivity.viewPoint.setVisibility(View.INVISIBLE);
+        } else {
+            modebtn.setBackground(ContextCompat.getDrawable(this, R.drawable.eye));
+            MainActivity.viewPoint.setVisibility(View.VISIBLE);
+        }
+
         viewPoint.setVisibility(View.INVISIBLE);
         pagenum = 0;
 
@@ -141,12 +149,12 @@ public class MainActivity extends AppCompatActivity {
 
         if(mode == 0) {
             mode = 1;
-            modebtn.setBackground(ContextCompat.getDrawable(this, R.drawable.black_eye));
+            modebtn.setBackground(ContextCompat.getDrawable(this, R.drawable.eye));
             viewPoint.setVisibility(View.VISIBLE);
         }
         else if(mode == 1) {
             mode = 0;
-            modebtn.setBackground(ContextCompat.getDrawable(this, R.drawable.black_eye_2));
+            modebtn.setBackground(ContextCompat.getDrawable(this, R.drawable.eye_2));
             viewPoint.setVisibility(View.GONE);
         }
     }
@@ -347,7 +355,7 @@ public class MainActivity extends AppCompatActivity {
                         if (isUseGazeFilter) {
                             if (oneEuroFilterManager.filterValues(gazeInfo.timestamp, gazeInfo.x, gazeInfo.y)) {
                                 float[] filteredPoint = oneEuroFilterManager.getFilteredValues();
-                                System.out.println(filteredPoint[0]);
+                                //System.out.println(filteredPoint[0]);
                                 showGazePoint(filteredPoint[0], filteredPoint[1], gazeInfo.screenState);
                                 xq.enqueue(filteredPoint[0]);
                                 yq.enqueue(filteredPoint[1]);

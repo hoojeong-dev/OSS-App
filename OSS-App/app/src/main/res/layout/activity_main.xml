@@ -61,6 +61,7 @@
                     android:layout_height="50dp"
                     android:textColor="#FFFFFF"
                     android:gravity="center|top"
+                    android:fontFamily="@font/square_ebold"
                     android:textSize="35dp"
                     android:text="Eye World"/>
             </LinearLayout>
@@ -72,12 +73,14 @@
                 android:orientation="vertical">
                 <Button
                     android:id="@+id/btncali"
-                    android:layout_width="150dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:background="#00ff0000"
                     android:gravity="center"
                     android:textColor="#FFFFFF"
-                    android:text="cailbration"
+                    android:fontFamily="@font/square_bold"
+                    android:letterSpacing="0.1"
+                    android:text="calibration"
                     android:textSize="20dp" />
 
                 <Button
@@ -87,6 +90,8 @@
                     android:background="#00ff0000"
                     android:gravity="center"
                     android:onClick="register"
+                    android:letterSpacing="0.1"
+                    android:fontFamily="@font/square_bold"
                     android:textColor="#FFFFFF"
                     android:visibility="invisible"
                     android:textSize="20dp" />
@@ -98,6 +103,8 @@
                     android:background="#00ff0000"
                     android:gravity="center"
                     android:textColor="#FFFFFF"
+                    android:letterSpacing="0.1"
+                    android:fontFamily="@font/square_bold"
                     android:visibility="invisible"
                     android:onClick="login"
                     android:textSize="20dp" />

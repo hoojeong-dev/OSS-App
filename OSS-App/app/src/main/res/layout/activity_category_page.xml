@@ -18,12 +18,13 @@
             android:layout_centerInParent="true"
             android:clipToPadding="false"
             android:foregroundGravity="bottom"
-            android:overScrollMode="never"></androidx.viewpager.widget.ViewPager>
+            android:overScrollMode="never"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:gravity="left|center"
+            android:fontFamily="@font/square_ebold"
             android:text="   CATEGORY"
             android:textSize="40dp" />
     </RelativeLayout>

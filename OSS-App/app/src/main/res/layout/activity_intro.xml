@@ -22,6 +22,7 @@
             android:layout_height="50dp"
             android:textColor="#FFFFFF"
             android:gravity="center|top"
+            android:fontFamily="@font/square_ebold"
             android:textSize="35dp"
             android:text="Eye World"/>
     </LinearLayout>
