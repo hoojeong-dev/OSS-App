@@ -80,11 +80,13 @@ public class NewsList extends Activity {
         if(OcrView.saveState && str.equals("My")){
             String result = sendContents(OcrView.title, OcrView.contents);
             myContentsDAO.LoadData();
+            /*
             if(result.equals("success")){
                 Toast.makeText(getApplicationContext(), "Success!", Toast.LENGTH_LONG).show();
             }
             else
                 Toast.makeText(getApplicationContext(), "Failed to Connect to Server. Please try again later.", Toast.LENGTH_LONG).show();
+             */
         }
 
         if(str.equals("My")){

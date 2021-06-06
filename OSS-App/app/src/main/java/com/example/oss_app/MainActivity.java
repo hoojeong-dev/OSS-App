@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
     static int count =0, count2=0, count3=0, safebar = 0, pagenum, Lsafebar=30;
     float display_x;
     float display_y;
+    static boolean magnifier;
 
     MyQueue xq = new MyQueue();
     MyQueue yq = new MyQueue();
@@ -106,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
 
         viewPoint.setVisibility(View.INVISIBLE);
         pagenum = 0;
+
 
         titleImage.startAnimation(fadein);
         modebtn.startAnimation(fadein);
@@ -400,7 +402,6 @@ public class MainActivity extends AppCompatActivity {
                                         inst.sendPointerSync(event2);
                                         System.out.println("%%%%%%%%%%%%%%%%%%%");
                                         safebar = 20;
-
                                     }
                                 }
                                 safebar--;

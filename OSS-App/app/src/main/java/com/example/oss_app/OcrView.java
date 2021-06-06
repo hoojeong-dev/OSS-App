@@ -249,10 +249,10 @@ public class OcrView extends AppCompatActivity {
         }
 
         protected void onPostExecute(String result) {
-            //String match = "[^\uAC00-\uD7A3xfe0-9a-zA-Z\\s]";
-            //result = result.replaceAll(match, " ");
-            //result = result.replaceAll(" ", "");
-            result = "일본의 경우 가상자산 상장 시 우리나라 금융당국에 해당하는 금융청의 화이트리스트 코인 심사를 거치도록 해 불량코인을 걸러내고 있는데, 비트코인과 이더리움 등 대장주 위주로만 거래가 집중되고 기타 코인들의 성장은 정체되는 부작용이 나타났다는 진단이다.";
+            String match = "[^\uAC00-\uD7A3xfe0-9a-zA-Z\\s]";
+            result = result.replaceAll(match, " ");
+            result = result.replaceAll(" ", "");
+            //
             textView.setText(result);
 
             contents = result;

@@ -37,6 +37,7 @@ public class CategoryPage extends Activity {
         myContentsDAO.LoadData();
 
         models = new ArrayList<>();
+        models.add(new CategoryModel(R.drawable.my, "My", ""));
         models.add(new CategoryModel(R.drawable.society, "Society", ""));
         models.add(new CategoryModel(R.drawable.sports, "Sports", ""));
         models.add(new CategoryModel(R.drawable.entertain, "Entertain", ""));
@@ -45,7 +46,6 @@ public class CategoryPage extends Activity {
         models.add(new CategoryModel(R.drawable.economic, "Economic", ""));
         models.add(new CategoryModel(R.drawable.foreign, "Foreign", ""));
         models.add(new CategoryModel(R.drawable.culture, "Culture", ""));
-        models.add(new CategoryModel(R.drawable.my, "My", ""));
 
         adapter = new CategoryAdapter(models, this);
 
