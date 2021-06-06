@@ -63,7 +63,7 @@
                     android:gravity="left|bottom"
                     android:id="@+id/camera"
                     android:onClick="cameraOCR"
-
+                    android:visibility="invisible"
                     android:textColor="#FF000000"
                     android:background="@drawable/black_camera"/>
             </LinearLayout>

@@ -111,6 +111,26 @@
                 android:gravity="center|top"
                 android:layout_marginRight="10dp">
                 <LinearLayout
+                    android:id="@+id/magnifier_back"
+                    android:layout_width="60dp"
+                    android:layout_height="65dp"
+                    android:background="@drawable/button_circle"
+                    android:gravity="center">
+                    <ImageButton
+                        android:id="@+id/magnifier"
+                        android:onClick="magnifierView"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:background="@drawable/black_magnifier"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:gravity="center|top"
+                android:layout_marginRight="10dp">
+                <LinearLayout
                     android:id="@+id/removeBack"
                     android:layout_width="60dp"
                     android:layout_height="65dp"

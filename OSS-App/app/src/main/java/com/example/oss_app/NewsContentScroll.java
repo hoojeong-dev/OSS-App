@@ -151,12 +151,18 @@ public class NewsContentScroll extends AppCompatActivity {
             mode.setBackground(ContextCompat.getDrawable(this, R.drawable.black_eye));
         }
 
-        if(category.equals("MY")) {
+        if(category.equals("My")) {
             LinearLayout removeBack = findViewById(R.id.removeBack);
             removeBack.setBackground(ContextCompat.getDrawable(this, R.drawable.button_circle));
             ImageButton remove = findViewById(R.id.remove);
             remove.setVisibility(View.VISIBLE);
         }
+
+        LinearLayout magnifier_back = findViewById(R.id.magnifier_back);
+        ImageButton magnifier = findViewById(R.id.magnifier);
+
+        magnifier_back.setVisibility(View.GONE);
+        magnifier.setVisibility(View.GONE);
     }
 
     public void inVisibleSetting(View v) {
@@ -296,7 +302,6 @@ public class NewsContentScroll extends AppCompatActivity {
         intent.putExtra("value", category);
         startActivity(intent);
     }
-
 
     public void removeContents(View v){
         AlertDialog.Builder oDialog = new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Light_Dialog);
