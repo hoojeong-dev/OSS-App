@@ -136,6 +136,11 @@ public class NewsContentPage extends AppCompatActivity {
         }
         else if(contentcount == 0){
             setContentView(R.layout.activity_title_page);
+            if(MainActivity.mode == 0)
+                MainActivity.viewPoint.setVisibility(View.INVISIBLE);
+            else
+                MainActivity.viewPoint.setVisibility(View.VISIBLE);
+
             MainActivity.viewPoint = findViewById(R.id.view_point);
             titleView = (TextView) findViewById(R.id.title);
             titleView.setText(title);
@@ -217,18 +222,23 @@ public class NewsContentPage extends AppCompatActivity {
             case R.id.text15:
             case R.id.text16:
                 if(!MainActivity.magnifier){
-                    TextView text = findViewById(v.getId());
-                    text.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 25);
-                    text.setPaintFlags(text.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
-
                     Handler mHandler = new Handler();
                     mHandler.postDelayed(new Runnable()  {
                         public void run() {
-                            //Toast.makeText(getApplicationContext(), "Change", Toast.LENGTH_LONG).show();
-                            text.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 22);
-                            text.setPaintFlags(text.getPaintFlags() & (~Paint.FAKE_BOLD_TEXT_FLAG));
+                            TextView text = findViewById(v.getId());
+                            text.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 23);
+                            text.setPaintFlags(text.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
+
+                            Handler mHandler = new Handler();
+                            mHandler.postDelayed(new Runnable()  {
+                                public void run() {
+                                    //Toast.makeText(getApplicationContext(), "Change", Toast.LENGTH_LONG).show();
+                                    text.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 22);
+                                    text.setPaintFlags(text.getPaintFlags() & (~Paint.FAKE_BOLD_TEXT_FLAG));
+                                }
+                            }, 3000);
                         }
-                    }, 3000);
+                    }, 1000);
                 }
         }
     }
