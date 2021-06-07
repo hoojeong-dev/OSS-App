@@ -152,7 +152,7 @@ public class SpeechToText extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "잠시만 기다려주세요 ...", Toast.LENGTH_SHORT).show();
 
             try {
-                Thread.sleep(8000);
+                Thread.sleep(4000);
 
                 if(pageName.equals("NewsContentPage")){
                     Intent intentBack = new Intent(SpeechToText.this, NewsContentPage.class);

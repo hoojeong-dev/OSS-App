@@ -18,7 +18,7 @@ import okhttp3.Response;
 public class MyContentsDAO {
 
     static String getResult;
-    String getUrl = "http://20.194.21.177:8000/getdata/" + LoginActivity.userid;
+    String getUrl = MainActivity.ipAddress + "/getdata/" + LoginActivity.userid;
     static List<NewsListModel> contentsModels = new ArrayList<>();
     NewsListModel newsListModel = new NewsListModel();
 

@@ -16,7 +16,7 @@ import okhttp3.Response;
 public class HttpConnection {
 
     String soundUrl;
-    String postUrl = "http://20.194.21.177:8000/ai";
+    String postUrl = MainActivity.ipAddress + "/ai";
 
     public String sendTTS(String msg, String path) {
 

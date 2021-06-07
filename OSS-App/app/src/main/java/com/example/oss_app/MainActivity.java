@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
     float display_x;
     float display_y;
     static boolean magnifier;
+    static String ipAddress = "http://20.194.21.177:8000";
 
     MyQueue xq = new MyQueue();
     MyQueue yq = new MyQueue();

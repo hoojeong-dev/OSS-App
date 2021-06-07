@@ -312,7 +312,7 @@ public class NewsContentPage extends AppCompatActivity {
         playLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 
         if (category.equals("My")) {
-            String contentUrl = "http://20.194.21.177:8000/tts/" + content;
+            String contentUrl = MainActivity.ipAddress + "/tts/" + content;
             soundPlay.setPlayUrl(contentUrl);
             ((ViewManager) settingLayout.getParent()).removeView(settingLayout);
             addContentView(playLayout, playLayoutParams);

@@ -44,7 +44,7 @@ public class NewsList extends Activity {
     static String removeContents;
     MyContentsDAO myContentsDAO = new MyContentsDAO();
 
-    String userUrl = "http://20.194.21.177:8000/insert/" + LoginActivity.userid;
+    String userUrl = MainActivity.ipAddress + "/insert/" + LoginActivity.userid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
