@@ -35,7 +35,7 @@
 *본 애플리케이션은 **안드로이드 v6.0 (Marshmallow) 이상**의 환경에서만 실행이 가능합니다.*  
 *__안드로이드 애뮬레이터에서 동작하지 않습니다.__*
 
-1. OSSW-Server를 먼저 실행합니다.  
+1. 먼저, 해당 프로젝트의 Server를 실행합니다.  
    (자세한 내용은 해당 <a href="https://github.com/gnwjd309/OSS-Server" target="_blank">링크</a>를 참고해 주세요.)
 2. IP 주소가 변경되지 않았다면, Eye World.apk 파일을 다운받아 실행해 주세요.
 3. 변경된 IP 주소는 *MainActivity.java* 내의 *ipAddress*에 입력해 주세요.
