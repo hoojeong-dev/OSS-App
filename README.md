@@ -51,6 +51,3 @@
 ---
 ## *Used Library*
 - Seeso SDK 2.2.0 : https://console.seeso.io/
-- Kosac : http://word.snu.ac.kr/kosac/
-- SCE-TTS : https://github.com/sce-tts/sce-tts.github.io
-- Tesseract Data v4.0 :  https://github.com/tesseract-ocr/tessdata/releases/tag/4.0.0
